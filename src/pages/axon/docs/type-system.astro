@@ -113,33 +113,34 @@ str[]?   // Nullable array of strings</code></pre>
   </ul>
 
   <h2>Example: E-commerce Data</h2>
-  <pre><code set:html={`<span class="text-purple-400">import</span> { encode, defineSchema } <span class="text-purple-400">from</span> <span class="text-green-400">'@axon-format/core'</span>;
+  <pre><code set:html={`<span class="text-purple-400">import</span> { encode, registerSchema, <span class="text-purple-400">type</span> Schema } <span class="text-purple-400">from</span> <span class="text-green-400">'@axon-format/core'</span>;
 
-<span class="text-purple-400">const</span> productSchema = defineSchema({
-  id: <span class="text-green-400">'u8'</span>,
-  sku: <span class="text-green-400">'str'</span>,
-  name: <span class="text-green-400">'str'</span>,
-  price: <span class="text-green-400">'f64'</span>,
-  inStock: <span class="text-green-400">'bool'</span>,
-  categories: <span class="text-green-400">'str[]'</span>,
-  lastUpdated: <span class="text-green-400">'iso8601'</span>
-});
-
-<span class="text-purple-400">const</span> products = {
-  products: [
-    {
-      id: <span class="text-blue-400">1</span>,
-      sku: <span class="text-green-400">"WDG-001"</span>,
-      name: <span class="text-green-400">"Premium Widget"</span>,
-      price: <span class="text-blue-400">49.99</span>,
-      inStock: <span class="text-blue-400">true</span>,
-      categories: [<span class="text-green-400">"electronics"</span>, <span class="text-green-400">"gadgets"</span>],
-      lastUpdated: <span class="text-green-400">"2025-01-15T10:30:00Z"</span>
-    }
+<span class="text-gray-500">// Define schema with type annotations</span>
+<span class="text-purple-400">const</span> productSchema<span class="text-purple-400">:</span> Schema = {
+  name: <span class="text-green-400">'Product'</span>,
+  fields: [
+    { name: <span class="text-green-400">'id'</span>, type: <span class="text-green-400">'u8'</span> },
+    { name: <span class="text-green-400">'sku'</span>, type: <span class="text-green-400">'str'</span> },
+    { name: <span class="text-green-400">'name'</span>, type: <span class="text-green-400">'str'</span> },
+    { name: <span class="text-green-400">'price'</span>, type: <span class="text-green-400">'f64'</span> },
+    { name: <span class="text-green-400">'inStock'</span>, type: <span class="text-green-400">'bool'</span> },
+    { name: <span class="text-green-400">'lastUpdated'</span>, type: <span class="text-green-400">'iso8601'</span> }
   ]
 };
 
-<span class="text-purple-400">const</span> encoded = encode(products, { schema: productSchema });`} /></pre>
+<span class="text-gray-500">// Register schema globally</span>
+registerSchema(productSchema);
+
+<span class="text-purple-400">const</span> product = {
+  id: <span class="text-blue-400">1</span>,
+  sku: <span class="text-green-400">"WDG-001"</span>,
+  name: <span class="text-green-400">"Premium Widget"</span>,
+  price: <span class="text-blue-400">49.99</span>,
+  inStock: <span class="text-blue-400">true</span>,
+  lastUpdated: <span class="text-green-400">"2025-01-15T10:30:00Z"</span>
+};
+
+<span class="text-purple-400">const</span> encoded = encode(product, { schemas: [productSchema] });`} /></pre>
 
   <div class="bg-highlight-50 dark:bg-highlight-900/20 p-6 rounded-lg my-6 border-l-4 border-highlight-500 not-prose">
     <p class="text-sm text-gray-700 dark:text-gray-300 m-0">

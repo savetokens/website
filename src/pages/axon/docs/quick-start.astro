@@ -49,27 +49,34 @@ console.log(axonString);
   <h2>With Schema Validation</h2>
   <p>Add type validation to catch errors before sending data to expensive LLM APIs:</p>
 
-  <pre><code set:html={`<span class="text-purple-400">import</span> { encode, decode, defineSchema } <span class="text-purple-400">from</span> <span class="text-green-400">'@axon-format/core'</span>;
+  <pre><code set:html={`<span class="text-purple-400">import</span> { encode, decode, registerSchema, <span class="text-purple-400">type</span> Schema } <span class="text-purple-400">from</span> <span class="text-green-400">'@axon-format/core'</span>;
 
-<span class="text-gray-500">// Define schema with types</span>
-<span class="text-purple-400">const</span> userSchema = defineSchema({
-  id: <span class="text-green-400">'u8'</span>,
-  name: <span class="text-green-400">'str'</span>,
-  email: <span class="text-green-400">'str'</span>,
-  verified: <span class="text-green-400">'bool'</span>
-});
-
-<span class="text-purple-400">const</span> userData = {
-  users: [
-    { id: <span class="text-blue-400">1</span>, name: <span class="text-green-400">"Alice"</span>, email: <span class="text-green-400">"alice@example.com"</span>, verified: <span class="text-blue-400">true</span> }
+<span class="text-gray-500">// Define schema as a plain object</span>
+<span class="text-purple-400">const</span> userSchema<span class="text-purple-400">:</span> Schema = {
+  name: <span class="text-green-400">'User'</span>,
+  fields: [
+    { name: <span class="text-green-400">'id'</span>, type: <span class="text-green-400">'u8'</span> },
+    { name: <span class="text-green-400">'name'</span>, type: <span class="text-green-400">'str'</span> },
+    { name: <span class="text-green-400">'email'</span>, type: <span class="text-green-400">'str'</span> },
+    { name: <span class="text-green-400">'verified'</span>, type: <span class="text-green-400">'bool'</span> }
   ]
 };
 
+<span class="text-gray-500">// Register the schema globally (optional)</span>
+registerSchema(userSchema);
+
+<span class="text-purple-400">const</span> userData = {
+  id: <span class="text-blue-400">1</span>,
+  name: <span class="text-green-400">"Alice"</span>,
+  email: <span class="text-green-400">"alice@example.com"</span>,
+  verified: <span class="text-blue-400">true</span>
+};
+
 <span class="text-gray-500">// Encode with validation</span>
-<span class="text-purple-400">const</span> encoded = encode(userData, { schema: userSchema });
+<span class="text-purple-400">const</span> encoded = encode(userData, { schemas: [userSchema] });
 
 <span class="text-gray-500">// Type-safe decode</span>
-<span class="text-purple-400">const</span> decoded = decode(encoded, { schema: userSchema });`} /></pre>
+<span class="text-purple-400">const</span> decoded = decode(encoded, { schemas: [userSchema] });`} /></pre>
 
   <h2>Real-World Example: LLM API Call</h2>
   <p>Here's how to use AXON in a real LLM API call to save tokens:</p>
