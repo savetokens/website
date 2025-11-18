@@ -4,11 +4,13 @@ import Navigation from '../components/Navigation.astro';
 interface Props {
   title: string;
   description?: string;
+  showBackground?: boolean;
 }
 
 const {
   title,
-  description = "We build tools to rescue tokens from inefficient formats. Discover AXON - save up to 95% on LLM API costs."
+  description = "We build tools to rescue tokens from inefficient formats. Discover AXON - save up to 95% on LLM API costs.",
+  showBackground = true
 } = Astro.props;
 ---
 
@@ -44,7 +46,7 @@ const {
   </head>
   <body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200 relative overflow-x-hidden">
     <!-- Interactive Mouse-Following Background -->
-    <canvas id="bg-canvas" class="fixed inset-0 -z-10 pointer-events-none"></canvas>
+    {showBackground && <canvas id="bg-canvas" class="fixed inset-0 -z-10 pointer-events-none"></canvas>}
 
     <Navigation />
 
@@ -94,111 +96,115 @@ const {
     </script>
 
     <!-- Interactive Background Script -->
-    <script is:inline>
-      (function() {
-        const canvas = document.getElementById('bg-canvas');
-        if (!canvas) return;
+    {showBackground && (
+      <script is:inline>
+        (function() {
+          const canvas = document.getElementById('bg-canvas');
+          if (!canvas) return;
 
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-        let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-        let isDark = document.documentElement.classList.contains('dark');
+          const ctx = canvas.getContext('2d');
+          let particles = [];
+          let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+          let isDark = document.documentElement.classList.contains('dark');
 
-        // Colors based on theme
-        const colors = {
-          light: ['rgba(74, 86, 95, 0.15)', 'rgba(193, 138, 109, 0.15)', 'rgba(111, 134, 117, 0.15)'],
-          dark: ['rgba(74, 86, 95, 0.25)', 'rgba(193, 138, 109, 0.25)', 'rgba(111, 134, 117, 0.25)']
-        };
+          // Colors based on theme
+          const colors = {
+            light: ['rgba(74, 86, 95, 0.15)', 'rgba(193, 138, 109, 0.15)', 'rgba(111, 134, 117, 0.15)'],
+            dark: ['rgba(74, 86, 95, 0.25)', 'rgba(193, 138, 109, 0.25)', 'rgba(111, 134, 117, 0.25)']
+          };
 
-        function resize() {
-          canvas.width = window.innerWidth;
-          canvas.height = window.innerHeight;
-        }
-
-        class Particle {
-          constructor() {
-            this.x = Math.random() * canvas.width;
-            this.y = Math.random() * canvas.height;
-            this.size = Math.random() * 300 + 100;
-            this.speedX = Math.random() * 0.5 - 0.25;
-            this.speedY = Math.random() * 0.5 - 0.25;
-            this.color = colors[isDark ? 'dark' : 'light'][Math.floor(Math.random() * 3)];
+          function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
           }
 
-          update() {
-            // Move towards mouse slowly
-            const dx = mouse.x - this.x;
-            const dy = mouse.y - this.y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-
-            if (distance > 100) {
-              this.x += dx * 0.0008 + this.speedX;
-              this.y += dy * 0.0008 + this.speedY;
-            } else {
-              this.x += this.speedX;
-              this.y += this.speedY;
+          class Particle {
+            constructor() {
+              this.x = Math.random() * canvas.width;
+              this.y = Math.random() * canvas.height;
+              this.size = Math.random() * 300 + 100;
+              this.speedX = Math.random() * 0.5 - 0.25;
+              this.speedY = Math.random() * 0.5 - 0.25;
+              this.color = colors[isDark ? 'dark' : 'light'][Math.floor(Math.random() * 3)];
             }
 
-            // Wrap around edges
-            if (this.x < -this.size) this.x = canvas.width + this.size;
-            if (this.x > canvas.width + this.size) this.x = -this.size;
-            if (this.y < -this.size) this.y = canvas.height + this.size;
-            if (this.y > canvas.height + this.size) this.y = -this.size;
+            update() {
+              // Move towards mouse slowly
+              const dx = mouse.x - this.x;
+              const dy = mouse.y - this.y;
+              const distance = Math.sqrt(dx * dx + dy * dy);
+
+              if (distance > 100) {
+                this.x += dx * 0.0008 + this.speedX;
+                this.y += dy * 0.0008 + this.speedY;
+              } else {
+                this.x += this.speedX;
+                this.y += this.speedY;
+              }
+
+              // Wrap around edges
+              if (this.x < -this.size) this.x = canvas.width + this.size;
+              if (this.x > canvas.width + this.size) this.x = -this.size;
+              if (this.y < -this.size) this.y = canvas.height + this.size;
+              if (this.y > canvas.height + this.size) this.y = -this.size;
+            }
+
+            draw() {
+              const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size);
+              gradient.addColorStop(0, this.color);
+              gradient.addColorStop(1, 'transparent');
+
+              ctx.fillStyle = gradient;
+              ctx.beginPath();
+              ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+              ctx.fill();
+            }
           }
 
-          draw() {
-            const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size);
-            gradient.addColorStop(0, this.color);
-            gradient.addColorStop(1, 'transparent');
-
-            ctx.fillStyle = gradient;
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fill();
+          function init() {
+            particles = [];
+            for (let i = 0; i < 5; i++) {
+              particles.push(new Particle());
+            }
           }
-        }
 
-        function init() {
-          particles = [];
-          for (let i = 0; i < 5; i++) {
-            particles.push(new Particle());
+          function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach(particle => {
+              particle.update();
+              particle.draw();
+            });
+
+            requestAnimationFrame(animate);
           }
-        }
 
-        function animate() {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-          particles.forEach(particle => {
-            particle.update();
-            particle.draw();
+          // Track mouse movement
+          window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
           });
 
-          requestAnimationFrame(animate);
-        }
+          // Handle resize
+          window.addEventListener('resize', resize);
 
-        // Track mouse movement
-        window.addEventListener('mousemove', (e) => {
-          mouse.x = e.clientX;
-          mouse.y = e.clientY;
-        });
-
-        // Handle resize
-        window.addEventListener('resize', resize);
-
-        // Watch for theme changes
-        const observer = new MutationObserver(() => {
-          isDark = document.documentElement.classList.contains('dark');
-          particles.forEach(particle => {
-            particle.color = colors[isDark ? 'dark' : 'light'][Math.floor(Math.random() * 3)];
+          // Watch for theme changes
+          const observer = new MutationObserver(() => {
+            isDark = document.documentElement.classList.contains('dark');
+            particles.forEach(particle => {
+              particle.color = colors[isDark ? 'dark' : 'light'][Math.floor(Math.random() * 3)];
+            });
           });
-        });
-        observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+          observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
-        // Initialize
-        resize();
-        init();
-        animate();
-      })();
-    </script>
+          // Initialize
+          resize();
+          init();
+          animate();
+        })();
+      </script>
+    )}
+
+    <script src="../scripts/copy-code.ts"></script>
   </body>
 </html>
