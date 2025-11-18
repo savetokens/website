@@ -1,0 +1,48 @@
+---
+const currentPath = Astro.url.pathname;
+---
+
+<nav class="fixed top-0 left-0 right-0 z-40 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800">
+  <div class="max-w-6xl mx-auto px-4 py-4">
+    <div class="flex items-center justify-between">
+      <!-- Logo/Brand -->
+      <a href="/" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+        <img src="/icon.png" alt="SaveTokens" class="w-8 h-8 rounded-lg dark:brightness-90" />
+        <span class="font-bold text-lg">SaveTokens</span>
+      </a>
+
+      <!-- Navigation Links -->
+      <div class="flex items-center gap-6">
+        <a
+          href="/"
+          class:list={[
+            "text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-100",
+            currentPath === "/" ? "text-gray-900 dark:text-gray-100" : "text-gray-600 dark:text-gray-400"
+          ]}
+        >
+          Home
+        </a>
+        <a
+          href="/axon"
+          class:list={[
+            "text-sm font-medium transition-colors hover:text-gray-900 dark:hover:text-gray-100",
+            currentPath === "/axon" ? "text-gray-900 dark:text-gray-100" : "text-gray-600 dark:text-gray-400"
+          ]}
+        >
+          AXON
+        </a>
+        <a
+          href="https://github.com/savetokens"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+        >
+          GitHub
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Spacer to prevent content from going under fixed nav -->
+<div class="h-16"></div>

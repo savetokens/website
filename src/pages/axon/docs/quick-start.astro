@@ -1,0 +1,134 @@
+---
+import DocsLayout from '../../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout title="Quick Start - AXON Documentation | SaveTokens">
+  <div class="not-prose mb-12">
+    <a
+      href="/axon"
+      class="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors text-sm mb-8"
+    >
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+      </svg>
+      Back to AXON
+    </a>
+
+    <h1 class="text-5xl font-bold mb-4 text-gray-900 dark:text-gray-100">Quick Start</h1>
+    <p class="text-xl text-gray-600 dark:text-gray-400 leading-relaxed">
+      Encode your first data structure with AXON in minutes
+    </p>
+  </div>
+
+  <h2>Basic Encoding</h2>
+  <p>The simplest way to use AXON is with the <code>encode()</code> and <code>decode()</code> functions:</p>
+
+  <pre><code set:html={`<span class="text-purple-400">import</span> { encode, decode } <span class="text-purple-400">from</span> <span class="text-green-400">'@axon-format/core'</span>;
+
+<span class="text-gray-500">// Your data</span>
+<span class="text-purple-400">const</span> data = {
+  users: [
+    { id: <span class="text-blue-400">1</span>, name: <span class="text-green-400">"Alice"</span>, active: <span class="text-blue-400">true</span> },
+    { id: <span class="text-blue-400">2</span>, name: <span class="text-green-400">"Bob"</span>, active: <span class="text-blue-400">true</span> },
+    { id: <span class="text-blue-400">3</span>, name: <span class="text-green-400">"Charlie"</span>, active: <span class="text-blue-400">false</span> }
+  ]
+};
+
+<span class="text-gray-500">// Encode to AXON</span>
+<span class="text-purple-400">const</span> axonString = encode(data);
+console.log(axonString);
+<span class="text-gray-500">// Output: users::[3] active:bool|id:u8|name:str</span>
+<span class="text-gray-500">//         true|1|Alice</span>
+<span class="text-gray-500">//         true|2|Bob</span>
+<span class="text-gray-500">//         false|3|Charlie</span>
+
+<span class="text-gray-500">// Decode back to original</span>
+<span class="text-purple-400">const</span> decoded = decode(axonString);
+<span class="text-gray-500">// Perfect round-trip! ✅</span>`} /></pre>
+
+  <h2>With Schema Validation</h2>
+  <p>Add type validation to catch errors before sending data to expensive LLM APIs:</p>
+
+  <pre><code set:html={`<span class="text-purple-400">import</span> { encode, decode, defineSchema } <span class="text-purple-400">from</span> <span class="text-green-400">'@axon-format/core'</span>;
+
+<span class="text-gray-500">// Define schema with types</span>
+<span class="text-purple-400">const</span> userSchema = defineSchema({
+  id: <span class="text-green-400">'u8'</span>,
+  name: <span class="text-green-400">'str'</span>,
+  email: <span class="text-green-400">'str'</span>,
+  verified: <span class="text-green-400">'bool'</span>
+});
+
+<span class="text-purple-400">const</span> userData = {
+  users: [
+    { id: <span class="text-blue-400">1</span>, name: <span class="text-green-400">"Alice"</span>, email: <span class="text-green-400">"alice@example.com"</span>, verified: <span class="text-blue-400">true</span> }
+  ]
+};
+
+<span class="text-gray-500">// Encode with validation</span>
+<span class="text-purple-400">const</span> encoded = encode(userData, { schema: userSchema });
+
+<span class="text-gray-500">// Type-safe decode</span>
+<span class="text-purple-400">const</span> decoded = decode(encoded, { schema: userSchema });`} /></pre>
+
+  <h2>Real-World Example: LLM API Call</h2>
+  <p>Here's how to use AXON in a real LLM API call to save tokens:</p>
+
+  <pre><code set:html={`<span class="text-purple-400">import</span> { encode } <span class="text-purple-400">from</span> <span class="text-green-400">'@axon-format/core'</span>;
+
+<span class="text-gray-500">// Your database query results</span>
+<span class="text-purple-400">const</span> results = {
+  products: [
+    { id: <span class="text-blue-400">1</span>, name: <span class="text-green-400">"Widget"</span>, price: <span class="text-blue-400">19.99</span>, stock: <span class="text-blue-400">50</span> },
+    { id: <span class="text-blue-400">2</span>, name: <span class="text-green-400">"Gadget"</span>, price: <span class="text-blue-400">29.99</span>, stock: <span class="text-blue-400">30</span> },
+    <span class="text-gray-500">// ... more products</span>
+  ]
+};
+
+<span class="text-gray-500">// Encode before sending to LLM</span>
+<span class="text-purple-400">const</span> axonData = encode(results);
+
+<span class="text-gray-500">// Send to your LLM (60-95% smaller!)</span>
+<span class="text-purple-400">const</span> response = <span class="text-purple-400">await</span> fetch(<span class="text-green-400">'https://api.openai.com/v1/chat/completions'</span>, {
+  method: <span class="text-green-400">'POST'</span>,
+  headers: {
+    <span class="text-green-400">'Content-Type'</span>: <span class="text-green-400">'application/json'</span>,
+    <span class="text-green-400">'Authorization'</span>: <span class="text-green-400">'Bearer ' + apiKey</span>
+  },
+  body: JSON.stringify({
+    model: <span class="text-green-400">'gpt-4o'</span>,
+    messages: [
+      {
+        role: <span class="text-green-400">'user'</span>,
+        content: <span class="text-green-400">"Here's the product data in AXON format: " + axonData</span>
+      }
+    ]
+  })
+});`} /></pre>
+
+  <div class="bg-primary-50 dark:bg-primary-900/20 p-6 rounded-lg my-6 border-l-4 border-primary-500 not-prose">
+    <p class="text-sm text-gray-700 dark:text-gray-300 m-0">
+      <strong>Pro Tip:</strong> AXON automatically selects the best encoding mode and compression algorithms.
+      You don't need to configure anything for basic usage!
+    </p>
+  </div>
+
+  <h2>CLI Usage</h2>
+  <p>You can also use AXON from the command line:</p>
+
+  <pre><code># Convert JSON to AXON
+axon encode data.json -o data.axon
+
+# See token savings
+axon stats data.json data.axon
+
+# Convert back to JSON
+axon decode data.axon -o output.json</code></pre>
+
+  <h2>Next Steps</h2>
+  <ul>
+    <li><a href="/axon/docs/type-system">Learn about the Type System</a> - Understand AXON's 13 validated types</li>
+    <li><a href="/axon/docs/compression">Explore Compression</a> - See how the 5 algorithms work</li>
+    <li><a href="/axon/docs/schemas">Use Schemas</a> - Add validation to your data</li>
+  </ul>
+</DocsLayout>

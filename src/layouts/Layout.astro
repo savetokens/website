@@ -1,0 +1,204 @@
+---
+import Navigation from '../components/Navigation.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = "We build tools to rescue tokens from inefficient formats. Discover AXON - save up to 95% on LLM API costs."
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="/savetokens_icon.ico" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="/icon.png" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <title>{title}</title>
+
+    <!-- Dark mode script (runs before page load to prevent flash) -->
+    <script is:inline>
+      const theme = localStorage.getItem('theme') || 'light';
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+      }
+    </script>
+  </head>
+  <body class="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200 relative overflow-x-hidden">
+    <!-- Interactive Mouse-Following Background -->
+    <canvas id="bg-canvas" class="fixed inset-0 -z-10 pointer-events-none"></canvas>
+
+    <Navigation />
+
+    <!-- Dark mode toggle -->
+    <button
+      id="theme-toggle"
+      class="fixed top-20 right-6 z-50 p-3 rounded-lg bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200"
+      aria-label="Toggle dark mode"
+    >
+      <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+      </svg>
+      <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+      </svg>
+    </button>
+
+    <slot />
+
+    <script>
+      const themeToggleBtn = document.getElementById('theme-toggle');
+      const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+      const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+      // Set icon based on current theme
+      const currentTheme = localStorage.getItem('theme') || 'light';
+      if (currentTheme === 'dark') {
+        themeToggleLightIcon?.classList.remove('hidden');
+      } else {
+        themeToggleDarkIcon?.classList.remove('hidden');
+      }
+
+      themeToggleBtn?.addEventListener('click', function() {
+        // Toggle icons
+        themeToggleDarkIcon?.classList.toggle('hidden');
+        themeToggleLightIcon?.classList.toggle('hidden');
+
+        // Toggle dark mode
+        if (document.documentElement.classList.contains('dark')) {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+        } else {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+        }
+      });
+    </script>
+
+    <!-- Interactive Background Script -->
+    <script is:inline>
+      (function() {
+        const canvas = document.getElementById('bg-canvas');
+        if (!canvas) return;
+
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+        let isDark = document.documentElement.classList.contains('dark');
+
+        // Colors based on theme
+        const colors = {
+          light: ['rgba(74, 86, 95, 0.15)', 'rgba(193, 138, 109, 0.15)', 'rgba(111, 134, 117, 0.15)'],
+          dark: ['rgba(74, 86, 95, 0.25)', 'rgba(193, 138, 109, 0.25)', 'rgba(111, 134, 117, 0.25)']
+        };
+
+        function resize() {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+        }
+
+        class Particle {
+          constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.size = Math.random() * 300 + 100;
+            this.speedX = Math.random() * 0.5 - 0.25;
+            this.speedY = Math.random() * 0.5 - 0.25;
+            this.color = colors[isDark ? 'dark' : 'light'][Math.floor(Math.random() * 3)];
+          }
+
+          update() {
+            // Move towards mouse slowly
+            const dx = mouse.x - this.x;
+            const dy = mouse.y - this.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance > 100) {
+              this.x += dx * 0.0008 + this.speedX;
+              this.y += dy * 0.0008 + this.speedY;
+            } else {
+              this.x += this.speedX;
+              this.y += this.speedY;
+            }
+
+            // Wrap around edges
+            if (this.x < -this.size) this.x = canvas.width + this.size;
+            if (this.x > canvas.width + this.size) this.x = -this.size;
+            if (this.y < -this.size) this.y = canvas.height + this.size;
+            if (this.y > canvas.height + this.size) this.y = -this.size;
+          }
+
+          draw() {
+            const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size);
+            gradient.addColorStop(0, this.color);
+            gradient.addColorStop(1, 'transparent');
+
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+
+        function init() {
+          particles = [];
+          for (let i = 0; i < 5; i++) {
+            particles.push(new Particle());
+          }
+        }
+
+        function animate() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+          particles.forEach(particle => {
+            particle.update();
+            particle.draw();
+          });
+
+          requestAnimationFrame(animate);
+        }
+
+        // Track mouse movement
+        window.addEventListener('mousemove', (e) => {
+          mouse.x = e.clientX;
+          mouse.y = e.clientY;
+        });
+
+        // Handle resize
+        window.addEventListener('resize', resize);
+
+        // Watch for theme changes
+        const observer = new MutationObserver(() => {
+          isDark = document.documentElement.classList.contains('dark');
+          particles.forEach(particle => {
+            particle.color = colors[isDark ? 'dark' : 'light'][Math.floor(Math.random() * 3)];
+          });
+        });
+        observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+
+        // Initialize
+        resize();
+        init();
+        animate();
+      })();
+    </script>
+  </body>
+</html>

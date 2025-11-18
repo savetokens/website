@@ -1,0 +1,192 @@
+---
+---
+
+<section class="py-20 px-4 bg-gray-50 dark:bg-gray-800">
+  <div class="max-w-4xl mx-auto">
+    <div class="text-center mb-12">
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">Calculate Your Savings</h2>
+      <p class="text-xl text-gray-600 dark:text-gray-400">
+        See how much you could save on your LLM API costs
+      </p>
+    </div>
+
+    <div class="bg-white dark:bg-gray-900 rounded-lg shadow-xl p-8">
+      <!-- Input Section -->
+      <div class="space-y-6 mb-8">
+        <div>
+          <label for="monthly-requests" class="block text-sm font-semibold mb-2">
+            Monthly API Requests
+          </label>
+          <input
+            type="number"
+            id="monthly-requests"
+            value="10000"
+            min="0"
+            class="w-full px-4 py-3 rounded-lg border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 focus:border-gray-900 dark:focus:border-gray-100 focus:outline-none"
+          />
+        </div>
+
+        <div>
+          <label for="avg-tokens" class="block text-sm font-semibold mb-2">
+            Average Tokens per Request (JSON)
+          </label>
+          <input
+            type="number"
+            id="avg-tokens"
+            value="500"
+            min="0"
+            class="w-full px-4 py-3 rounded-lg border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 focus:border-gray-900 dark:focus:border-gray-100 focus:outline-none"
+          />
+        </div>
+
+        <div>
+          <label for="compression-rate" class="block text-sm font-semibold mb-2">
+            Expected Compression Rate
+          </label>
+          <div class="flex items-center gap-4">
+            <input
+              type="range"
+              id="compression-rate"
+              min="60"
+              max="95"
+              value="75"
+              class="flex-1"
+            />
+            <span id="compression-display" class="text-2xl font-bold w-16 text-right">75%</span>
+          </div>
+          <p class="text-sm text-gray-500 dark:text-gray-500 mt-2">
+            AXON typically achieves 60-95% compression depending on data patterns
+          </p>
+        </div>
+
+        <div>
+          <label for="token-price" class="block text-sm font-semibold mb-2">
+            Cost per 1M Input Tokens (USD)
+          </label>
+          <select
+            id="token-price"
+            class="w-full px-4 py-3 rounded-lg border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 focus:border-gray-900 dark:focus:border-gray-100 focus:outline-none"
+          >
+            <optgroup label="OpenAI (2025)">
+              <option value="1.25" selected>GPT-5 - $1.25</option>
+              <option value="0.15">GPT-4o mini - $0.15</option>
+              <option value="5.00">GPT-4o - $5.00</option>
+              <option value="1.10">o3-mini - $1.10</option>
+              <option value="15.00">o1 - $15.00</option>
+              <option value="30.00">GPT-4 - $30.00</option>
+            </optgroup>
+            <optgroup label="Anthropic (2025)">
+              <option value="3.00">Claude Sonnet 4.5 - $3.00</option>
+              <option value="1.00">Claude Haiku 4.5 - $1.00</option>
+              <option value="15.00">Claude Opus 4.1 - $15.00</option>
+              <option value="0.80">Claude Haiku 3.5 - $0.80</option>
+              <option value="0.25">Claude Haiku 3 - $0.25</option>
+            </optgroup>
+            <optgroup label="Google (2025)">
+              <option value="0.10">Gemini 2.5 Flash-Lite - $0.10</option>
+              <option value="0.30">Gemini 2.5 Flash - $0.30</option>
+              <option value="1.25">Gemini 2.5 Pro - $1.25</option>
+              <option value="0.10">Gemini 2.0 Flash - $0.10</option>
+            </optgroup>
+            <optgroup label="xAI (2025)">
+              <option value="0.20">Grok-4-fast - $0.20</option>
+              <option value="3.00">Grok-4 - $3.00</option>
+              <option value="2.00">Grok-2 - $2.00</option>
+            </optgroup>
+          </select>
+        </div>
+      </div>
+
+      <!-- Results Section -->
+      <div class="border-t-2 border-gray-200 dark:border-gray-700 pt-8">
+        <div class="grid md:grid-cols-2 gap-6 mb-6">
+          <div class="text-center p-6 bg-red-50 dark:bg-red-900/20 rounded-lg">
+            <div class="text-sm text-gray-600 dark:text-gray-400 mb-2">With JSON</div>
+            <div id="json-cost" class="text-3xl font-bold text-red-600 dark:text-red-400">$125.00</div>
+            <div class="text-sm text-gray-500 dark:text-gray-500 mt-1">per month</div>
+          </div>
+
+          <div class="text-center p-6 bg-green-50 dark:bg-green-900/20 rounded-lg">
+            <div class="text-sm text-gray-600 dark:text-gray-400 mb-2">With AXON</div>
+            <div id="axon-cost" class="text-3xl font-bold text-green-600 dark:text-green-400">$31.25</div>
+            <div class="text-sm text-gray-500 dark:text-gray-500 mt-1">per month</div>
+          </div>
+        </div>
+
+        <!-- Savings Highlight -->
+        <div class="text-center p-8 bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20 rounded-lg">
+          <div class="text-sm text-gray-600 dark:text-gray-400 mb-2">You Save</div>
+          <div id="savings-amount" class="text-5xl font-bold text-green-600 dark:text-green-400 mb-2">$93.75</div>
+          <div class="text-xl text-gray-600 dark:text-gray-400">per month</div>
+          <div id="yearly-savings" class="text-2xl font-bold text-gray-900 dark:text-gray-100 mt-4">
+            $1,125 per year
+          </div>
+        </div>
+
+        <!-- ROI Note -->
+        <p class="text-center text-sm text-gray-500 dark:text-gray-500 mt-6">
+          These estimates are conservative. Actual savings may be higher depending on your data patterns.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  function calculateCosts() {
+    const monthlyRequests = parseFloat((document.getElementById('monthly-requests') as HTMLInputElement)?.value || '0');
+    const avgTokens = parseFloat((document.getElementById('avg-tokens') as HTMLInputElement)?.value || '0');
+    const compressionRate = parseFloat((document.getElementById('compression-rate') as HTMLInputElement)?.value || '0') / 100;
+    const tokenPrice = parseFloat((document.getElementById('token-price') as HTMLSelectElement)?.value || '0');
+
+    // Calculate total tokens
+    const totalTokens = monthlyRequests * avgTokens;
+
+    // Calculate costs
+    const jsonCost = (totalTokens / 1000000) * tokenPrice;
+    const axonTokens = totalTokens * (1 - compressionRate);
+    const axonCost = (axonTokens / 1000000) * tokenPrice;
+    const savings = jsonCost - axonCost;
+    const yearlySavings = savings * 12;
+
+    // Update display
+    const jsonCostEl = document.getElementById('json-cost');
+    const axonCostEl = document.getElementById('axon-cost');
+    const savingsAmountEl = document.getElementById('savings-amount');
+    const yearlySavingsEl = document.getElementById('yearly-savings');
+
+    if (jsonCostEl) jsonCostEl.textContent = `$${jsonCost.toFixed(2)}`;
+    if (axonCostEl) axonCostEl.textContent = `$${axonCost.toFixed(2)}`;
+    if (savingsAmountEl) savingsAmountEl.textContent = `$${savings.toFixed(2)}`;
+    if (yearlySavingsEl) yearlySavingsEl.textContent = `$${yearlySavings.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} per year`;
+  }
+
+  function updateCompressionDisplay() {
+    const compressionRate = (document.getElementById('compression-rate') as HTMLInputElement)?.value;
+    const displayEl = document.getElementById('compression-display');
+    if (displayEl && compressionRate) {
+      displayEl.textContent = `${compressionRate}%`;
+    }
+    calculateCosts();
+  }
+
+  // Add event listeners
+  const inputs = ['monthly-requests', 'avg-tokens', 'compression-rate', 'token-price'];
+  inputs.forEach(id => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.addEventListener('input', () => {
+        if (id === 'compression-rate') {
+          updateCompressionDisplay();
+        } else {
+          calculateCosts();
+        }
+      });
+    }
+  });
+
+  // Initial calculation
+  window.addEventListener('load', () => {
+    updateCompressionDisplay();
+  });
+</script>

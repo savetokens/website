@@ -1,0 +1,226 @@
+---
+import DocsLayout from '../../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout title="Compression - AXON Documentation | SaveTokens">
+  <div class="not-prose mb-12">
+    <a
+      href="/axon"
+      class="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors text-sm mb-8"
+    >
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+      </svg>
+      Back to AXON
+    </a>
+
+    <h1 class="text-5xl font-bold mb-4 text-gray-900 dark:text-gray-100">Compression Algorithms</h1>
+    <p class="text-xl text-gray-600 dark:text-gray-400 leading-relaxed">
+      AXON automatically applies the most effective compression based on your data patterns
+    </p>
+  </div>
+
+  <div class="bg-primary-50 dark:bg-primary-900/20 p-6 rounded-lg my-8 border-l-4 border-primary-500 not-prose">
+    <p class="text-sm text-gray-700 dark:text-gray-300 m-0">
+      <strong>Automatic Selection:</strong> You don't need to choose compression algorithms manually.
+      AXON analyzes your data and applies the best combination automatically.
+    </p>
+  </div>
+
+  <h2>1. RLE (Run-Length Encoding)</h2>
+
+  <div class="not-prose bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-700 mb-8">
+    <div class="flex justify-between items-start mb-4">
+      <div>
+        <h3 class="text-lg font-bold mb-2">Best For</h3>
+        <p class="text-gray-600 dark:text-gray-400">Repeated values</p>
+      </div>
+      <div class="text-right">
+        <div class="text-3xl font-bold text-primary-600 dark:text-primary-400">204×</div>
+        <div class="text-sm text-gray-500">efficiency</div>
+      </div>
+    </div>
+
+    <h4 class="font-semibold mb-2">How it works:</h4>
+    <p class="text-gray-700 dark:text-gray-300 mb-4">
+      Compresses sequences of identical values by storing the value once plus a count.
+    </p>
+
+    <h4 class="font-semibold mb-2">Example:</h4>
+    <div class="grid md:grid-cols-2 gap-4">
+      <div>
+        <div class="text-sm text-gray-500 mb-2">JSON (verbose)</div>
+        <pre class="bg-gray-50 dark:bg-gray-800 p-3 rounded text-sm"><code>age: [30, 30, 30, 30, 30]</code></pre>
+      </div>
+      <div>
+        <div class="text-sm text-gray-500 mb-2">AXON (compressed)</div>
+        <pre class="bg-gray-50 dark:bg-gray-800 p-3 rounded text-sm"><code>age:30*5</code></pre>
+      </div>
+    </div>
+
+    <div class="mt-4 p-3 bg-green-50 dark:bg-green-900/20 rounded">
+      <p class="text-sm text-gray-700 dark:text-gray-300 m-0">
+        <strong>Savings:</strong> 99.5% reduction for 100 repeated values
+      </p>
+    </div>
+  </div>
+
+  <h2>2. Dictionary Compression</h2>
+
+  <div class="not-prose bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-700 mb-8">
+    <div class="flex justify-between items-start mb-4">
+      <div>
+        <h3 class="text-lg font-bold mb-2">Best For</h3>
+        <p class="text-gray-600 dark:text-gray-400">Limited unique values (high cardinality)</p>
+      </div>
+      <div class="text-right">
+        <div class="text-3xl font-bold text-primary-600 dark:text-primary-400">4.3×</div>
+        <div class="text-sm text-gray-500">efficiency</div>
+      </div>
+    </div>
+
+    <h4 class="font-semibold mb-2">How it works:</h4>
+    <p class="text-gray-700 dark:text-gray-300 mb-4">
+      Creates a lookup table of unique values, then references them by index.
+    </p>
+
+    <h4 class="font-semibold mb-2">Example:</h4>
+    <div class="grid md:grid-cols-2 gap-4">
+      <div>
+        <div class="text-sm text-gray-500 mb-2">JSON</div>
+        <pre class="bg-gray-50 dark:bg-gray-800 p-3 rounded text-sm"><code>role: ["admin", "user", "admin", "guest", "user"]</code></pre>
+      </div>
+      <div>
+        <div class="text-sm text-gray-500 mb-2">AXON</div>
+        <pre class="bg-gray-50 dark:bg-gray-800 p-3 rounded text-sm"><code>@dict(admin,user,guest)
+role:[0,1,0,2,1]</code></pre>
+      </div>
+    </div>
+
+    <div class="mt-4 p-3 bg-green-50 dark:bg-green-900/20 rounded">
+      <p class="text-sm text-gray-700 dark:text-gray-300 m-0">
+        <strong>Savings:</strong> 65-75% reduction for strings with limited unique values
+      </p>
+    </div>
+  </div>
+
+  <h2>3. Delta Encoding</h2>
+
+  <div class="not-prose bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-700 mb-8">
+    <div class="flex justify-between items-start mb-4">
+      <div>
+        <h3 class="text-lg font-bold mb-2">Best For</h3>
+        <p class="text-gray-600 dark:text-gray-400">Sequential or time-series data</p>
+      </div>
+      <div class="text-right">
+        <div class="text-3xl font-bold text-primary-600 dark:text-primary-400">50-76%</div>
+        <div class="text-sm text-gray-500">reduction</div>
+      </div>
+    </div>
+
+    <h4 class="font-semibold mb-2">How it works:</h4>
+    <p class="text-gray-700 dark:text-gray-300 mb-4">
+      Stores differences between consecutive values instead of absolute values.
+    </p>
+
+    <h4 class="font-semibold mb-2">Example:</h4>
+    <div class="grid md:grid-cols-2 gap-4">
+      <div>
+        <div class="text-sm text-gray-500 mb-2">JSON</div>
+        <pre class="bg-gray-50 dark:bg-gray-800 p-3 rounded text-sm"><code>price: [10.00, 10.50, 10.75, 11.25]</code></pre>
+      </div>
+      <div>
+        <div class="text-sm text-gray-500 mb-2">AXON</div>
+        <pre class="bg-gray-50 dark:bg-gray-800 p-3 rounded text-sm"><code>price:Δ10.00[0.50,0.25,0.50]</code></pre>
+      </div>
+    </div>
+  </div>
+
+  <h2>4. Bit Packing</h2>
+
+  <div class="not-prose bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-700 mb-8">
+    <div class="flex justify-between items-start mb-4">
+      <div>
+        <h3 class="text-lg font-bold mb-2">Best For</h3>
+        <p class="text-gray-600 dark:text-gray-400">Boolean arrays</p>
+      </div>
+      <div class="text-right">
+        <div class="text-3xl font-bold text-primary-600 dark:text-primary-400">22.7×</div>
+        <div class="text-sm text-gray-500">efficiency</div>
+      </div>
+    </div>
+
+    <h4 class="font-semibold mb-2">How it works:</h4>
+    <p class="text-gray-700 dark:text-gray-300 mb-4">
+      Compresses boolean values to single bits (8 booleans = 1 byte).
+    </p>
+
+    <h4 class="font-semibold mb-2">Example:</h4>
+    <div class="grid md:grid-cols-2 gap-4">
+      <div>
+        <div class="text-sm text-gray-500 mb-2">JSON</div>
+        <pre class="bg-gray-50 dark:bg-gray-800 p-3 rounded text-sm"><code>active: [true, true, false, true, false, false, true, true]</code></pre>
+      </div>
+      <div>
+        <div class="text-sm text-gray-500 mb-2">AXON</div>
+        <pre class="bg-gray-50 dark:bg-gray-800 p-3 rounded text-sm"><code>active:@bitpack(8):0b11010011</code></pre>
+      </div>
+    </div>
+
+    <div class="mt-4 p-3 bg-green-50 dark:bg-green-900/20 rounded">
+      <p class="text-sm text-gray-700 dark:text-gray-300 m-0">
+        <strong>Savings:</strong> 95.6% reduction for boolean arrays
+      </p>
+    </div>
+  </div>
+
+  <h2>5. Varint Encoding</h2>
+
+  <div class="not-prose bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-700 mb-8">
+    <h3 class="text-lg font-bold mb-4">Best For</h3>
+    <p class="text-gray-600 dark:text-gray-400 mb-4">Integers with variable magnitude</p>
+
+    <h4 class="font-semibold mb-2">How it works:</h4>
+    <p class="text-gray-700 dark:text-gray-300 mb-4">
+      Variable-length integer encoding that uses fewer bytes for smaller numbers. Small numbers (0-127)
+      use just 1 byte, while larger numbers use more bytes only when needed.
+    </p>
+
+    <h4 class="font-semibold mb-2">Example:</h4>
+    <pre class="bg-gray-50 dark:bg-gray-800 p-3 rounded text-sm mb-4"><code>id:@varint[1,100,1000000]</code></pre>
+
+    <p class="text-sm text-gray-700 dark:text-gray-300">
+      The number 1 uses 1 byte, 100 uses 1 byte, 1000000 uses 3 bytes. Much more efficient than
+      fixed-width encoding.
+    </p>
+  </div>
+
+  <h2>Automatic Algorithm Selection</h2>
+  <p>
+    AXON analyzes your data and chooses the best algorithm(s) automatically:
+  </p>
+
+  <pre><code set:html={`<span class="text-purple-400">import</span> { encode } <span class="text-purple-400">from</span> <span class="text-green-400">'@axon-format/core'</span>;
+
+<span class="text-gray-500">// AXON automatically detects patterns and applies optimal compression</span>
+<span class="text-purple-400">const</span> data = {
+  users: [
+    { id: <span class="text-blue-400">1</span>, role: <span class="text-green-400">"admin"</span>, active: <span class="text-blue-400">true</span> },
+    { id: <span class="text-blue-400">2</span>, role: <span class="text-green-400">"user"</span>, active: <span class="text-blue-400">true</span> },
+    { id: <span class="text-blue-400">3</span>, role: <span class="text-green-400">"user"</span>, active: <span class="text-blue-400">true</span> }
+  ]
+};
+
+<span class="text-purple-400">const</span> axon = encode(data);
+<span class="text-gray-500">// Automatically uses:</span>
+<span class="text-gray-500">// - RLE for repeated "true" values</span>
+<span class="text-gray-500">// - Dictionary for role field (admin/user)</span>
+<span class="text-gray-500">// - Varint for sequential IDs</span>`} /></pre>
+
+  <div class="bg-highlight-50 dark:bg-highlight-900/20 p-6 rounded-lg my-8 border-l-4 border-highlight-500 not-prose">
+    <p class="text-sm text-gray-700 dark:text-gray-300 m-0">
+      <strong>Next:</strong> Learn about <a href="/axon/docs/encoding-modes" class="underline">Encoding Modes</a>
+      and how AXON adapts to different data structures.
+    </p>
+  </div>
+</DocsLayout>

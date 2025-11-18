@@ -1,0 +1,235 @@
+---
+---
+
+<section id="demo" class="py-20 px-4 bg-gray-50 dark:bg-gray-800">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-12">
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">See the Difference</h2>
+      <p class="text-xl text-gray-600 dark:text-gray-400 mb-3">
+        Paste your JSON data and watch AXON compress it in real-time
+      </p>
+      <p class="text-sm text-gray-500 dark:text-gray-500 italic">
+        Note: This is a conceptual demonstration. Real AXON uses binary encoding and is more sophisticated.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      <!-- JSON Input -->
+      <div class="bg-white dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden">
+        <div class="bg-gray-900 dark:bg-gray-950 text-white px-4 py-3 flex justify-between items-center">
+          <span class="font-semibold">JSON Input</span>
+          <span id="json-tokens" class="text-sm text-gray-400">0 tokens</span>
+        </div>
+        <textarea
+          id="json-input"
+          class="w-full h-80 p-4 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-mono text-sm resize-none focus:outline-none"
+          placeholder='{"users": [{"name": "Alice", "age": 30}, {"name": "Bob", "age": 30}]}'
+        ></textarea>
+      </div>
+
+      <!-- AXON Output -->
+      <div class="bg-white dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden">
+        <div class="bg-gray-900 dark:bg-gray-950 text-white px-4 py-3 flex justify-between items-center">
+          <span class="font-semibold">AXON Output</span>
+          <span id="axon-tokens" class="text-sm text-green-400">0 tokens</span>
+        </div>
+        <pre
+          id="axon-output"
+          class="w-full h-80 p-4 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-mono text-sm overflow-auto"
+        >AXON output will appear here...</pre>
+      </div>
+    </div>
+
+    <!-- Savings Display -->
+    <div class="mt-8 p-6 bg-white dark:bg-gray-900 rounded-lg shadow-lg text-center">
+      <div class="text-3xl font-bold mb-2">
+        <span id="savings-percentage" class="text-green-600 dark:text-green-400">0%</span>
+        <span class="text-gray-600 dark:text-gray-400 text-xl ml-2">Token Savings</span>
+      </div>
+      <div class="text-gray-500 dark:text-gray-500">
+        <span id="tokens-saved">0</span> tokens saved with AXON
+      </div>
+    </div>
+
+    <!-- Example Buttons -->
+    <div class="mt-6 flex flex-wrap gap-3 justify-center">
+      <button
+        class="example-btn px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+        data-example='{"users": [{"name": "Alice", "age": 30, "active": true}, {"name": "Bob", "age": 30, "active": true}, {"name": "Carol", "age": 30, "active": true}]}'
+      >
+        Try: Repeated Values
+      </button>
+      <button
+        class="example-btn px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+        data-example='{"items": [{"id": 1, "price": 10.50}, {"id": 2, "price": 10.55}, {"id": 3, "price": 10.60}]}'
+      >
+        Try: Sequential Numbers
+      </button>
+      <button
+        class="example-btn px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+        data-example='{"flags": [true, true, false, true, false, false, true, true]}'
+      >
+        Try: Booleans
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Simple token counter (approximates GPT tokenization)
+  function countTokens(text: string): number {
+    // Rough approximation: ~4 characters per token
+    return Math.ceil(text.length / 4);
+  }
+
+  // Simplified AXON encoder for demo purposes
+  function convertToAxon(jsonObj: any): string {
+    // NOTE: This is a conceptual demonstration, not the actual AXON format
+    // Real AXON uses binary encoding and is more sophisticated
+
+    // Handle objects with array values (like {"users": [...]})
+    if (typeof jsonObj === 'object' && !Array.isArray(jsonObj)) {
+      let result = '';
+      for (const [key, value] of Object.entries(jsonObj)) {
+        if (Array.isArray(value)) {
+          result += `${key}:` + convertToAxon(value) + '\n';
+        } else {
+          result += `${key}:${JSON.stringify(value)}\n`;
+        }
+      }
+      return result.trim();
+    }
+
+    if (Array.isArray(jsonObj)) {
+      const firstItem = jsonObj[0];
+      if (typeof firstItem === 'object' && firstItem !== null) {
+        // Columnar representation
+        const keys = Object.keys(firstItem);
+        let axon = `@schema(${keys.join(',')})\n`;
+
+        for (const key of keys) {
+          const values = jsonObj.map(item => item[key]);
+
+          // Check if all values are the same (RLE compression)
+          const allSame = values.every(v => v === values[0]);
+          if (allSame) {
+            axon += `  ${key}:${JSON.stringify(values[0])}*${values.length}\n`;
+          } else if (values.every(v => typeof v === 'number')) {
+            // All numbers - check for sequential pattern
+            const deltas = [];
+            let isGoodPattern = true;
+
+            for (let i = 1; i < values.length; i++) {
+              const current = values[i];
+              const previous = values[i-1];
+              if (current !== undefined && previous !== undefined) {
+                const delta = current - previous;
+                // Round to avoid floating point errors
+                const roundedDelta = Math.round(delta * 100) / 100;
+                deltas.push(roundedDelta);
+
+                // If deltas vary too much, not a good pattern
+                if (Math.abs(roundedDelta) > 10) {
+                  isGoodPattern = false;
+                  break;
+                }
+              }
+            }
+
+            // Check if deltas are consistent (good for delta encoding)
+            const deltaSet = new Set(deltas);
+            if (isGoodPattern && deltaSet.size <= 2) {
+              // Use delta encoding
+              axon += `  ${key}:Δ${values[0]}[${deltas.join(',')}]\n`;
+            } else {
+              // Just list the values (still more compact than JSON objects)
+              axon += `  ${key}:[${values.join(',')}]\n`;
+            }
+          } else {
+            // Mixed types or strings - just list them
+            axon += `  ${key}:[${values.map(v => JSON.stringify(v)).join(',')}]\n`;
+          }
+        }
+        return axon;
+      } else if (typeof firstItem === 'boolean') {
+        // Bit packing for booleans
+        const bits = jsonObj.map((b: boolean) => b ? '1' : '0').join('');
+        return `@bitpack(${jsonObj.length}):0b${bits}`;
+      } else {
+        return `[${jsonObj.join(',')}]`;
+      }
+    }
+
+    return JSON.stringify(jsonObj);
+  }
+
+  function updateDemo() {
+    const input = document.getElementById('json-input') as HTMLTextAreaElement;
+    const output = document.getElementById('axon-output') as HTMLPreElement;
+    const jsonTokensEl = document.getElementById('json-tokens');
+    const axonTokensEl = document.getElementById('axon-tokens');
+    const savingsPercentageEl = document.getElementById('savings-percentage');
+    const tokensSavedEl = document.getElementById('tokens-saved');
+
+    try {
+      const jsonText = input.value.trim();
+      if (!jsonText) {
+        output.textContent = 'AXON output will appear here...';
+        if (jsonTokensEl) jsonTokensEl.textContent = '0 tokens';
+        if (axonTokensEl) axonTokensEl.textContent = '0 tokens';
+        if (savingsPercentageEl) savingsPercentageEl.textContent = '0%';
+        if (tokensSavedEl) tokensSavedEl.textContent = '0';
+        return;
+      }
+
+      const jsonObj = JSON.parse(jsonText);
+      const axonText = convertToAxon(jsonObj);
+
+      const jsonTokens = countTokens(jsonText);
+      const axonTokens = countTokens(axonText);
+      const savedTokens = Math.max(0, jsonTokens - axonTokens);
+      const savingsPercent = jsonTokens > 0
+        ? Math.round((savedTokens / jsonTokens) * 100)
+        : 0;
+
+      output.classList.remove('text-red-400');
+      output.textContent = axonText;
+      if (jsonTokensEl) jsonTokensEl.textContent = `${jsonTokens} tokens`;
+      if (axonTokensEl) axonTokensEl.textContent = `${axonTokens} tokens`;
+      if (savingsPercentageEl) savingsPercentageEl.textContent = `${savingsPercent}%`;
+      if (tokensSavedEl) tokensSavedEl.textContent = savedTokens.toString();
+    } catch (e) {
+      output.textContent = 'Invalid JSON - please check your syntax';
+      output.classList.add('text-red-400');
+    }
+  }
+
+  // Event listeners
+  const input = document.getElementById('json-input') as HTMLTextAreaElement;
+  if (input) {
+    input.addEventListener('input', updateDemo);
+  }
+
+  // Example buttons
+  document.querySelectorAll('.example-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const example = (e.target as HTMLButtonElement).dataset.example;
+      if (example && input) {
+        input.value = JSON.stringify(JSON.parse(example), null, 2);
+        updateDemo();
+      }
+    });
+  });
+
+  // Load first example on page load
+  window.addEventListener('load', () => {
+    const firstExample = document.querySelector('.example-btn') as HTMLButtonElement;
+    if (firstExample && input) {
+      const example = firstExample.dataset.example;
+      if (example) {
+        input.value = JSON.stringify(JSON.parse(example), null, 2);
+        updateDemo();
+      }
+    }
+  });
+</script>

@@ -1,0 +1,77 @@
+---
+import DocsLayout from '../../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout title="Performance - AXON Documentation | SaveTokens">
+  <div class="not-prose mb-12">
+    <a href="/axon" class="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors text-sm mb-8">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+      </svg>
+      Back to AXON
+    </a>
+
+    <h1 class="text-5xl font-bold mb-4 text-gray-900 dark:text-gray-100">Performance Benchmarks</h1>
+    <p class="text-xl text-gray-600 dark:text-gray-400 leading-relaxed">Real-world token savings and compression results</p>
+  </div>
+
+  <h2>Real-World Impact: RAG Pipeline</h2>
+
+  <div class="not-prose bg-white dark:bg-gray-900 p-8 rounded-lg border border-gray-200 dark:border-gray-700 mb-8">
+    <h3 class="text-xl font-bold mb-6">1,000 Document Entries</h3>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="bg-red-50 dark:bg-red-900/20 p-6 rounded-lg">
+        <div class="text-sm text-gray-600 dark:text-gray-400 mb-2">JSON Format</div>
+        <div class="text-4xl font-bold text-red-600 dark:text-red-400 mb-1">~50,000</div>
+        <div class="text-sm text-gray-500">tokens per query</div>
+      </div>
+      <div class="bg-green-50 dark:bg-green-900/20 p-6 rounded-lg">
+        <div class="text-sm text-gray-600 dark:text-gray-400 mb-2">AXON Format</div>
+        <div class="text-4xl font-bold text-green-600 dark:text-green-400 mb-1">~15,000</div>
+        <div class="text-sm text-gray-500">tokens per query</div>
+      </div>
+    </div>
+    <div class="mt-6 p-4 bg-primary-50 dark:bg-primary-900/20 rounded-lg">
+      <p class="text-gray-700 dark:text-gray-300 m-0">
+        <strong>Result:</strong> 70% savings = <strong>$350 saved per 1,000 queries</strong> at typical API rates
+      </p>
+    </div>
+  </div>
+
+  <h2>Pattern-Specific Results</h2>
+
+  <div class="not-prose grid md:grid-cols-2 gap-4 my-8">
+    <div class="bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+      <div class="text-2xl font-bold text-primary-600 dark:text-primary-400 mb-2">204×</div>
+      <div class="text-sm font-semibold mb-1">Repeated Values</div>
+      <div class="text-xs text-gray-500">99.5% reduction with RLE</div>
+    </div>
+
+    <div class="bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+      <div class="text-2xl font-bold text-primary-600 dark:text-primary-400 mb-2">4.3×</div>
+      <div class="text-sm font-semibold mb-1">High-Cardinality Strings</div>
+      <div class="text-xs text-gray-500">65-75% with dictionary compression</div>
+    </div>
+
+    <div class="bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+      <div class="text-2xl font-bold text-primary-600 dark:text-primary-400 mb-2">22.7×</div>
+      <div class="text-sm font-semibold mb-1">Boolean Arrays</div>
+      <div class="text-xs text-gray-500">95.6% with bit packing</div>
+    </div>
+
+    <div class="bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+      <div class="text-2xl font-bold text-primary-600 dark:text-primary-400 mb-2">59%</div>
+      <div class="text-sm font-semibold mb-1">Simple Tables</div>
+      <div class="text-xs text-gray-500">General token savings vs JSON</div>
+    </div>
+  </div>
+
+  <h2>Quality Assurance</h2>
+  <p>AXON is production-ready with comprehensive testing:</p>
+  <ul>
+    <li><strong>93.51% test coverage</strong></li>
+    <li><strong>342 passing tests</strong></li>
+    <li><strong>Perfect round-trip encoding/decoding</strong></li>
+    <li><strong>MIT licensed</strong> and open source</li>
+  </ul>
+</DocsLayout>

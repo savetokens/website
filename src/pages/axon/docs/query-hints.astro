@@ -1,0 +1,81 @@
+---
+import DocsLayout from '../../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout title="Query Hints - AXON Documentation | SaveTokens">
+  <div class="not-prose mb-12">
+    <a href="/axon" class="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors text-sm mb-8">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+      </svg>
+      Back to AXON
+    </a>
+
+    <h1 class="text-5xl font-bold mb-4 text-gray-900 dark:text-gray-100">Query Hints</h1>
+    <p class="text-xl text-gray-600 dark:text-gray-400 leading-relaxed">Metadata to help LLMs understand and process your data effectively</p>
+  </div>
+
+  <h2>Available Hints</h2>
+
+  <div class="grid md:grid-cols-2 gap-6 my-8 not-prose">
+    <div class="bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+      <code class="text-primary-700 dark:text-primary-400 font-bold">!primary</code>
+      <p class="text-gray-700 dark:text-gray-300 text-sm mt-3">
+        Marks primary key fields for unique identification
+      </p>
+    </div>
+
+    <div class="bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+      <code class="text-primary-700 dark:text-primary-400 font-bold">!search</code>
+      <p class="text-gray-700 dark:text-gray-300 text-sm mt-3">
+        Indicates searchable columns for LLM queries
+      </p>
+    </div>
+
+    <div class="bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+      <code class="text-primary-700 dark:text-primary-400 font-bold">!aggregate</code>
+      <p class="text-gray-700 dark:text-gray-300 text-sm mt-3">
+        Marks fields suitable for aggregation (sum, average, etc.)
+      </p>
+    </div>
+
+    <div class="bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+      <code class="text-primary-700 dark:text-primary-400 font-bold">!filter</code>
+      <p class="text-gray-700 dark:text-gray-300 text-sm mt-3">
+        Identifies filterable fields
+      </p>
+    </div>
+
+    <div class="bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+      <code class="text-primary-700 dark:text-primary-400 font-bold">!sort</code>
+      <p class="text-gray-700 dark:text-gray-300 text-sm mt-3">
+        Marks sortable columns
+      </p>
+    </div>
+
+    <div class="bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+      <code class="text-primary-700 dark:text-primary-400 font-bold">!relationship</code>
+      <p class="text-gray-700 dark:text-gray-300 text-sm mt-3">
+        Indicates foreign key relationships between entities
+      </p>
+    </div>
+  </div>
+
+  <h2>Usage Example</h2>
+  <pre><code>users::[100] !primary id:u8|!search name:str|!aggregate age:u8|role:str</code></pre>
+
+  <p>This tells the LLM that:</p>
+  <ul>
+    <li><code>id</code> is the primary identifier</li>
+    <li><code>name</code> can be searched</li>
+    <li><code>age</code> can be aggregated (averaged, summed, etc.)</li>
+    <li><code>role</code> is a regular field</li>
+  </ul>
+
+  <h2>Why Use Query Hints?</h2>
+  <ul>
+    <li><strong>Improved accuracy:</strong> LLMs understand data relationships better</li>
+    <li><strong>Faster responses:</strong> Models know which fields to focus on</li>
+    <li><strong>Better queries:</strong> Hints guide the LLM's query planning</li>
+  </ul>
+</DocsLayout>

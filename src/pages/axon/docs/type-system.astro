@@ -1,0 +1,150 @@
+---
+import DocsLayout from '../../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout title="Type System - AXON Documentation | SaveTokens">
+  <div class="not-prose mb-12">
+    <a
+      href="/axon"
+      class="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors text-sm mb-8"
+    >
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+      </svg>
+      Back to AXON
+    </a>
+
+    <h1 class="text-5xl font-bold mb-4 text-gray-900 dark:text-gray-100">Type System</h1>
+    <p class="text-xl text-gray-600 dark:text-gray-400 leading-relaxed">
+      AXON's 13 validated types ensure data integrity and catch errors before expensive LLM API calls
+    </p>
+  </div>
+
+  <h2>Built-in Types</h2>
+
+  <div class="not-prose overflow-x-auto my-8">
+    <table class="min-w-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg">
+      <thead class="bg-gray-50 dark:bg-gray-800">
+        <tr>
+          <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">Type</th>
+          <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">Description</th>
+          <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">Range/Format</th>
+          <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">Example</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+        <tr>
+          <td class="px-6 py-4 font-mono text-sm font-semibold">u8</td>
+          <td class="px-6 py-4 text-sm">Unsigned 8-bit integer</td>
+          <td class="px-6 py-4 text-sm">0 to 255</td>
+          <td class="px-6 py-4 font-mono text-sm">42</td>
+        </tr>
+        <tr>
+          <td class="px-6 py-4 font-mono text-sm font-semibold">i32</td>
+          <td class="px-6 py-4 text-sm">Signed 32-bit integer</td>
+          <td class="px-6 py-4 text-sm">-2.1B to 2.1B</td>
+          <td class="px-6 py-4 font-mono text-sm">-1000</td>
+        </tr>
+        <tr>
+          <td class="px-6 py-4 font-mono text-sm font-semibold">f64</td>
+          <td class="px-6 py-4 text-sm">64-bit floating point</td>
+          <td class="px-6 py-4 text-sm">Double precision</td>
+          <td class="px-6 py-4 font-mono text-sm">3.14159</td>
+        </tr>
+        <tr>
+          <td class="px-6 py-4 font-mono text-sm font-semibold">bool</td>
+          <td class="px-6 py-4 text-sm">Boolean</td>
+          <td class="px-6 py-4 text-sm">true or false</td>
+          <td class="px-6 py-4 font-mono text-sm">true</td>
+        </tr>
+        <tr>
+          <td class="px-6 py-4 font-mono text-sm font-semibold">str</td>
+          <td class="px-6 py-4 text-sm">UTF-8 string</td>
+          <td class="px-6 py-4 text-sm">Any text</td>
+          <td class="px-6 py-4 font-mono text-sm">"Hello"</td>
+        </tr>
+        <tr>
+          <td class="px-6 py-4 font-mono text-sm font-semibold">iso8601</td>
+          <td class="px-6 py-4 text-sm">ISO 8601 date/time</td>
+          <td class="px-6 py-4 text-sm">With validation</td>
+          <td class="px-6 py-4 font-mono text-xs">2025-01-15T10:30Z</td>
+        </tr>
+        <tr>
+          <td class="px-6 py-4 font-mono text-sm font-semibold">uuid</td>
+          <td class="px-6 py-4 text-sm">UUID identifier</td>
+          <td class="px-6 py-4 text-sm">39% smaller encoding</td>
+          <td class="px-6 py-4 font-mono text-xs">550e8400-e29b...</td>
+        </tr>
+        <tr>
+          <td class="px-6 py-4 font-mono text-sm font-semibold">enum</td>
+          <td class="px-6 py-4 text-sm">Categorical type</td>
+          <td class="px-6 py-4 text-sm">Validated set</td>
+          <td class="px-6 py-4 font-mono text-sm">"admin"</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Type Modifiers</h2>
+
+  <h3>Nullable Types</h3>
+  <p>Add <code>?</code> to make any type nullable:</p>
+  <pre><code>u8?     // Can be a number 0-255 or null
+str?    // Can be a string or null
+bool?   // Can be true, false, or null</code></pre>
+
+  <h3>Array Types</h3>
+  <p>Add <code>[]</code> to create array types:</p>
+  <pre><code>u8[]     // Array of unsigned 8-bit integers
+str[]    // Array of strings
+bool[]   // Array of booleans (automatically bit-packed!)</code></pre>
+
+  <h3>Combining Modifiers</h3>
+  <p>You can combine modifiers for complex types:</p>
+  <pre><code>u8?[]    // Array of nullable unsigned integers
+str[]?   // Nullable array of strings</code></pre>
+
+  <h2>Type Validation Benefits</h2>
+  <ul>
+    <li><strong>Catch errors early:</strong> Invalid data is rejected before costly API calls</li>
+    <li><strong>Better compression:</strong> Types enable smarter compression algorithms</li>
+    <li><strong>LLM optimization:</strong> Type hints help models understand data structure</li>
+    <li><strong>Documentation:</strong> Types serve as inline documentation for your data</li>
+  </ul>
+
+  <h2>Example: E-commerce Data</h2>
+  <pre><code set:html={`<span class="text-purple-400">import</span> { encode, defineSchema } <span class="text-purple-400">from</span> <span class="text-green-400">'@axon-format/core'</span>;
+
+<span class="text-purple-400">const</span> productSchema = defineSchema({
+  id: <span class="text-green-400">'u8'</span>,
+  sku: <span class="text-green-400">'str'</span>,
+  name: <span class="text-green-400">'str'</span>,
+  price: <span class="text-green-400">'f64'</span>,
+  inStock: <span class="text-green-400">'bool'</span>,
+  categories: <span class="text-green-400">'str[]'</span>,
+  lastUpdated: <span class="text-green-400">'iso8601'</span>
+});
+
+<span class="text-purple-400">const</span> products = {
+  products: [
+    {
+      id: <span class="text-blue-400">1</span>,
+      sku: <span class="text-green-400">"WDG-001"</span>,
+      name: <span class="text-green-400">"Premium Widget"</span>,
+      price: <span class="text-blue-400">49.99</span>,
+      inStock: <span class="text-blue-400">true</span>,
+      categories: [<span class="text-green-400">"electronics"</span>, <span class="text-green-400">"gadgets"</span>],
+      lastUpdated: <span class="text-green-400">"2025-01-15T10:30:00Z"</span>
+    }
+  ]
+};
+
+<span class="text-purple-400">const</span> encoded = encode(products, { schema: productSchema });`} /></pre>
+
+  <div class="bg-highlight-50 dark:bg-highlight-900/20 p-6 rounded-lg my-6 border-l-4 border-highlight-500 not-prose">
+    <p class="text-sm text-gray-700 dark:text-gray-300 m-0">
+      <strong>Next:</strong> Learn how <a href="/axon/docs/compression" class="underline">Compression Algorithms</a>
+      work to achieve massive token savings.
+    </p>
+  </div>
+</DocsLayout>

@@ -1,0 +1,51 @@
+---
+import DocsLayout from '../../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout title="Examples - AXON Documentation | SaveTokens">
+  <div class="not-prose mb-12">
+    <a href="/axon" class="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors text-sm mb-8">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+      </svg>
+      Back to AXON
+    </a>
+
+    <h1 class="text-5xl font-bold mb-4 text-gray-900 dark:text-gray-100">Examples</h1>
+    <p class="text-xl text-gray-600 dark:text-gray-400 leading-relaxed">Real-world usage patterns and code examples</p>
+  </div>
+
+  <h2>E-commerce Product Catalog</h2>
+  <pre><code set:html={`<span class="text-purple-400">import</span> { encode, defineSchema } <span class="text-purple-400">from</span> <span class="text-green-400">'@axon-format/core'</span>;
+
+<span class="text-purple-400">const</span> productSchema = defineSchema({
+  id: <span class="text-green-400">'u8'</span>,
+  sku: <span class="text-green-400">'str'</span>,
+  name: <span class="text-green-400">'str'</span>,
+  price: <span class="text-green-400">'f64'</span>,
+  inStock: <span class="text-green-400">'bool'</span>,
+  categories: <span class="text-green-400">'str[]'</span>
+});
+
+<span class="text-purple-400">const</span> products = { products: [<span class="text-gray-500">/* ... */</span>] };
+<span class="text-purple-400">const</span> encoded = encode(products, { schema: productSchema });`} /></pre>
+
+  <h2>User Analytics Dashboard</h2>
+  <pre><code set:html={`<span class="text-purple-400">const</span> analyticsData = {
+  events: [
+    { timestamp: <span class="text-green-400">"2025-01-15T10:00:00Z"</span>, userId: <span class="text-blue-400">123</span>, action: <span class="text-green-400">"login"</span> },
+    { timestamp: <span class="text-green-400">"2025-01-15T10:05:00Z"</span>, userId: <span class="text-blue-400">123</span>, action: <span class="text-green-400">"view_product"</span> },
+    <span class="text-gray-500">// Time-series data works great with AXON</span>
+  ]
+};
+
+<span class="text-purple-400">const</span> axon = encode(analyticsData);
+<span class="text-gray-500">// Automatically uses Stream mode + delta encoding</span>`} /></pre>
+
+  <h2>More Examples</h2>
+  <p>Find complete working examples in the GitHub repository:</p>
+  <ul>
+    <li><a href="https://github.com/savetokens/axon/tree/main/examples" target="_blank" rel="noopener noreferrer">Official Examples Directory</a></li>
+    <li><a href="https://github.com/savetokens/axon#readme" target="_blank" rel="noopener noreferrer">README with Examples</a></li>
+  </ul>
+</DocsLayout>

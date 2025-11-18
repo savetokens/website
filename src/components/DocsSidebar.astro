@@ -1,0 +1,134 @@
+---
+const currentPath = Astro.url.pathname;
+
+const sections = [
+  {
+    title: 'Getting Started',
+    links: [
+      { href: '/axon/docs', label: 'Overview' },
+      { href: '/axon/docs/installation', label: 'Installation' },
+      { href: '/axon/docs/quick-start', label: 'Quick Start' },
+    ]
+  },
+  {
+    title: 'Core Concepts',
+    links: [
+      { href: '/axon/docs/type-system', label: 'Type System' },
+      { href: '/axon/docs/compression', label: 'Compression' },
+      { href: '/axon/docs/encoding-modes', label: 'Encoding Modes' },
+    ]
+  },
+  {
+    title: 'Advanced',
+    links: [
+      { href: '/axon/docs/schemas', label: 'Schema System' },
+      { href: '/axon/docs/query-hints', label: 'Query Hints' },
+      { href: '/axon/docs/performance', label: 'Performance' },
+    ]
+  },
+  {
+    title: 'Resources',
+    links: [
+      { href: '/axon/docs/best-practices', label: 'Best Practices' },
+      { href: '/axon/docs/examples', label: 'Examples' },
+    ]
+  }
+];
+---
+
+<aside class="w-64 flex-shrink-0 sticky top-24 self-start hidden lg:block">
+  <nav class="space-y-8 bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm">
+    {sections.map(section => (
+      <div>
+        <h3 class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-3">
+          {section.title}
+        </h3>
+        <ul class="space-y-1">
+          {section.links.map(link => (
+            <li>
+              <a
+                href={link.href}
+                class:list={[
+                  "block py-2 px-3 text-sm transition-all rounded-md",
+                  currentPath === link.href
+                    ? "bg-primary-100 dark:bg-primary-900/40 text-gray-900 dark:text-gray-100 font-semibold"
+                    : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800"
+                ]}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </nav>
+
+  <!-- Mobile Menu Toggle (shown on mobile) -->
+  <button
+    id="mobile-docs-toggle"
+    class="lg:hidden fixed bottom-6 right-6 z-50 p-4 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 rounded-full shadow-lg"
+  >
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+    </svg>
+  </button>
+</aside>
+
+<!-- Mobile Sidebar Overlay -->
+<div id="mobile-docs-sidebar" class="lg:hidden fixed inset-0 bg-black/50 z-40 hidden">
+  <div class="absolute right-0 top-0 bottom-0 w-64 bg-white dark:bg-gray-900 p-6 overflow-y-auto">
+    <button id="close-mobile-docs" class="absolute top-4 right-4 text-gray-600 dark:text-gray-400">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+
+    <nav class="space-y-8 mt-12">
+      {sections.map(section => (
+        <div>
+          <h3 class="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-3">
+            {section.title}
+          </h3>
+          <ul class="space-y-2">
+            {section.links.map(link => (
+              <li>
+                <a
+                  href={link.href}
+                  class:list={[
+                    "block py-1 text-sm transition-colors",
+                    currentPath === link.href
+                      ? "text-gray-900 dark:text-gray-100 font-semibold"
+                      : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100"
+                  ]}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </nav>
+  </div>
+</div>
+
+<script>
+  const toggle = document.getElementById('mobile-docs-toggle');
+  const sidebar = document.getElementById('mobile-docs-sidebar');
+  const close = document.getElementById('close-mobile-docs');
+
+  toggle?.addEventListener('click', () => {
+    sidebar?.classList.remove('hidden');
+  });
+
+  close?.addEventListener('click', () => {
+    sidebar?.classList.add('hidden');
+  });
+
+  sidebar?.addEventListener('click', (e) => {
+    if (e.target === sidebar) {
+      sidebar.classList.add('hidden');
+    }
+  });
+</script>

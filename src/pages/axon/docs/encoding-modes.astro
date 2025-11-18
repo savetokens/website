@@ -1,0 +1,96 @@
+---
+import DocsLayout from '../../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout title="Encoding Modes - AXON Documentation | SaveTokens">
+  <div class="not-prose mb-12">
+    <a
+      href="/axon"
+      class="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors text-sm mb-8"
+    >
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+      </svg>
+      Back to AXON
+    </a>
+
+    <h1 class="text-5xl font-bold mb-4 text-gray-900 dark:text-gray-100">Encoding Modes</h1>
+    <p class="text-xl text-gray-600 dark:text-gray-400 leading-relaxed">
+      AXON automatically selects the optimal encoding mode based on your data structure
+    </p>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-6 my-8 not-prose">
+    <div class="bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+      <span class="px-3 py-1 bg-primary-100 dark:bg-primary-800 text-primary-800 dark:text-primary-200 rounded text-xs font-bold">COMPACT</span>
+      <h3 class="text-xl font-bold mt-4 mb-2">Compact Mode</h3>
+      <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">Default for uniform arrays</p>
+      <p class="text-gray-700 dark:text-gray-300 text-sm">
+        CSV-like columnar format with type annotations. Best for arrays of similar objects.
+      </p>
+    </div>
+
+    <div class="bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+      <span class="px-3 py-1 bg-accent-100 dark:bg-accent-800 text-accent-800 dark:text-accent-200 rounded text-xs font-bold">NESTED</span>
+      <h3 class="text-xl font-bold mt-4 mb-2">Nested Mode</h3>
+      <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">For complex hierarchies</p>
+      <p class="text-gray-700 dark:text-gray-300 text-sm">
+        Handles objects with arbitrary nesting depth while maintaining compression benefits.
+      </p>
+    </div>
+
+    <div class="bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+      <span class="px-3 py-1 bg-highlight-100 dark:bg-highlight-800 text-highlight-800 dark:text-highlight-200 rounded text-xs font-bold">COLUMNAR</span>
+      <h3 class="text-xl font-bold mt-4 mb-2">Columnar Mode</h3>
+      <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">For large datasets (1000+ rows)</p>
+      <p class="text-gray-700 dark:text-gray-300 text-sm">
+        Column-oriented storage optimized for analytics and large tables.
+      </p>
+    </div>
+
+    <div class="bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+      <span class="px-3 py-1 bg-primary-100 dark:bg-primary-800 text-primary-800 dark:text-primary-200 rounded text-xs font-bold">STREAM</span>
+      <h3 class="text-xl font-bold mt-4 mb-2">Stream Mode</h3>
+      <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">For time-series data</p>
+      <p class="text-gray-700 dark:text-gray-300 text-sm">
+        Optimized for sequential data with temporal ordering. Applies delta encoding automatically.
+      </p>
+    </div>
+
+    <div class="bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+      <span class="px-3 py-1 bg-accent-100 dark:bg-accent-800 text-accent-800 dark:text-accent-200 rounded text-xs font-bold">SPARSE</span>
+      <h3 class="text-xl font-bold mt-4 mb-2">Sparse Mode</h3>
+      <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">For data with >50% nulls</p>
+      <p class="text-gray-700 dark:text-gray-300 text-sm">
+        Only stores non-null values with position indices, dramatically reducing size.
+      </p>
+    </div>
+
+    <div class="bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+      <span class="px-3 py-1 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded text-xs font-bold">JSON</span>
+      <h3 class="text-xl font-bold mt-4 mb-2">JSON Fallback</h3>
+      <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">For irregular data</p>
+      <p class="text-gray-700 dark:text-gray-300 text-sm">
+        Falls back to JSON for highly irregular data where compression wouldn't help.
+      </p>
+    </div>
+  </div>
+
+  <h2>Mode Selection Example</h2>
+  <p>You can check which mode AXON would recommend for your data:</p>
+
+  <pre><code set:html={`<span class="text-purple-400">import</span> { getModeRecommendation } <span class="text-purple-400">from</span> <span class="text-green-400">'@axon-format/core'</span>;
+
+<span class="text-purple-400">const</span> data = { <span class="text-gray-500">/* your data */</span> };
+<span class="text-purple-400">const</span> recommendation = getModeRecommendation(data);
+
+console.log(recommendation.mode);   <span class="text-gray-500">// 'columnar'</span>
+console.log(recommendation.reason); <span class="text-gray-500">// Explanatory text</span>`} /></pre>
+
+  <div class="bg-primary-50 dark:bg-primary-900/20 p-6 rounded-lg my-8 border-l-4 border-primary-500 not-prose">
+    <p class="text-sm text-gray-700 dark:text-gray-300 m-0">
+      <strong>Best Practice:</strong> Let AXON choose the mode automatically. Manual override is rarely
+      needed and may reduce compression effectiveness.
+    </p>
+  </div>
+</DocsLayout>

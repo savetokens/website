@@ -1,0 +1,115 @@
+---
+---
+
+<section id="mission" class="py-20 px-4 bg-gray-50 dark:bg-gray-800">
+  <div class="max-w-4xl mx-auto">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl md:text-5xl font-bold mb-6">Our Mission</h2>
+      <p class="text-xl text-gray-600 dark:text-gray-400">
+        Building a future where every token counts
+      </p>
+    </div>
+
+    <!-- Philosophy -->
+    <div class="prose prose-lg dark:prose-invert mx-auto mb-16">
+      <div class="bg-white dark:bg-gray-900 rounded-lg p-8 shadow-lg mb-8">
+        <h3 class="text-2xl font-bold mb-4">Why We Exist</h3>
+        <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+          Large Language Models are transforming how we build software, but they come with a hidden cost:
+          every interaction is measured in tokens. Traditional data formats like JSON were designed for
+          human readability and machine parsing—not for token efficiency.
+        </p>
+        <p class="text-gray-700 dark:text-gray-300 leading-relaxed mt-4">
+          We believe developers shouldn't have to choose between clarity and cost. Our mission is to
+          create tools that rescue tokens from inefficient formats, enabling more powerful AI applications
+          without breaking the bank.
+        </p>
+      </div>
+    </div>
+
+    <!-- Context Rot Section -->
+    <div class="bg-gradient-to-br from-highlight-50 to-primary-50 dark:from-highlight-900/20 dark:to-primary-900/20 rounded-lg p-8 shadow-xl mb-12 border border-highlight-200 dark:border-highlight-800">
+      <div class="flex items-start gap-4 mb-6">
+        <div class="flex-shrink-0 w-12 h-12 bg-highlight-100 dark:bg-highlight-800 rounded-lg flex items-center justify-center">
+          <svg class="w-6 h-6 text-highlight-700 dark:text-highlight-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+          </svg>
+        </div>
+        <div class="flex-1">
+          <h3 class="text-2xl font-bold mb-3 text-gray-900 dark:text-gray-100">The Context Rot Problem</h3>
+          <p class="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+            As LLMs process more input tokens, their performance degrades—a phenomenon researchers call
+            <strong>"context rot"</strong> or "lost in the middle." Models struggle to maintain attention
+            across long contexts, leading to:
+          </p>
+          <ul class="space-y-2 text-gray-700 dark:text-gray-300">
+            <li class="flex gap-2">
+              <span class="text-highlight-600 dark:text-highlight-400 font-bold">•</span>
+              <span><strong>Degraded accuracy:</strong> Critical information gets overlooked in long prompts</span>
+            </li>
+            <li class="flex gap-2">
+              <span class="text-highlight-600 dark:text-highlight-400 font-bold">•</span>
+              <span><strong>Slower responses:</strong> More tokens mean longer processing times</span>
+            </li>
+            <li class="flex gap-2">
+              <span class="text-highlight-600 dark:text-highlight-400 font-bold">•</span>
+              <span><strong>Higher costs:</strong> You pay for every token, even redundant ones</span>
+            </li>
+            <li class="flex gap-2">
+              <span class="text-highlight-600 dark:text-highlight-400 font-bold">•</span>
+              <span><strong>Context limits:</strong> Inefficient formats force you to omit important data</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-6 p-4 bg-white/50 dark:bg-gray-900/50 rounded-lg border-l-4 border-highlight-600 dark:border-highlight-500">
+        <p class="text-sm text-gray-700 dark:text-gray-300 italic">
+          <strong>Research insight:</strong> Studies show that LLM performance can drop by 10-30% when
+          critical information is buried in the middle of long contexts. Reducing total token count while
+          maintaining information density is crucial for optimal performance.
+        </p>
+      </div>
+    </div>
+
+    <!-- Solution Approach -->
+    <div class="bg-white dark:bg-gray-900 rounded-lg p-8 shadow-lg border border-gray-200 dark:border-gray-800">
+      <h3 class="text-2xl font-bold mb-6 text-center">Our Approach</h3>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="text-center">
+          <div class="w-16 h-16 bg-accent-100 dark:bg-accent-800 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-accent-700 dark:text-accent-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            </svg>
+          </div>
+          <h4 class="font-bold mb-2">Compress</h4>
+          <p class="text-sm text-gray-600 dark:text-gray-400">
+            Remove redundancy without losing information
+          </p>
+        </div>
+        <div class="text-center">
+          <div class="w-16 h-16 bg-primary-100 dark:bg-primary-800 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-primary-700 dark:text-primary-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+            </svg>
+          </div>
+          <h4 class="font-bold mb-2">Validate</h4>
+          <p class="text-sm text-gray-600 dark:text-gray-400">
+            Ensure data integrity with strong type systems
+          </p>
+        </div>
+        <div class="text-center">
+          <div class="w-16 h-16 bg-highlight-100 dark:bg-highlight-800 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-highlight-700 dark:text-highlight-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path>
+            </svg>
+          </div>
+          <h4 class="font-bold mb-2">Optimize</h4>
+          <p class="text-sm text-gray-600 dark:text-gray-400">
+            Adapt encoding to your data patterns
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

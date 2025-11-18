@@ -1,0 +1,128 @@
+---
+---
+
+<section class="py-20 px-4">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-12">
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">Get Started in Seconds</h2>
+      <p class="text-xl text-gray-600 dark:text-gray-400">
+        Simple API, powerful compression
+      </p>
+    </div>
+
+    <div class="space-y-8">
+      <!-- Installation -->
+      <div class="bg-white dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden">
+        <div class="bg-gray-900 dark:bg-gray-950 text-white px-4 py-3">
+          <span class="font-semibold">Installation</span>
+        </div>
+        <div class="p-4 bg-gray-50 dark:bg-gray-800">
+          <pre class="font-mono text-sm text-gray-900 dark:text-gray-100"><code>npm install @axon-format/core</code></pre>
+        </div>
+      </div>
+
+      <!-- Basic Usage -->
+      <div class="bg-white dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden">
+        <div class="bg-gray-900 dark:bg-gray-950 text-white px-4 py-3">
+          <span class="font-semibold">Basic Usage</span>
+        </div>
+        <div class="p-4 bg-gray-50 dark:bg-gray-800">
+          <pre class="font-mono text-sm text-gray-900 dark:text-gray-100 overflow-x-auto"><code set:html={`<span class="text-purple-600 dark:text-purple-400">import</span> { encode, decode } <span class="text-purple-600 dark:text-purple-400">from</span> <span class="text-green-600 dark:text-green-400">'@axon-format/core'</span>;
+
+<span class="text-gray-500 dark:text-gray-500">// Your data</span>
+<span class="text-purple-600 dark:text-purple-400">const</span> data = {
+  users: [
+    { name: <span class="text-green-600 dark:text-green-400">"Alice"</span>, age: <span class="text-blue-600 dark:text-blue-400">30</span>, active: <span class="text-blue-600 dark:text-blue-400">true</span> },
+    { name: <span class="text-green-600 dark:text-green-400">"Bob"</span>, age: <span class="text-blue-600 dark:text-blue-400">30</span>, active: <span class="text-blue-600 dark:text-blue-400">true</span> },
+    { name: <span class="text-green-600 dark:text-green-400">"Carol"</span>, age: <span class="text-blue-600 dark:text-blue-400">30</span>, active: <span class="text-blue-600 dark:text-blue-400">true</span> }
+  ]
+};
+
+<span class="text-gray-500 dark:text-gray-500">// Encode to AXON (saves 60-95% tokens)</span>
+<span class="text-purple-600 dark:text-purple-400">const</span> encoded = encode(data);
+
+<span class="text-gray-500 dark:text-gray-500">// Send to LLM...</span>
+<span class="text-purple-600 dark:text-purple-400">const</span> response = <span class="text-purple-600 dark:text-purple-400">await</span> sendToLLM(encoded);
+
+<span class="text-gray-500 dark:text-gray-500">// Decode back to original</span>
+<span class="text-purple-600 dark:text-purple-400">const</span> decoded = decode(response);`} /></pre>
+        </div>
+      </div>
+
+      <!-- Advanced Example -->
+      <div class="bg-white dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden">
+        <div class="bg-gray-900 dark:bg-gray-950 text-white px-4 py-3">
+          <span class="font-semibold">With Schema Validation</span>
+        </div>
+        <div class="p-4 bg-gray-50 dark:bg-gray-800">
+          <pre class="font-mono text-sm text-gray-900 dark:text-gray-100 overflow-x-auto"><code set:html={`<span class="text-purple-600 dark:text-purple-400">import</span> { encode, decode, defineSchema } <span class="text-purple-600 dark:text-purple-400">from</span> <span class="text-green-600 dark:text-green-400">'@axon-format/core'</span>;
+
+<span class="text-gray-500 dark:text-gray-500">// Define schema with types</span>
+<span class="text-purple-600 dark:text-purple-400">const</span> userSchema = defineSchema({
+  name: <span class="text-green-600 dark:text-green-400">'string'</span>,
+  age: <span class="text-green-600 dark:text-green-400">'u8'</span>,
+  email: <span class="text-green-600 dark:text-green-400">'string'</span>,
+  verified: <span class="text-green-600 dark:text-green-400">'bool'</span>
+});
+
+<span class="text-gray-500 dark:text-gray-500">// Encode with validation</span>
+<span class="text-purple-600 dark:text-purple-400">const</span> encoded = encode(userData, { schema: userSchema });
+
+<span class="text-gray-500 dark:text-gray-500">// Type-safe decode</span>
+<span class="text-purple-600 dark:text-purple-400">const</span> decoded = decode(encoded, { schema: userSchema });`} /></pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Key Features List -->
+    <div class="mt-12 grid md:grid-cols-2 gap-6">
+      <div class="flex gap-4">
+        <div class="flex-shrink-0 w-8 h-8 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center">
+          <svg class="w-5 h-5 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+          </svg>
+        </div>
+        <div>
+          <h3 class="font-semibold text-lg mb-1">Drop-in Replacement</h3>
+          <p class="text-gray-600 dark:text-gray-400">Works with your existing JSON data structures</p>
+        </div>
+      </div>
+
+      <div class="flex gap-4">
+        <div class="flex-shrink-0 w-8 h-8 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center">
+          <svg class="w-5 h-5 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+          </svg>
+        </div>
+        <div>
+          <h3 class="font-semibold text-lg mb-1">Type Safe</h3>
+          <p class="text-gray-600 dark:text-gray-400">13 validated types with schema support</p>
+        </div>
+      </div>
+
+      <div class="flex gap-4">
+        <div class="flex-shrink-0 w-8 h-8 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center">
+          <svg class="w-5 h-5 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+          </svg>
+        </div>
+        <div>
+          <h3 class="font-semibold text-lg mb-1">Battle Tested</h3>
+          <p class="text-gray-600 dark:text-gray-400">93% test coverage, 342 passing tests</p>
+        </div>
+      </div>
+
+      <div class="flex gap-4">
+        <div class="flex-shrink-0 w-8 h-8 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center">
+          <svg class="w-5 h-5 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+          </svg>
+        </div>
+        <div>
+          <h3 class="font-semibold text-lg mb-1">Open Source</h3>
+          <p class="text-gray-600 dark:text-gray-400">MIT licensed, community-driven</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,127 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import InteractiveDemo from '../../components/InteractiveDemo.astro';
+import CodeExamples from '../../components/CodeExamples.astro';
+import CostCalculator from '../../components/CostCalculator.astro';
+import Features from '../../components/Features.astro';
+import Footer from '../../components/Footer.astro';
+---
+
+<Layout title="AXON - Adaptive eXchange Oriented Notation | SaveTokens">
+  <!-- Hero Section -->
+  <section class="min-h-screen flex items-center justify-center px-4 py-20 pt-32">
+    <div class="max-w-6xl mx-auto text-center">
+      <!-- Back Link -->
+      <div class="mb-12">
+        <a
+          href="/"
+          class="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+          </svg>
+          Back to SaveTokens
+        </a>
+      </div>
+
+      <!-- Main Headline -->
+      <h1 class="text-5xl md:text-7xl font-bold mb-6 text-gray-900 dark:text-gray-100">
+        AXON
+      </h1>
+
+      <!-- Subtitle -->
+      <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-400 mb-4">
+        Adaptive eXchange Oriented Notation
+      </p>
+
+      <!-- Description -->
+      <p class="text-lg md:text-xl text-gray-500 dark:text-gray-500 mb-12 max-w-3xl mx-auto">
+        The next-generation data serialization format engineered for LLM interactions.
+        Save up to 95% on token costs without sacrificing type safety or validation.
+      </p>
+
+      <!-- CTA Buttons -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
+        <a
+          href="/axon/docs"
+          class="px-8 py-4 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 rounded-lg font-semibold hover:bg-gray-800 dark:hover:bg-gray-200 transition-all duration-200 transform hover:scale-105 shadow-lg"
+        >
+          Read Documentation
+        </a>
+        <a
+          href="https://github.com/savetokens/axon"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="px-8 py-4 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-2 border-gray-900 dark:border-gray-100 rounded-lg font-semibold hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200 flex items-center gap-2"
+        >
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+            <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path>
+          </svg>
+          GitHub
+        </a>
+        <a
+          href="#demo"
+          class="px-8 py-4 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-2 border-gray-300 dark:border-gray-600 rounded-lg font-semibold hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200"
+        >
+          Try Demo
+        </a>
+      </div>
+
+      <!-- Key Stats -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+        <div class="p-6 bg-gray-50 dark:bg-gray-800 rounded-lg">
+          <div class="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-2">60-95%</div>
+          <div class="text-gray-600 dark:text-gray-400">Token Reduction</div>
+        </div>
+        <div class="p-6 bg-gray-50 dark:bg-gray-800 rounded-lg">
+          <div class="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-2">204x</div>
+          <div class="text-gray-600 dark:text-gray-400">More Efficient for Repeated Data</div>
+        </div>
+        <div class="p-6 bg-gray-50 dark:bg-gray-800 rounded-lg">
+          <div class="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-2">93%</div>
+          <div class="text-gray-600 dark:text-gray-400">Test Coverage</div>
+        </div>
+      </div>
+
+      <!-- Scroll Indicator -->
+      <div class="mt-16 animate-bounce">
+        <svg
+          class="w-6 h-6 mx-auto text-gray-400"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 14l-7 7m0 0l-7-7m7 7V3"
+          ></path>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <InteractiveDemo />
+  <CodeExamples />
+  <CostCalculator />
+  <Features />
+
+  <!-- Documentation CTA -->
+  <section class="py-20 px-4 bg-gray-50 dark:bg-gray-800">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">Ready to Dive Deeper?</h2>
+      <p class="text-lg text-gray-600 dark:text-gray-400 mb-8">
+        Explore comprehensive documentation, API reference, and advanced usage guides
+      </p>
+      <a
+        href="/axon/docs"
+        class="inline-block px-8 py-4 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 rounded-lg font-semibold hover:bg-gray-800 dark:hover:bg-gray-200 transition-all duration-200 transform hover:scale-105 shadow-lg"
+      >
+        View Complete Documentation
+      </a>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>

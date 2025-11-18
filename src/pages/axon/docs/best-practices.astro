@@ -1,0 +1,39 @@
+---
+import DocsLayout from '../../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout title="Best Practices - AXON Documentation | SaveTokens">
+  <div class="not-prose mb-12">
+    <a href="/axon" class="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors text-sm mb-8">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+      </svg>
+      Back to AXON
+    </a>
+
+    <h1 class="text-5xl font-bold mb-4 text-gray-900 dark:text-gray-100">Best Practices</h1>
+    <p class="text-xl text-gray-600 dark:text-gray-400 leading-relaxed">Guidelines for optimal AXON usage</p>
+  </div>
+
+  <h2>✓ Use Schemas for Validation</h2>
+  <p>Define schemas to catch type errors before sending data to expensive LLM APIs.</p>
+  <pre><code set:html={`<span class="text-purple-400">const</span> schema = defineSchema({ id: <span class="text-green-400">'u8'</span>, name: <span class="text-green-400">'str'</span> });
+<span class="text-purple-400">const</span> encoded = encode(data, { schema }); <span class="text-gray-500">// Validates first!</span>`} /></pre>
+
+  <h2>✓ Let AXON Choose the Mode</h2>
+  <p>
+    The automatic mode selection is optimized through extensive testing. Manual override rarely improves results.
+  </p>
+
+  <h2>✓ Add Query Hints for Complex Data</h2>
+  <p>Help LLMs understand relationships and primary keys to improve accuracy in responses.</p>
+
+  <h2>✓ Compress Structured Data, Not Prose</h2>
+  <p>AXON excels at structured/tabular data. Natural language text should remain as-is.</p>
+
+  <h2>✗ Don't Over-Optimize</h2>
+  <p>For small payloads (under 100 tokens), the overhead isn't worth it. Use AXON for larger datasets.</p>
+
+  <h2>✗ Don't Skip Validation</h2>
+  <p>Type validation catches errors early. It's worth the tiny performance cost.</p>
+</DocsLayout>

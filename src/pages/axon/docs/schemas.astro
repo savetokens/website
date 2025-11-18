@@ -1,0 +1,59 @@
+---
+import DocsLayout from '../../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout title="Schema System - AXON Documentation | SaveTokens">
+  <div class="not-prose mb-12">
+    <a href="/axon" class="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors text-sm mb-8">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+      </svg>
+      Back to AXON
+    </a>
+
+    <h1 class="text-5xl font-bold mb-4 text-gray-900 dark:text-gray-100">Schema System</h1>
+    <p class="text-xl text-gray-600 dark:text-gray-400 leading-relaxed">Define reusable, validated data structures</p>
+  </div>
+
+  <h2>Defining Schemas</h2>
+  <pre><code set:html={`<span class="text-purple-400">import</span> { defineSchema, encode } <span class="text-purple-400">from</span> <span class="text-green-400">'@axon-format/core'</span>;
+
+<span class="text-purple-400">const</span> userSchema = defineSchema({
+  id: <span class="text-green-400">'u8'</span>,
+  name: <span class="text-green-400">'str'</span>,
+  email: <span class="text-green-400">'str'</span>,
+  verified: <span class="text-green-400">'bool'</span>,
+  createdAt: <span class="text-green-400">'iso8601'</span>
+});`} /></pre>
+
+  <h2>Schema Inheritance</h2>
+  <pre><code set:html={`<span class="text-gray-500">// Base schema</span>
+<span class="text-purple-400">const</span> userSchema = defineSchema({
+  id: <span class="text-green-400">'u8'</span>,
+  name: <span class="text-green-400">'str'</span>,
+  email: <span class="text-green-400">'str'</span>
+});
+
+<span class="text-gray-500">// Extended schema</span>
+<span class="text-purple-400">const</span> adminSchema = defineSchema({
+  ...userSchema,
+  permissions: <span class="text-green-400">'str[]'</span>,
+  level: <span class="text-green-400">'u8'</span>
+});`} /></pre>
+
+  <h2>Using Schemas</h2>
+  <pre><code set:html={`<span class="text-purple-400">const</span> data = [
+  { id: <span class="text-blue-400">1</span>, name: <span class="text-green-400">"Alice"</span>, email: <span class="text-green-400">"alice@example.com"</span>, verified: <span class="text-blue-400">true</span> }
+];
+
+<span class="text-gray-500">// Encode with schema validation</span>
+<span class="text-purple-400">const</span> encoded = encode(data, { schema: userSchema });`} /></pre>
+
+  <h2>Benefits</h2>
+  <ul>
+    <li><strong>Type safety:</strong> Catch errors before expensive API calls</li>
+    <li><strong>Reusability:</strong> Define once, use across your application</li>
+    <li><strong>Documentation:</strong> Schemas serve as inline documentation</li>
+    <li><strong>Validation:</strong> Automatic data validation on encode/decode</li>
+  </ul>
+</DocsLayout>

@@ -1,0 +1,105 @@
+---
+import DocsLayout from '../../../layouts/DocsLayout.astro';
+---
+
+<DocsLayout title="AXON Documentation | SaveTokens">
+  <div class="not-prose mb-12">
+    <a
+      href="/axon"
+      class="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors text-sm mb-8"
+    >
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+      </svg>
+      Back to AXON
+    </a>
+
+    <h1 class="text-5xl font-bold mb-4 text-gray-900 dark:text-gray-100">AXON Documentation</h1>
+    <p class="text-xl text-gray-600 dark:text-gray-400 leading-relaxed">
+      Complete guide to using AXON for token-efficient LLM interactions
+    </p>
+  </div>
+
+  <h2>What is AXON?</h2>
+  <p>
+    AXON (Adaptive eXchange Oriented Notation) is a data serialization format designed specifically
+    for Large Language Model interactions. It achieves <strong>60-95% token reduction</strong> compared
+    to JSON while maintaining type safety, validation, and the flexibility to handle complex nested structures.
+  </p>
+  <p>
+    Unlike traditional formats optimized for human readability or machine parsing, AXON optimizes for
+    the <strong>token economy</strong> of LLM APIs, making your AI applications more cost-effective and
+    performant by reducing context rot.
+  </p>
+
+  <div class="bg-primary-50 dark:bg-primary-900/20 p-6 rounded-lg my-6 border-l-4 border-primary-500 not-prose">
+    <p class="text-sm text-gray-700 dark:text-gray-300 m-0">
+      <strong>Key Insight:</strong> AXON combines CSV's compactness with JSON's flexibility. For typical
+      datasets, it matches or beats CSV while adding type annotations and validation that neither JSON nor CSV provide.
+    </p>
+  </div>
+
+  <h2>Key Features</h2>
+  <ul>
+    <li><strong>60-95% token reduction</strong> versus JSON</li>
+    <li><strong>13 validated types</strong> including u8, i32, f64, bool, iso8601, uuid, enum</li>
+    <li><strong>5 compression algorithms</strong> automatically applied based on data patterns</li>
+    <li><strong>6 adaptive modes</strong> for different data structures</li>
+    <li><strong>Schema system</strong> with inheritance and validation</li>
+    <li><strong>Query hints</strong> to optimize LLM understanding</li>
+    <li><strong>93.51% test coverage</strong> with 342 passing tests</li>
+  </ul>
+
+  <h2>When to Use AXON</h2>
+  <p>Choose AXON when you need:</p>
+  <ul>
+    <li><strong>Token efficiency</strong> for LLM API calls</li>
+    <li><strong>Type validation</strong> before sending data to expensive APIs</li>
+    <li><strong>Compression</strong> on patterned or structured data</li>
+    <li><strong>Nested object support</strong> that CSV cannot provide</li>
+  </ul>
+
+  <div class="bg-accent-50 dark:bg-accent-900/20 p-6 rounded-lg my-6 border-l-4 border-accent-500 not-prose">
+    <p class="text-sm text-gray-700 dark:text-gray-300 m-0">
+      <strong>Note:</strong> JSON remains appropriate for simple, unstructured data where human readability
+      matters more than token count. AXON excels at structured, tabular, or repetitive data.
+    </p>
+  </div>
+
+  <div class="not-prose mt-16 p-8 bg-gradient-to-br from-primary-50 to-accent-50 dark:from-primary-900/20 dark:to-accent-900/20 rounded-2xl border border-primary-200 dark:border-primary-800">
+    <h2 class="text-2xl font-bold mb-6 text-gray-900 dark:text-gray-100">Next Steps</h2>
+    <div class="grid md:grid-cols-2 gap-4">
+      <a href="/axon/docs/installation" class="group block p-6 bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-primary-300 dark:hover:border-primary-700 transition-all hover:shadow-lg">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="text-2xl font-bold text-primary-600 dark:text-primary-400">1</span>
+          <h3 class="text-lg font-bold text-gray-900 dark:text-gray-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">Installation</h3>
+        </div>
+        <p class="text-sm text-gray-600 dark:text-gray-400">Install the NPM package or CLI tool</p>
+      </a>
+
+      <a href="/axon/docs/quick-start" class="group block p-6 bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-primary-300 dark:hover:border-primary-700 transition-all hover:shadow-lg">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="text-2xl font-bold text-primary-600 dark:text-primary-400">2</span>
+          <h3 class="text-lg font-bold text-gray-900 dark:text-gray-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">Quick Start</h3>
+        </div>
+        <p class="text-sm text-gray-600 dark:text-gray-400">Encode your first data structure</p>
+      </a>
+
+      <a href="/axon/docs/type-system" class="group block p-6 bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-primary-300 dark:hover:border-primary-700 transition-all hover:shadow-lg">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="text-2xl font-bold text-primary-600 dark:text-primary-400">3</span>
+          <h3 class="text-lg font-bold text-gray-900 dark:text-gray-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">Type System</h3>
+        </div>
+        <p class="text-sm text-gray-600 dark:text-gray-400">Explore 13 validated types</p>
+      </a>
+
+      <a href="/axon/docs/compression" class="group block p-6 bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-primary-300 dark:hover:border-primary-700 transition-all hover:shadow-lg">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="text-2xl font-bold text-primary-600 dark:text-primary-400">4</span>
+          <h3 class="text-lg font-bold text-gray-900 dark:text-gray-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">Compression</h3>
+        </div>
+        <p class="text-sm text-gray-600 dark:text-gray-400">Learn about 5 compression algorithms</p>
+      </a>
+    </div>
+  </div>
+</DocsLayout>
