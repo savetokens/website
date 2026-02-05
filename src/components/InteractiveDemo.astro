@@ -55,21 +55,27 @@
     <div class="mt-6 flex flex-wrap gap-3 justify-center">
       <button
         class="example-btn px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-        data-example='{"users": [{"name": "Alice", "age": 30, "active": true}, {"name": "Bob", "age": 30, "active": true}, {"name": "Carol", "age": 30, "active": true}]}'
+        data-example='{"users": [{"id": 1001, "name": "Alice Chen", "email": "alice@company.com", "role": "admin", "department": "Engineering", "active": true, "verified": true}, {"id": 1002, "name": "Bob Smith", "email": "bob@company.com", "role": "user", "department": "Engineering", "active": true, "verified": true}, {"id": 1003, "name": "Carol Johnson", "email": "carol@company.com", "role": "user", "department": "Engineering", "active": true, "verified": true}, {"id": 1004, "name": "David Lee", "email": "david@company.com", "role": "user", "department": "Engineering", "active": true, "verified": false}, {"id": 1005, "name": "Eva Martinez", "email": "eva@company.com", "role": "user", "department": "Sales", "active": true, "verified": true}, {"id": 1006, "name": "Frank Wilson", "email": "frank@company.com", "role": "user", "department": "Sales", "active": true, "verified": true}, {"id": 1007, "name": "Grace Kim", "email": "grace@company.com", "role": "manager", "department": "Sales", "active": true, "verified": true}, {"id": 1008, "name": "Henry Brown", "email": "henry@company.com", "role": "user", "department": "Marketing", "active": false, "verified": true}]}'
       >
-        Try: Repeated Values
+        API Response
       </button>
       <button
         class="example-btn px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-        data-example='{"items": [{"id": 1, "price": 10.50}, {"id": 2, "price": 10.55}, {"id": 3, "price": 10.60}]}'
+        data-example='{"events": [{"timestamp": 1706745600, "userId": "u_8x7k2", "event": "page_view", "page": "/dashboard", "duration": 45}, {"timestamp": 1706745601, "userId": "u_8x7k2", "event": "click", "page": "/dashboard", "duration": 2}, {"timestamp": 1706745602, "userId": "u_8x7k2", "event": "page_view", "page": "/settings", "duration": 30}, {"timestamp": 1706745603, "userId": "u_8x7k2", "event": "click", "page": "/settings", "duration": 1}, {"timestamp": 1706745604, "userId": "u_8x7k2", "event": "page_view", "page": "/profile", "duration": 60}, {"timestamp": 1706745605, "userId": "u_8x7k2", "event": "click", "page": "/profile", "duration": 3}, {"timestamp": 1706745606, "userId": "u_8x7k2", "event": "page_view", "page": "/billing", "duration": 90}, {"timestamp": 1706745607, "userId": "u_8x7k2", "event": "click", "page": "/billing", "duration": 5}, {"timestamp": 1706745608, "userId": "u_8x7k2", "event": "purchase", "page": "/billing", "duration": 120}, {"timestamp": 1706745609, "userId": "u_8x7k2", "event": "page_view", "page": "/confirmation", "duration": 15}]}'
       >
-        Try: Sequential Numbers
+        Analytics Events
       </button>
       <button
         class="example-btn px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-        data-example='{"flags": [true, true, false, true, false, false, true, true]}'
+        data-example='{"products": [{"sku": "LAPTOP-001", "name": "MacBook Pro 14\"", "price": 1999.00, "category": "Electronics", "inStock": true, "rating": 4.8}, {"sku": "LAPTOP-002", "name": "MacBook Air M3", "price": 1299.00, "category": "Electronics", "inStock": true, "rating": 4.7}, {"sku": "LAPTOP-003", "name": "Dell XPS 15", "price": 1799.00, "category": "Electronics", "inStock": true, "rating": 4.5}, {"sku": "PHONE-001", "name": "iPhone 15 Pro", "price": 999.00, "category": "Electronics", "inStock": true, "rating": 4.6}, {"sku": "PHONE-002", "name": "Samsung Galaxy S24", "price": 899.00, "category": "Electronics", "inStock": false, "rating": 4.4}, {"sku": "TABLET-001", "name": "iPad Pro 12.9\"", "price": 1099.00, "category": "Electronics", "inStock": true, "rating": 4.9}, {"sku": "WATCH-001", "name": "Apple Watch Ultra", "price": 799.00, "category": "Electronics", "inStock": true, "rating": 4.7}, {"sku": "AUDIO-001", "name": "AirPods Pro 2", "price": 249.00, "category": "Electronics", "inStock": true, "rating": 4.8}]}'
       >
-        Try: Booleans
+        Product Catalog
+      </button>
+      <button
+        class="example-btn px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+        data-example='{"messages": [{"role": "system", "content": "You are a helpful coding assistant.", "timestamp": 1706745600}, {"role": "user", "content": "How do I read a file in Python?", "timestamp": 1706745610}, {"role": "assistant", "content": "You can use the open() function with a context manager.", "timestamp": 1706745615}, {"role": "user", "content": "Can you show me an example?", "timestamp": 1706745625}, {"role": "assistant", "content": "Here is an example using with open()...", "timestamp": 1706745630}, {"role": "user", "content": "What about writing to a file?", "timestamp": 1706745650}, {"role": "assistant", "content": "For writing, use open() with mode w or a.", "timestamp": 1706745655}, {"role": "user", "content": "How do I handle encoding?", "timestamp": 1706745670}, {"role": "assistant", "content": "Pass encoding parameter like encoding=utf-8.", "timestamp": 1706745675}, {"role": "user", "content": "Thanks, that helps!", "timestamp": 1706745690}, {"role": "assistant", "content": "You are welcome! Let me know if you need more help.", "timestamp": 1706745695}]}'
+      >
+        Chat History
       </button>
       <button
         class="example-btn xml-example px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
