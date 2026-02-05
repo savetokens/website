@@ -6,7 +6,7 @@
     <div class="text-center mb-12">
       <h2 class="text-4xl md:text-5xl font-bold mb-4">See the Difference</h2>
       <p class="text-xl text-gray-600 dark:text-gray-400 mb-3">
-        Paste your JSON data and watch AXON compress it in real-time
+        Paste your JSON or XML data and watch AXON compress it in real-time
       </p>
       <p class="text-sm text-gray-500 dark:text-gray-500 italic">
         Note: This is a conceptual demonstration. Real AXON uses binary encoding and is more sophisticated.
@@ -14,10 +14,10 @@
     </div>
 
     <div class="grid md:grid-cols-2 gap-6">
-      <!-- JSON Input -->
+      <!-- Input -->
       <div class="bg-white dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden">
         <div class="bg-gray-900 dark:bg-gray-950 text-white px-4 py-3 flex justify-between items-center">
-          <span class="font-semibold">JSON Input</span>
+          <span id="input-label" class="font-semibold">JSON Input</span>
           <span id="json-tokens" class="text-sm text-gray-400">0 tokens</span>
         </div>
         <textarea
@@ -71,19 +71,67 @@
       >
         Try: Booleans
       </button>
+      <button
+        class="example-btn xml-example px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+        data-example='<?xml version="1.0" encoding="UTF-8"?>
+<catalog>
+  <product id="P001" category="electronics">
+    <name>Wireless Headphones</name>
+    <price currency="USD">149.99</price>
+    <stock>250</stock>
+    <rating>4.5</rating>
+  </product>
+  <product id="P002" category="electronics">
+    <name>Bluetooth Speaker</name>
+    <price currency="USD">79.99</price>
+    <stock>180</stock>
+    <rating>4.2</rating>
+  </product>
+  <product id="P003" category="electronics">
+    <name>USB-C Hub</name>
+    <price currency="USD">45.00</price>
+    <stock>320</stock>
+    <rating>4.7</rating>
+  </product>
+  <product id="P004" category="accessories">
+    <name>Phone Case</name>
+    <price currency="USD">25.00</price>
+    <stock>500</stock>
+    <rating>4.0</rating>
+  </product>
+  <product id="P005" category="accessories">
+    <name>Screen Protector</name>
+    <price currency="USD">15.00</price>
+    <stock>750</stock>
+    <rating>4.3</rating>
+  </product>
+</catalog>'
+        data-type="xml"
+      >
+        Try: XML Data
+      </button>
     </div>
   </div>
 </section>
 
 <script>
+  // Track current input type
+  let currentInputType: 'json' | 'xml' = 'json';
+
   // Simple token counter (approximates GPT tokenization)
   function countTokens(text: string): number {
     // Rough approximation: ~4 characters per token
     return Math.ceil(text.length / 4);
   }
 
-  // Simplified AXON encoder for demo purposes
-  function convertToAxon(jsonObj: any): string {
+  // Detect if input is XML
+  function isXml(text: string): boolean {
+    const trimmed = text.trim();
+    return trimmed.startsWith('<?xml') || trimmed.startsWith('<');
+  }
+
+  // Simplified AXON encoder for JSON demo purposes
+  function convertJsonToAxon(jsonObj: any): string {
     // NOTE: This is a conceptual demonstration, not the actual AXON format
     // Real AXON uses binary encoding and is more sophisticated
 
@@ -92,7 +140,7 @@
       let result = '';
       for (const [key, value] of Object.entries(jsonObj)) {
         if (Array.isArray(value)) {
-          result += `${key}:` + convertToAxon(value) + '\n';
+          result += `${key}:` + convertJsonToAxon(value) + '\n';
         } else {
           result += `${key}:${JSON.stringify(value)}\n`;
         }
@@ -163,6 +211,247 @@
     return JSON.stringify(jsonObj);
   }
 
+  // Simple XML parser for demo (extracts structure)
+  interface XmlElement {
+    name: string;
+    attrs: Record<string, string>;
+    children: (XmlElement | string)[];
+  }
+
+  function parseXmlSimple(xml: string): XmlElement | null {
+    // Remove XML declaration
+    const content = xml.replace(/<\?xml[^?]*\?>/g, '').trim();
+
+    // Simple recursive parser
+    function parseElement(str: string, startIdx: number): { element: XmlElement | null; endIdx: number } {
+      // Skip whitespace
+      while (startIdx < str.length && /\s/.test(str.charAt(startIdx))) startIdx++;
+
+      if (startIdx >= str.length || str.charAt(startIdx) !== '<') {
+        return { element: null, endIdx: startIdx };
+      }
+
+      // Find tag name
+      let idx = startIdx + 1;
+      let tagName = '';
+      while (idx < str.length && /[a-zA-Z0-9_:-]/.test(str.charAt(idx))) {
+        tagName += str.charAt(idx);
+        idx++;
+      }
+
+      if (!tagName) return { element: null, endIdx: startIdx };
+
+      // Parse attributes
+      const attrs: Record<string, string> = {};
+      while (idx < str.length && str.charAt(idx) !== '>' && str.charAt(idx) !== '/') {
+        // Skip whitespace
+        while (idx < str.length && /\s/.test(str.charAt(idx))) idx++;
+        if (str.charAt(idx) === '>' || str.charAt(idx) === '/') break;
+
+        // Get attribute name
+        let attrName = '';
+        while (idx < str.length && /[a-zA-Z0-9_:-]/.test(str.charAt(idx))) {
+          attrName += str.charAt(idx);
+          idx++;
+        }
+
+        if (attrName && str.charAt(idx) === '=') {
+          idx++; // skip =
+          const quote = str.charAt(idx);
+          if (quote === '"' || quote === "'") {
+            idx++; // skip opening quote
+            let attrValue = '';
+            while (idx < str.length && str.charAt(idx) !== quote) {
+              attrValue += str.charAt(idx);
+              idx++;
+            }
+            idx++; // skip closing quote
+            attrs[attrName] = attrValue;
+          }
+        }
+      }
+
+      // Self-closing tag
+      if (str.charAt(idx) === '/') {
+        idx += 2; // skip />
+        return {
+          element: { name: tagName, attrs, children: [] },
+          endIdx: idx
+        };
+      }
+
+      idx++; // skip >
+
+      // Parse children
+      const children: (XmlElement | string)[] = [];
+      let textContent = '';
+
+      while (idx < str.length) {
+        // Skip whitespace for structure
+        while (idx < str.length && /\s/.test(str.charAt(idx))) idx++;
+
+        if (idx >= str.length) break;
+
+        // Check for closing tag
+        if (str.substring(idx, idx + 2 + tagName.length + 1) === `</${tagName}>`) {
+          if (textContent.trim()) {
+            children.push(textContent.trim());
+          }
+          idx += 2 + tagName.length + 1;
+          break;
+        }
+
+        // Check for child element
+        if (str.charAt(idx) === '<' && str.charAt(idx + 1) !== '/') {
+          if (textContent.trim()) {
+            children.push(textContent.trim());
+            textContent = '';
+          }
+          const result = parseElement(str, idx);
+          if (result.element) {
+            children.push(result.element);
+            idx = result.endIdx;
+          } else {
+            break;
+          }
+        } else if (str.charAt(idx) !== '<') {
+          // Text content
+          while (idx < str.length && str.charAt(idx) !== '<') {
+            textContent += str.charAt(idx);
+            idx++;
+          }
+        } else {
+          break;
+        }
+      }
+
+      return {
+        element: { name: tagName, attrs, children },
+        endIdx: idx
+      };
+    }
+
+    const result = parseElement(content, 0);
+    return result.element;
+  }
+
+  // Convert XML to AXON format
+  function convertXmlToAxon(xmlString: string): string {
+    const root = parseXmlSimple(xmlString);
+    if (!root) return 'Invalid XML';
+
+    let result = `@xml\n`;
+
+    function processElement(el: XmlElement, indent: string = ''): string {
+      let out = `${indent}${el.name}`;
+
+      // Add attributes inline
+      const attrEntries = Object.entries(el.attrs);
+      if (attrEntries.length > 0) {
+        const attrStr = attrEntries.map(([k, v]) => `@${k}:${JSON.stringify(v)}`).join(' ');
+        out += ` {${attrStr}}`;
+      }
+
+      // Check if children are uniform elements (same tag name)
+      const elementChildren = el.children.filter((c): c is XmlElement => typeof c !== 'string');
+      const textChildren = el.children.filter((c): c is string => typeof c === 'string');
+
+      if (elementChildren.length > 1) {
+        const firstChild = elementChildren[0];
+        if (firstChild) {
+          const firstChildName = firstChild.name;
+          const allSameName = elementChildren.every(c => c.name === firstChildName);
+
+          if (allSameName && elementChildren.length >= 2) {
+            // Use columnar/schema format for uniform children
+            out += `:\n`;
+
+            // Get all unique attribute and child element names
+            const allAttrs = new Set<string>();
+            const allChildElements = new Set<string>();
+
+            for (const child of elementChildren) {
+              Object.keys(child.attrs).forEach(a => allAttrs.add(a));
+              child.children.forEach(c => {
+                if (typeof c !== 'string') allChildElements.add(c.name);
+              });
+            }
+
+            const schemaFields = [...allAttrs].map(a => `@${a}`).concat([...allChildElements]);
+            out += `${indent}  @schema(${firstChildName}): [${schemaFields.join(', ')}]\n`;
+
+            // Extract column values
+            const columns: Record<string, string[]> = {};
+            schemaFields.forEach(f => { columns[f] = []; });
+
+            for (const child of elementChildren) {
+              for (const attr of allAttrs) {
+                const col = columns[`@${attr}`];
+                if (col) col.push(child.attrs[attr] || '');
+              }
+              for (const elemName of allChildElements) {
+                const found = child.children.find((c): c is XmlElement =>
+                  typeof c !== 'string' && c.name === elemName
+                );
+                const textVal = found?.children.find((c): c is string => typeof c === 'string') || '';
+                const col = columns[elemName];
+                if (col) col.push(textVal);
+              }
+            }
+
+            // Output columns with compression
+            for (const [field, values] of Object.entries(columns)) {
+              // Check for repeated values (RLE)
+              const firstVal = values[0];
+              const allSame = values.every(v => v === firstVal);
+              if (allSame && firstVal) {
+                out += `${indent}    ${field}: ${JSON.stringify(firstVal)}*${values.length}\n`;
+              } else {
+                // Check for dictionary compression opportunity
+                const unique = [...new Set(values)];
+                if (unique.length <= 3 && values.length > 3) {
+                  out += `${indent}    ${field}: @dict(${unique.map(u => JSON.stringify(u)).join(',')})[${values.map(v => unique.indexOf(v)).join(',')}]\n`;
+                } else {
+                  out += `${indent}    ${field}: [${values.map(v => JSON.stringify(v)).join(', ')}]\n`;
+                }
+              }
+            }
+            return out;
+          }
+        }
+      }
+
+      // Non-uniform children or mixed content
+      if (el.children.length === 0) {
+        out += '\n';
+      } else if (textChildren.length === 1 && elementChildren.length === 0) {
+        out += `: ${JSON.stringify(textChildren[0])}\n`;
+      } else {
+        out += ':\n';
+        for (const child of el.children) {
+          if (typeof child === 'string') {
+            out += `${indent}  _text: ${JSON.stringify(child)}\n`;
+          } else {
+            out += processElement(child, indent + '  ');
+          }
+        }
+      }
+
+      return out;
+    }
+
+    result += processElement(root);
+    return result;
+  }
+
+  function updateInputLabel(type: 'json' | 'xml') {
+    const label = document.getElementById('input-label');
+    if (label) {
+      label.textContent = type === 'xml' ? 'XML Input' : 'JSON Input';
+    }
+    currentInputType = type;
+  }
+
   function updateDemo() {
     const input = document.getElementById('json-input') as HTMLTextAreaElement;
     const output = document.getElementById('axon-output') as HTMLPreElement;
@@ -172,8 +461,8 @@
     const tokensSavedEl = document.getElementById('tokens-saved');
 
     try {
-      const jsonText = input.value.trim();
-      if (!jsonText) {
+      const inputText = input.value.trim();
+      if (!inputText) {
         output.textContent = 'AXON output will appear here...';
         if (jsonTokensEl) jsonTokensEl.textContent = '0 tokens';
         if (axonTokensEl) axonTokensEl.textContent = '0 tokens';
@@ -182,24 +471,35 @@
         return;
       }
 
-      const jsonObj = JSON.parse(jsonText);
-      const axonText = convertToAxon(jsonObj);
+      let axonText: string;
 
-      const jsonTokens = countTokens(jsonText);
+      if (isXml(inputText)) {
+        updateInputLabel('xml');
+        axonText = convertXmlToAxon(inputText);
+      } else {
+        updateInputLabel('json');
+        const jsonObj = JSON.parse(inputText);
+        axonText = convertJsonToAxon(jsonObj);
+      }
+
+      const inputTokens = countTokens(inputText);
       const axonTokens = countTokens(axonText);
-      const savedTokens = Math.max(0, jsonTokens - axonTokens);
-      const savingsPercent = jsonTokens > 0
-        ? Math.round((savedTokens / jsonTokens) * 100)
+      const savedTokens = Math.max(0, inputTokens - axonTokens);
+      const savingsPercent = inputTokens > 0
+        ? Math.round((savedTokens / inputTokens) * 100)
         : 0;
 
       output.classList.remove('text-red-400');
       output.textContent = axonText;
-      if (jsonTokensEl) jsonTokensEl.textContent = `${jsonTokens} tokens`;
+      if (jsonTokensEl) jsonTokensEl.textContent = `${inputTokens} tokens`;
       if (axonTokensEl) axonTokensEl.textContent = `${axonTokens} tokens`;
       if (savingsPercentageEl) savingsPercentageEl.textContent = `${savingsPercent}%`;
       if (tokensSavedEl) tokensSavedEl.textContent = savedTokens.toString();
     } catch (e) {
-      output.textContent = 'Invalid JSON - please check your syntax';
+      const errorMsg = currentInputType === 'xml'
+        ? 'Invalid XML - please check your syntax'
+        : 'Invalid JSON - please check your syntax';
+      output.textContent = errorMsg;
       output.classList.add('text-red-400');
     }
   }
@@ -213,9 +513,20 @@
   // Example buttons
   document.querySelectorAll('.example-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
-      const example = (e.target as HTMLButtonElement).dataset.example;
+      const target = e.target as HTMLButtonElement;
+      const example = target.dataset.example;
+      const type = target.dataset.type;
+
       if (example && input) {
-        input.value = JSON.stringify(JSON.parse(example), null, 2);
+        if (type === 'xml') {
+          // XML example - use as-is
+          input.value = example;
+          updateInputLabel('xml');
+        } else {
+          // JSON example - format it
+          input.value = JSON.stringify(JSON.parse(example), null, 2);
+          updateInputLabel('json');
+        }
         updateDemo();
       }
     });
