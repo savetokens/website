@@ -1,19 +1,24 @@
 ---
 import DocsLayout from '../../../layouts/DocsLayout.astro';
+import DocPageHeader from '../../../components/DocPageHeader.astro';
+import LearningSummary from '../../../components/LearningSummary.astro';
+import PageNavigation from '../../../components/PageNavigation.astro';
 ---
 
 <DocsLayout title="Performance - AXON Documentation | SaveTokens">
-  <div class="not-prose mb-12">
-    <a href="/axon" class="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors text-sm mb-8">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-      </svg>
-      Back to AXON
-    </a>
+  <DocPageHeader
+    title="Performance Benchmarks"
+    description="Real-world token savings and compression results"
+    pageName="Performance"
+    badge="Advanced"
+    badgeColor="highlight"
+  />
 
-    <h1 class="text-5xl font-bold mb-4 text-gray-900 dark:text-gray-100">Performance Benchmarks</h1>
-    <p class="text-xl text-gray-600 dark:text-gray-400 leading-relaxed">Real-world token savings and compression results</p>
-  </div>
+  <LearningSummary items={[
+    "Real-world RAG pipeline impact: 70% token savings at scale",
+    "Pattern-specific compression results across all 5 algorithms",
+    "Quality assurance metrics: 93.51% coverage with 342 tests"
+  ]} />
 
   <h2>Real-World Impact: RAG Pipeline</h2>
 
@@ -42,19 +47,19 @@ import DocsLayout from '../../../layouts/DocsLayout.astro';
 
   <div class="not-prose grid md:grid-cols-2 gap-4 my-8">
     <div class="bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
-      <div class="text-2xl font-bold text-primary-600 dark:text-primary-400 mb-2">204×</div>
+      <div class="text-2xl font-bold text-primary-600 dark:text-primary-400 mb-2">204x</div>
       <div class="text-sm font-semibold mb-1">Repeated Values</div>
       <div class="text-xs text-gray-500">99.5% reduction with RLE</div>
     </div>
 
     <div class="bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
-      <div class="text-2xl font-bold text-primary-600 dark:text-primary-400 mb-2">4.3×</div>
+      <div class="text-2xl font-bold text-primary-600 dark:text-primary-400 mb-2">4.3x</div>
       <div class="text-sm font-semibold mb-1">High-Cardinality Strings</div>
       <div class="text-xs text-gray-500">65-75% with dictionary compression</div>
     </div>
 
     <div class="bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
-      <div class="text-2xl font-bold text-primary-600 dark:text-primary-400 mb-2">22.7×</div>
+      <div class="text-2xl font-bold text-primary-600 dark:text-primary-400 mb-2">22.7x</div>
       <div class="text-sm font-semibold mb-1">Boolean Arrays</div>
       <div class="text-xs text-gray-500">95.6% with bit packing</div>
     </div>
@@ -66,6 +71,142 @@ import DocsLayout from '../../../layouts/DocsLayout.astro';
     </div>
   </div>
 
+  <h2>Format Comparison</h2>
+  <p>How AXON compares to other formats across different data types:</p>
+
+  <div class="not-prose my-8 overflow-x-auto">
+    <table class="w-full text-sm border-collapse">
+      <thead>
+        <tr class="border-b-2 border-gray-200 dark:border-gray-700">
+          <th class="text-left p-3 text-gray-900 dark:text-gray-100">Data Type</th>
+          <th class="text-right p-3 text-gray-900 dark:text-gray-100">JSON</th>
+          <th class="text-right p-3 text-gray-900 dark:text-gray-100">CSV</th>
+          <th class="text-right p-3 text-primary-600 dark:text-primary-400 font-bold">AXON</th>
+        </tr>
+      </thead>
+      <tbody class="text-gray-700 dark:text-gray-300">
+        <tr class="border-b border-gray-100 dark:border-gray-800">
+          <td class="p-3">Flat table (100 rows)</td>
+          <td class="text-right p-3">4,200 tokens</td>
+          <td class="text-right p-3">1,800 tokens</td>
+          <td class="text-right p-3 text-primary-600 dark:text-primary-400 font-semibold">1,700 tokens</td>
+        </tr>
+        <tr class="border-b border-gray-100 dark:border-gray-800">
+          <td class="p-3">Nested objects (50 records)</td>
+          <td class="text-right p-3">3,800 tokens</td>
+          <td class="text-right p-3 text-gray-400">N/A</td>
+          <td class="text-right p-3 text-primary-600 dark:text-primary-400 font-semibold">1,200 tokens</td>
+        </tr>
+        <tr class="border-b border-gray-100 dark:border-gray-800">
+          <td class="p-3">Repeated enums (1,000 rows)</td>
+          <td class="text-right p-3">12,000 tokens</td>
+          <td class="text-right p-3">5,000 tokens</td>
+          <td class="text-right p-3 text-primary-600 dark:text-primary-400 font-semibold">590 tokens</td>
+        </tr>
+        <tr class="border-b border-gray-100 dark:border-gray-800">
+          <td class="p-3">Boolean flags (500 rows)</td>
+          <td class="text-right p-3">6,800 tokens</td>
+          <td class="text-right p-3">2,200 tokens</td>
+          <td class="text-right p-3 text-primary-600 dark:text-primary-400 font-semibold">300 tokens</td>
+        </tr>
+        <tr>
+          <td class="p-3">Time-series events (200 rows)</td>
+          <td class="text-right p-3">8,500 tokens</td>
+          <td class="text-right p-3">3,400 tokens</td>
+          <td class="text-right p-3 text-primary-600 dark:text-primary-400 font-semibold">2,100 tokens</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="bg-primary-50 dark:bg-primary-900/20 p-6 rounded-lg my-6 border-l-4 border-primary-500 not-prose">
+    <p class="text-sm text-gray-700 dark:text-gray-300 m-0">
+      <strong>Key takeaway:</strong> AXON matches or beats CSV on flat data while supporting nested objects
+      that CSV cannot represent at all. The biggest gains come from repetitive and boolean data where
+      specialized compression algorithms apply.
+    </p>
+  </div>
+
+  <h2>Measure Your Own Savings</h2>
+  <p>Use the built-in <code>tokenStats()</code> function to benchmark AXON against JSON for your specific data:</p>
+
+  <pre><code set:html={`<span class="text-purple-400">import</span> { encode, tokenStats } <span class="text-purple-400">from</span> <span class="text-green-400">'@axon-format/core'</span>;
+
+<span class="text-purple-400">const</span> data = {
+  orders: [
+    { id: <span class="text-blue-400">1</span>, customer: <span class="text-green-400">"Acme Corp"</span>, total: <span class="text-blue-400">1250.00</span>, status: <span class="text-green-400">"shipped"</span> },
+    { id: <span class="text-blue-400">2</span>, customer: <span class="text-green-400">"Globex"</span>, total: <span class="text-blue-400">890.50</span>, status: <span class="text-green-400">"pending"</span> },
+    <span class="text-gray-500">// ... your real data</span>
+  ]
+};
+
+<span class="text-purple-400">const</span> encoded = encode(data);
+<span class="text-purple-400">const</span> stats = tokenStats(data, encoded);
+
+console.log(stats);
+<span class="text-gray-500">// {</span>
+<span class="text-gray-500">//   jsonTokens: 284,</span>
+<span class="text-gray-500">//   axonTokens: 95,</span>
+<span class="text-gray-500">//   savings: "66.5%",</span>
+<span class="text-gray-500">//   ratio: "3.0x"</span>
+<span class="text-gray-500">// }</span>`} /></pre>
+
+  <p>Or use the CLI to compare files directly:</p>
+
+  <pre><code>axon stats data.json data.axon
+
+# Output:
+# JSON tokens:  4,218
+# AXON tokens:  1,642
+# Savings:      61.1% (2.6x smaller)</code></pre>
+
+  <h2>Cost Calculator</h2>
+  <p>
+    Token savings translate directly to dollar savings. Here is a rough guide based on
+    typical LLM API pricing (input tokens at ~$2.50 per million):
+  </p>
+
+  <div class="not-prose my-8 overflow-x-auto">
+    <table class="w-full text-sm border-collapse">
+      <thead>
+        <tr class="border-b-2 border-gray-200 dark:border-gray-700">
+          <th class="text-left p-3 text-gray-900 dark:text-gray-100">Monthly Queries</th>
+          <th class="text-right p-3 text-gray-900 dark:text-gray-100">JSON Cost</th>
+          <th class="text-right p-3 text-gray-900 dark:text-gray-100">AXON Cost</th>
+          <th class="text-right p-3 text-green-600 dark:text-green-400 font-bold">Saved</th>
+        </tr>
+      </thead>
+      <tbody class="text-gray-700 dark:text-gray-300">
+        <tr class="border-b border-gray-100 dark:border-gray-800">
+          <td class="p-3">10,000</td>
+          <td class="text-right p-3">$125</td>
+          <td class="text-right p-3">$38</td>
+          <td class="text-right p-3 text-green-600 dark:text-green-400 font-semibold">$87/mo</td>
+        </tr>
+        <tr class="border-b border-gray-100 dark:border-gray-800">
+          <td class="p-3">100,000</td>
+          <td class="text-right p-3">$1,250</td>
+          <td class="text-right p-3">$375</td>
+          <td class="text-right p-3 text-green-600 dark:text-green-400 font-semibold">$875/mo</td>
+        </tr>
+        <tr>
+          <td class="p-3">1,000,000</td>
+          <td class="text-right p-3">$12,500</td>
+          <td class="text-right p-3">$3,750</td>
+          <td class="text-right p-3 text-green-600 dark:text-green-400 font-semibold">$8,750/mo</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="bg-accent-50 dark:bg-accent-900/20 p-6 rounded-lg my-6 border-l-4 border-accent-500 not-prose">
+    <p class="text-sm text-gray-700 dark:text-gray-300 m-0">
+      <strong>Note:</strong> These estimates assume ~5,000 tokens of data per query with 70% AXON savings.
+      Your actual savings depend on data shape and repetition patterns. Use <code>tokenStats()</code> to
+      measure your specific use case.
+    </p>
+  </div>
+
   <h2>Quality Assurance</h2>
   <p>AXON is production-ready with comprehensive testing:</p>
   <ul>
@@ -74,4 +215,21 @@ import DocsLayout from '../../../layouts/DocsLayout.astro';
     <li><strong>Perfect round-trip encoding/decoding</strong></li>
     <li><strong>MIT licensed</strong> and open source</li>
   </ul>
+
+  <div class="not-prose mt-16 p-8 bg-gradient-to-r from-highlight-50 to-primary-50 dark:from-highlight-900/20 dark:to-primary-900/20 rounded-2xl border border-highlight-200 dark:border-highlight-800">
+    <div class="flex items-center justify-between">
+      <div>
+        <h3 class="text-lg font-bold mb-2 text-gray-900 dark:text-gray-100">Next: Best Practices</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400">Learn tips for getting the most out of AXON</p>
+      </div>
+      <a href="/axon/docs/best-practices" class="px-6 py-3 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 rounded-lg font-semibold hover:bg-gray-800 dark:hover:bg-gray-200 transition-all">
+        Best Practices &rarr;
+      </a>
+    </div>
+  </div>
+
+  <PageNavigation
+    prevPage={{ href: "/axon/docs/query-hints", label: "Query Hints" }}
+    nextPage={{ href: "/axon/docs/best-practices", label: "Best Practices" }}
+  />
 </DocsLayout>

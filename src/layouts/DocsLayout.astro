@@ -13,18 +13,18 @@ const layoutProps = description ? { title, description, showBackground: false } 
 ---
 
 <Layout {...layoutProps}>
-  <div class="pt-16 min-h-screen">
-    <div class="max-w-7xl mx-auto px-4 lg:px-8 py-8">
+  <div class="pt-16 min-h-screen bg-gray-50/50 dark:bg-gray-950/50">
+    <div class="max-w-[90rem] mx-auto px-4 lg:px-8 py-8">
       <div class="flex gap-8 lg:gap-12">
         <DocsSidebar />
 
         <main class="flex-1 min-w-0 max-w-4xl">
-          <article class="prose prose-lg dark:prose-invert max-w-none
+          <article class="docs-article prose prose-lg dark:prose-invert max-w-none
                          prose-headings:font-bold prose-headings:tracking-tight
                          prose-h1:text-5xl prose-h1:font-extrabold prose-h1:my-8 prose-h1:text-gray-900 prose-h1:dark:text-gray-100 prose-h1:leading-tight prose-h1:tracking-tighter
-                         prose-h2:text-3xl prose-h2:mt-20 prose-h2:mb-8 prose-h2:pb-5 prose-h2:text-gray-900 prose-h2:dark:text-gray-100 prose-h2:font-extrabold
-                         prose-h3:text-xl prose-h3:mt-12 prose-h3:mb-5 prose-h3:text-gray-800 prose-h3:dark:text-gray-200 prose-h3:font-bold
-                         prose-h4:text-lg prose-h4:mt-8 prose-h4:mb-4 prose-h4:text-gray-700 prose-h4:dark:text-gray-300 prose-h4:font-bold
+                         prose-h2:text-2xl prose-h2:mt-0 prose-h2:mb-6 prose-h2:pb-0 prose-h2:text-gray-900 prose-h2:dark:text-gray-100 prose-h2:font-extrabold
+                         prose-h3:text-lg prose-h3:mt-10 prose-h3:mb-4 prose-h3:text-gray-800 prose-h3:dark:text-gray-200 prose-h3:font-bold
+                         prose-h4:text-base prose-h4:mt-6 prose-h4:mb-3 prose-h4:text-gray-700 prose-h4:dark:text-gray-300 prose-h4:font-bold
                          prose-p:text-gray-600 prose-p:dark:text-gray-400 prose-p:leading-relaxed prose-p:text-base prose-p:my-4
                          prose-li:text-gray-600 prose-li:dark:text-gray-400 prose-li:my-2 prose-li:leading-relaxed
                          prose-ul:my-6 prose-ul:space-y-2 prose-ol:my-6 prose-ol:space-y-2
@@ -36,6 +36,15 @@ const layoutProps = description ? { title, description, showBackground: false } 
             <slot />
           </article>
         </main>
+
+        <!-- On This Page TOC -->
+        <aside class="w-56 flex-shrink-0 hidden xl:block">
+          <div id="toc-container" class="sticky top-24 self-start">
+            <h4 class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mb-4">On This Page</h4>
+            <nav id="toc-nav" class="space-y-1 border-l-2 border-gray-200 dark:border-gray-700">
+            </nav>
+          </div>
+        </aside>
       </div>
     </div>
   </div>
@@ -43,37 +52,103 @@ const layoutProps = description ? { title, description, showBackground: false } 
 </Layout>
 
 <style>
-  /* Custom documentation styling */
+  /* ═══════════════════════════════════════════════════
+     SECTION SEPARATION: h2 gets a distinct visual band
+     ═══════════════════════════════════════════════════ */
   article :global(h2) {
-    @apply scroll-mt-24 border-b-2 border-gray-200 dark:border-gray-700;
+    @apply scroll-mt-24;
+    position: relative;
+    padding: 1.25rem 1.5rem 1.25rem 1.5rem;
+    margin-top: 3.5rem !important;
+    margin-bottom: 1.5rem !important;
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
+    background: linear-gradient(135deg, rgb(248 249 250 / 0.8), rgb(241 243 245 / 0.6));
+    border-left: 4px solid rgb(74 86 95);
+    border-radius: 0 0.75rem 0.75rem 0;
+    border-bottom: none !important;
   }
 
+  :global(.dark) article :global(h2) {
+    background: linear-gradient(135deg, rgb(26 34 41 / 0.6), rgb(30 40 50 / 0.4));
+    border-left-color: rgb(120 140 160);
+  }
+
+  /* h3 - subtle left accent bar, lighter background */
   article :global(h3) {
     @apply scroll-mt-24;
+    position: relative;
+    padding-left: 1rem;
+    border-left: 3px solid rgb(74 86 95 / 0.3);
+  }
+
+  :global(.dark) article :global(h3) {
+    border-left-color: rgb(120 140 160 / 0.3);
   }
 
   article :global(h4) {
     @apply scroll-mt-24;
+    padding-left: 0.5rem;
+    color: rgb(74 86 95);
+    text-transform: uppercase;
+    font-size: 0.8rem !important;
+    letter-spacing: 0.05em;
   }
 
+  :global(.dark) article :global(h4) {
+    color: rgb(156 170 180);
+  }
+
+  /* ═══════════════════════════════════════════════════
+     CODE BLOCKS: professional terminal-style
+     ═══════════════════════════════════════════════════ */
   article :global(pre) {
-    @apply my-8 rounded-xl overflow-hidden shadow-2xl bg-gray-900 dark:bg-black border-2 border-gray-800 dark:border-gray-700;
+    @apply my-8 rounded-xl overflow-hidden shadow-2xl;
+    background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+    border: 1px solid rgb(51 65 85);
+    position: relative;
+  }
+
+  article :global(pre)::before {
+    content: '';
+    display: block;
+    height: 2.5rem;
+    background: linear-gradient(180deg, rgb(30 41 59) 0%, rgb(30 41 59 / 0.8) 100%);
+    border-bottom: 1px solid rgb(51 65 85);
+    position: relative;
+  }
+
+  article :global(pre)::after {
+    content: '';
+    position: absolute;
+    top: 0.85rem;
+    left: 1rem;
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+    background: #ef4444;
+    box-shadow: 1.25rem 0 0 #eab308, 2.5rem 0 0 #22c55e;
   }
 
   article :global(pre code) {
-    @apply block p-6 overflow-x-auto text-gray-100 leading-loose font-mono text-sm;
+    @apply block px-6 pb-6 pt-4 overflow-x-auto text-gray-100 font-mono text-sm;
+    line-height: 1.8;
   }
 
   article :global(.lead) {
     @apply text-xl text-gray-600 dark:text-gray-400 mb-10 font-normal leading-relaxed;
   }
 
+  /* ═══════════════════════════════════════════════════
+     TABLES: clean, professional data display
+     ═══════════════════════════════════════════════════ */
   article :global(table) {
-    @apply w-full my-8 shadow-lg rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700;
+    @apply w-full my-8 rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
   }
 
   article :global(thead) {
-    @apply bg-gray-900 dark:bg-black;
+    background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
   }
 
   article :global(th) {
@@ -88,6 +163,9 @@ const layoutProps = description ? { title, description, showBackground: false } 
     @apply bg-gray-50 dark:bg-gray-800;
   }
 
+  /* ═══════════════════════════════════════════════════
+     LISTS: colored markers, better spacing
+     ═══════════════════════════════════════════════════ */
   article :global(ul li::marker) {
     @apply text-primary-500;
   }
@@ -95,6 +173,86 @@ const layoutProps = description ? { title, description, showBackground: false } 
   article :global(ol li::marker) {
     @apply text-primary-600 font-bold;
   }
+
+  /* ═══════════════════════════════════════════════════
+     HORIZONTAL RULES: visible section dividers
+     ═══════════════════════════════════════════════════ */
+  article :global(hr) {
+    @apply my-16 border-0;
+    height: 2px;
+    background: linear-gradient(to right, transparent, rgb(74 86 95 / 0.3), transparent);
+  }
+
+  :global(.dark) article :global(hr) {
+    background: linear-gradient(to right, transparent, rgb(120 140 160 / 0.3), transparent);
+  }
+
+  /* ═══════════════════════════════════════════════════
+     TOC: active state highlight
+     ═══════════════════════════════════════════════════ */
+  #toc-nav :global(a.toc-active) {
+    @apply text-primary-600 dark:text-primary-400 border-l-primary-500 dark:border-l-primary-400 font-semibold;
+  }
 </style>
+
+<script>
+  // Build Table of Contents from h2 headings using safe DOM methods
+  function buildTOC() {
+    const tocNav = document.getElementById('toc-nav');
+    const article = document.querySelector('article');
+    if (!tocNav || !article) return;
+
+    const headings = article.querySelectorAll('h2');
+    if (headings.length === 0) {
+      const container = document.getElementById('toc-container');
+      if (container) container.style.display = 'none';
+      return;
+    }
+
+    // Ensure h2s have IDs for anchor links
+    headings.forEach((heading, index) => {
+      if (!heading.id) {
+        const text = heading.textContent || '';
+        heading.id = text.trim()
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/^-|-$/g, '') || ('section-' + index);
+      }
+    });
+
+    // Clear existing children safely
+    while (tocNav.firstChild) {
+      tocNav.removeChild(tocNav.firstChild);
+    }
+
+    // Build TOC links using DOM API (no innerHTML)
+    headings.forEach(heading => {
+      const link = document.createElement('a');
+      link.href = '#' + heading.id;
+      link.textContent = (heading.textContent || '').trim();
+      link.className = 'block py-1.5 pl-4 -ml-px text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 border-l-2 border-transparent transition-colors';
+      tocNav.appendChild(link);
+    });
+
+    // Highlight active heading on scroll
+    const tocLinks = tocNav.querySelectorAll('a');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(link => link.classList.remove('toc-active'));
+            const activeLink = tocNav.querySelector('a[href="#' + entry.target.id + '"]');
+            if (activeLink) activeLink.classList.add('toc-active');
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -70% 0px', threshold: 0 }
+    );
+
+    headings.forEach(heading => observer.observe(heading));
+  }
+
+  buildTOC();
+</script>
 
 <script src="../scripts/copy-code.ts"></script>

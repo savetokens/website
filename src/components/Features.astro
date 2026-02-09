@@ -1,125 +1,178 @@
 ---
 ---
 
-<section class="py-20 px-4">
+<section class="py-28 px-4 relative">
+  <!-- Section divider -->
+  <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-200 dark:via-gray-700 to-transparent"></div>
+
   <div class="max-w-6xl mx-auto">
     <div class="text-center mb-16">
-      <h2 class="text-4xl md:text-5xl font-bold mb-4">Why AXON?</h2>
-      <p class="text-xl text-gray-600 dark:text-gray-400">
-        Built specifically for the AI era
+      <h2 class="text-4xl md:text-[3.25rem] font-bold mb-5 leading-tight">
+        <span class="text-gray-900 dark:text-gray-100">Built for </span>
+        <span class="bg-gradient-to-r from-primary-600 to-accent-600 dark:from-primary-400 dark:to-accent-400 bg-clip-text text-transparent">What Matters</span>
+      </h2>
+      <p class="text-lg text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
+        Every feature exists to solve a real problem in LLM data pipelines.
       </p>
     </div>
 
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
       <!-- Feature 1: Cost Savings -->
-      <div class="p-6 bg-white dark:bg-gray-900 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
-        <div class="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center mb-4">
-          <svg class="w-6 h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div class="group relative p-7 bg-white dark:bg-gray-900 rounded-2xl border border-gray-200/60 dark:border-gray-700/60 hover:border-green-300 dark:hover:border-green-700 transition-all duration-300">
+        <div class="absolute top-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-green-400/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+        <div class="w-10 h-10 bg-green-100 dark:bg-green-900/40 rounded-xl flex items-center justify-center mb-5">
+          <svg class="w-5 h-5 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
           </svg>
         </div>
-        <h3 class="text-xl font-bold mb-2">Massive Cost Savings</h3>
-        <p class="text-gray-600 dark:text-gray-400">
-          60-95% token reduction means dramatically lower API costs. Save thousands per month on GPT-4, Claude, and other LLM APIs.
+        <h3 class="text-lg font-bold mb-2">Cut Costs Dramatically</h3>
+        <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
+          60&ndash;95% fewer tokens on every API call. Smaller payloads mean lower bills and more budget for the interactions that matter.
         </p>
       </div>
 
       <!-- Feature 2: Type Safety -->
-      <div class="p-6 bg-white dark:bg-gray-900 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
-        <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mb-4">
-          <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div class="group relative p-7 bg-white dark:bg-gray-900 rounded-2xl border border-gray-200/60 dark:border-gray-700/60 hover:border-blue-300 dark:hover:border-blue-700 transition-all duration-300">
+        <div class="absolute top-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-blue-400/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+        <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900/40 rounded-xl flex items-center justify-center mb-5">
+          <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
           </svg>
         </div>
-        <h3 class="text-xl font-bold mb-2">Type Safety</h3>
-        <p class="text-gray-600 dark:text-gray-400">
-          13 validated types including u8, i32, f64, bool, iso8601, uuid, and more. Catch errors before they reach production.
+        <h3 class="text-lg font-bold mb-2">13 Validated Types</h3>
+        <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
+          u8 through f64, booleans, ISO 8601 dates, UUIDs, and more. Catch malformed data before it reaches your model.
         </p>
       </div>
 
       <!-- Feature 3: Smart Compression -->
-      <div class="p-6 bg-white dark:bg-gray-900 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
-        <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center mb-4">
-          <svg class="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div class="group relative p-7 bg-white dark:bg-gray-900 rounded-2xl border border-gray-200/60 dark:border-gray-700/60 hover:border-purple-300 dark:hover:border-purple-700 transition-all duration-300">
+        <div class="absolute top-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-purple-400/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+        <div class="w-10 h-10 bg-purple-100 dark:bg-purple-900/40 rounded-xl flex items-center justify-center mb-5">
+          <svg class="w-5 h-5 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
           </svg>
         </div>
-        <h3 class="text-xl font-bold mb-2">5 Compression Algorithms</h3>
-        <p class="text-gray-600 dark:text-gray-400">
-          RLE, Dictionary, Delta, Bit Packing, and Varint encoding. Automatically selects the best algorithm for your data.
+        <h3 class="text-lg font-bold mb-2">5 Compression Algorithms</h3>
+        <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
+          RLE, Dictionary, Delta, Bit Packing, and Varint. Automatically selected based on your data, no configuration needed.
         </p>
       </div>
 
       <!-- Feature 4: Adaptive Encoding -->
-      <div class="p-6 bg-white dark:bg-gray-900 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
-        <div class="w-12 h-12 bg-yellow-100 dark:bg-yellow-900 rounded-lg flex items-center justify-center mb-4">
-          <svg class="w-6 h-6 text-yellow-600 dark:text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div class="group relative p-7 bg-white dark:bg-gray-900 rounded-2xl border border-gray-200/60 dark:border-gray-700/60 hover:border-amber-300 dark:hover:border-amber-700 transition-all duration-300">
+        <div class="absolute top-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-amber-400/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+        <div class="w-10 h-10 bg-amber-100 dark:bg-amber-900/40 rounded-xl flex items-center justify-center mb-5">
+          <svg class="w-5 h-5 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path>
           </svg>
         </div>
-        <h3 class="text-xl font-bold mb-2">6 Encoding Modes</h3>
-        <p class="text-gray-600 dark:text-gray-400">
-          Compact, Nested, Columnar, Stream, Sparse, and JSON modes. Optimized for different data structures and use cases.
+        <h3 class="text-lg font-bold mb-2">6 Encoding Modes</h3>
+        <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
+          Compact, Nested, Columnar, Stream, Sparse, and JSON. Each mode is optimized for a specific data shape and access pattern.
         </p>
       </div>
 
       <!-- Feature 5: Production Ready -->
-      <div class="p-6 bg-white dark:bg-gray-900 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
-        <div class="w-12 h-12 bg-red-100 dark:bg-red-900 rounded-lg flex items-center justify-center mb-4">
-          <svg class="w-6 h-6 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div class="group relative p-7 bg-white dark:bg-gray-900 rounded-2xl border border-gray-200/60 dark:border-gray-700/60 hover:border-red-300 dark:hover:border-red-700 transition-all duration-300">
+        <div class="absolute top-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-red-400/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+        <div class="w-10 h-10 bg-red-100 dark:bg-red-900/40 rounded-xl flex items-center justify-center mb-5">
+          <svg class="w-5 h-5 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
           </svg>
         </div>
-        <h3 class="text-xl font-bold mb-2">Battle Tested</h3>
-        <p class="text-gray-600 dark:text-gray-400">
-          93.51% test coverage with 342 passing tests. Thoroughly tested and ready for production workloads.
+        <h3 class="text-lg font-bold mb-2">Battle Tested</h3>
+        <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
+          342 tests, 93% coverage, zero dependencies. Ship with confidence. AXON won't break your build or bloat your bundle.
         </p>
       </div>
 
       <!-- Feature 6: Open Source -->
-      <div class="p-6 bg-white dark:bg-gray-900 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
-        <div class="w-12 h-12 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center mb-4">
-          <svg class="w-6 h-6 text-gray-600 dark:text-gray-400" fill="currentColor" viewBox="0 0 24 24">
+      <div class="group relative p-7 bg-white dark:bg-gray-900 rounded-2xl border border-gray-200/60 dark:border-gray-700/60 hover:border-gray-400 dark:hover:border-gray-500 transition-all duration-300">
+        <div class="absolute top-0 left-6 right-6 h-px bg-gradient-to-r from-transparent via-gray-400/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+        <div class="w-10 h-10 bg-gray-100 dark:bg-gray-700/60 rounded-xl flex items-center justify-center mb-5">
+          <svg class="w-5 h-5 text-gray-600 dark:text-gray-400" fill="currentColor" viewBox="0 0 24 24">
             <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path>
           </svg>
         </div>
-        <h3 class="text-xl font-bold mb-2">Open Source</h3>
-        <p class="text-gray-600 dark:text-gray-400">
-          MIT licensed and community-driven. Free to use, modify, and distribute. Contribute on GitHub.
+        <h3 class="text-lg font-bold mb-2">MIT Open Source</h3>
+        <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
+          Free to use, modify, and ship. No vendor lock-in, no license fees, no strings attached. Built by the community, for the community.
         </p>
       </div>
     </div>
 
     <!-- Use Cases Section -->
-    <div class="mt-20">
-      <h3 class="text-3xl font-bold text-center mb-12">Perfect For</h3>
-      <div class="grid md:grid-cols-2 gap-6">
-        <div class="p-6 bg-gray-50 dark:bg-gray-800 rounded-lg">
-          <h4 class="font-bold text-lg mb-3">LLM API Calls</h4>
-          <p class="text-gray-600 dark:text-gray-400">
-            Reduce token costs when sending structured data to GPT-4, Claude, or other language models. Perfect for function calling and structured outputs.
-          </p>
+    <div class="mt-24">
+      <div class="text-center mb-12">
+        <h3 class="text-3xl md:text-4xl font-bold">
+          <span class="text-gray-900 dark:text-gray-100">Built for </span>
+          <span class="bg-gradient-to-r from-accent-600 to-highlight-600 dark:from-accent-400 dark:to-highlight-400 bg-clip-text text-transparent">Your Stack</span>
+        </h3>
+      </div>
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="group p-6 bg-white dark:bg-gray-900 rounded-2xl border border-gray-200/60 dark:border-gray-700/60 hover:border-primary-300 dark:hover:border-primary-600 transition-all duration-300">
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0 w-9 h-9 bg-primary-100 dark:bg-primary-900/40 rounded-xl flex items-center justify-center mt-0.5">
+              <svg class="w-4 h-4 text-primary-600 dark:text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+              </svg>
+            </div>
+            <div>
+              <h4 class="font-bold mb-1">LLM API Calls</h4>
+              <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
+                Encode function calls, structured outputs, and tool-use payloads in a fraction of the tokens. Fits naturally into any OpenAI or Anthropic pipeline.
+              </p>
+            </div>
+          </div>
         </div>
 
-        <div class="p-6 bg-gray-50 dark:bg-gray-800 rounded-lg">
-          <h4 class="font-bold text-lg mb-3">RAG Systems</h4>
-          <p class="text-gray-600 dark:text-gray-400">
-            Compress context data in Retrieval Augmented Generation pipelines. Fit more context within token limits while reducing costs.
-          </p>
+        <div class="group p-6 bg-white dark:bg-gray-900 rounded-2xl border border-gray-200/60 dark:border-gray-700/60 hover:border-primary-300 dark:hover:border-primary-600 transition-all duration-300">
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0 w-9 h-9 bg-primary-100 dark:bg-primary-900/40 rounded-xl flex items-center justify-center mt-0.5">
+              <svg class="w-4 h-4 text-primary-600 dark:text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"></path>
+              </svg>
+            </div>
+            <div>
+              <h4 class="font-bold mb-1">RAG Pipelines</h4>
+              <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
+                Pack more retrieved context into your token window. More context means better answers and sharper reasoning from your model.
+              </p>
+            </div>
+          </div>
         </div>
 
-        <div class="p-6 bg-gray-50 dark:bg-gray-800 rounded-lg">
-          <h4 class="font-bold text-lg mb-3">AI Agents</h4>
-          <p class="text-gray-600 dark:text-gray-400">
-            Efficiently pass data between AI agents and tools. Reduce latency and costs in multi-agent systems.
-          </p>
+        <div class="group p-6 bg-white dark:bg-gray-900 rounded-2xl border border-gray-200/60 dark:border-gray-700/60 hover:border-primary-300 dark:hover:border-primary-600 transition-all duration-300">
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0 w-9 h-9 bg-primary-100 dark:bg-primary-900/40 rounded-xl flex items-center justify-center mt-0.5">
+              <svg class="w-4 h-4 text-primary-600 dark:text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+              </svg>
+            </div>
+            <div>
+              <h4 class="font-bold mb-1">Multi-Agent Systems</h4>
+              <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
+                When agents pass structured data between each other, every token counts. AXON keeps inter-agent communication lean and fast.
+              </p>
+            </div>
+          </div>
         </div>
 
-        <div class="p-6 bg-gray-50 dark:bg-gray-800 rounded-lg">
-          <h4 class="font-bold text-lg mb-3">Chatbot Context</h4>
-          <p class="text-gray-600 dark:text-gray-400">
-            Manage conversation history and user data more efficiently. Extend conversation length within token budgets.
-          </p>
+        <div class="group p-6 bg-white dark:bg-gray-900 rounded-2xl border border-gray-200/60 dark:border-gray-700/60 hover:border-primary-300 dark:hover:border-primary-600 transition-all duration-300">
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0 w-9 h-9 bg-primary-100 dark:bg-primary-900/40 rounded-xl flex items-center justify-center mt-0.5">
+              <svg class="w-4 h-4 text-primary-600 dark:text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+              </svg>
+            </div>
+            <div>
+              <h4 class="font-bold mb-1">Conversation Memory</h4>
+              <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
+                Store more chat history and user context in your token window. Longer conversations with better continuity and stronger recall.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -1,24 +1,24 @@
 ---
 import DocsLayout from '../../../layouts/DocsLayout.astro';
+import DocPageHeader from '../../../components/DocPageHeader.astro';
+import LearningSummary from '../../../components/LearningSummary.astro';
+import PageNavigation from '../../../components/PageNavigation.astro';
 ---
 
 <DocsLayout title="Installation - AXON Documentation | SaveTokens">
-  <div class="not-prose mb-12">
-    <a
-      href="/axon"
-      class="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors text-sm mb-8"
-    >
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-      </svg>
-      Back to AXON
-    </a>
+  <DocPageHeader
+    title="Installation"
+    description="Get AXON up and running in your project"
+    pageName="Installation"
+    badge="Getting Started"
+    badgeColor="primary"
+  />
 
-    <h1 class="text-5xl font-bold mb-4 text-gray-900 dark:text-gray-100">Installation</h1>
-    <p class="text-xl text-gray-600 dark:text-gray-400 leading-relaxed">
-      Get AXON up and running in your project
-    </p>
-  </div>
+  <LearningSummary items={[
+    "How to install the AXON core library via npm, yarn, or pnpm",
+    "Setting up the CLI tool for command-line usage",
+    "Verifying your installation and system requirements"
+  ]} />
 
   <h2>NPM Package</h2>
   <p>Install the core AXON library for your JavaScript/TypeScript project:</p>
@@ -55,6 +55,40 @@ console.log(encode({ test: <span class="text-green-400">"Hello AXON!"</span> }))
     <li><strong>TypeScript:</strong> 5.0+ (optional, but recommended)</li>
   </ul>
 
+  <h2>Troubleshooting</h2>
+
+  <h3>Module not found</h3>
+  <p>If you see <code>Cannot find module '@axon-format/core'</code>, verify the package installed correctly:</p>
+  <pre><code>npm ls @axon-format/core</code></pre>
+  <p>If it is not listed, reinstall it. If you are using a monorepo, make sure you are installing in the correct workspace.</p>
+
+  <h3>TypeScript type errors</h3>
+  <p>AXON ships with built-in TypeScript declarations. If types are not resolving, check that your <code>tsconfig.json</code> includes <code>"moduleResolution": "node"</code> or <code>"bundler"</code>:</p>
+  <pre><code set:html={`{
+  <span class="text-green-400">"compilerOptions"</span>: {
+    <span class="text-green-400">"moduleResolution"</span>: <span class="text-green-400">"bundler"</span>,
+    <span class="text-green-400">"esModuleInterop"</span>: <span class="text-blue-400">true</span>
+  }
+}`} /></pre>
+
+  <h3>Node.js version mismatch</h3>
+  <p>AXON requires Node.js 18 or higher. Check your version:</p>
+  <pre><code>node --version</code></pre>
+  <p>If you are on an older version, use <a href="https://github.com/nvm-sh/nvm" target="_blank" rel="noopener noreferrer">nvm</a> to upgrade:</p>
+  <pre><code>nvm install 18
+nvm use 18</code></pre>
+
+  <h3>ESM vs CommonJS</h3>
+  <p>AXON is distributed as an ES module. If your project uses CommonJS (<code>require()</code>), either:</p>
+  <ul>
+    <li>Add <code>"type": "module"</code> to your <code>package.json</code>, or</li>
+    <li>Use dynamic <code>import()</code> instead of <code>require()</code></li>
+  </ul>
+
+  <pre><code set:html={`<span class="text-gray-500">// CommonJS workaround</span>
+<span class="text-purple-400">const</span> axon = <span class="text-purple-400">await</span> <span class="text-purple-400">import</span>(<span class="text-green-400">'@axon-format/core'</span>);
+<span class="text-purple-400">const</span> encoded = axon.encode({ test: <span class="text-green-400">"data"</span> });`} /></pre>
+
   <div class="not-prose mt-16 p-8 bg-gradient-to-r from-highlight-50 to-primary-50 dark:from-highlight-900/20 dark:to-primary-900/20 rounded-2xl border border-highlight-200 dark:border-highlight-800">
     <div class="flex items-center justify-between">
       <div>
@@ -62,8 +96,13 @@ console.log(encode({ test: <span class="text-green-400">"Hello AXON!"</span> }))
         <p class="text-sm text-gray-600 dark:text-gray-400">Encode your first data structure with AXON</p>
       </div>
       <a href="/axon/docs/quick-start" class="px-6 py-3 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 rounded-lg font-semibold hover:bg-gray-800 dark:hover:bg-gray-200 transition-all">
-        Quick Start →
+        Quick Start &rarr;
       </a>
     </div>
   </div>
+
+  <PageNavigation
+    prevPage={{ href: "/axon/docs", label: "Overview" }}
+    nextPage={{ href: "/axon/docs/quick-start", label: "Quick Start" }}
+  />
 </DocsLayout>

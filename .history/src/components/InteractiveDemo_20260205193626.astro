@@ -1,57 +1,37 @@
 ---
 ---
 
-<section id="demo" class="py-28 px-4 bg-gray-50/50 dark:bg-gray-800/30 relative">
-  <!-- Section divider -->
-  <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-600 to-transparent"></div>
-
+<section id="demo" class="py-20 px-4 bg-gray-50 dark:bg-gray-800">
   <div class="max-w-6xl mx-auto">
     <div class="text-center mb-12">
-      <h2 class="text-4xl md:text-[3.25rem] font-bold mb-5 leading-tight">
-        <span class="text-gray-900 dark:text-gray-100">See It </span>
-        <span class="bg-gradient-to-r from-accent-600 to-primary-600 dark:from-accent-400 dark:to-primary-400 bg-clip-text text-transparent">In Action</span>
-      </h2>
-      <p class="text-lg text-gray-500 dark:text-gray-400 mb-3 max-w-xl mx-auto">
-        Paste JSON or XML and watch AXON compress it in real time.
+      <h2 class="text-4xl md:text-5xl font-bold mb-4">See the Difference</h2>
+      <p class="text-xl text-gray-600 dark:text-gray-400 mb-3">
+        Paste your JSON or XML data and watch AXON compress it in real-time
       </p>
-      <p class="text-xs text-gray-400 dark:text-gray-500">
-        Conceptual demo - production AXON uses binary encoding for even greater savings
+      <p class="text-sm text-gray-500 dark:text-gray-500 italic">
+        Note: This is a conceptual demonstration. Real AXON uses binary encoding and is more sophisticated.
       </p>
     </div>
 
     <div class="grid md:grid-cols-2 gap-6">
       <!-- Input -->
-      <div class="rounded-2xl overflow-hidden border border-gray-200/60 dark:border-gray-700/60">
-        <div class="bg-gray-100 dark:bg-gray-800 px-4 py-3 flex items-center justify-between">
-          <div class="flex items-center gap-3">
-            <div class="flex gap-1.5">
-              <div class="w-3 h-3 rounded-full bg-red-400/80"></div>
-              <div class="w-3 h-3 rounded-full bg-yellow-400/80"></div>
-              <div class="w-3 h-3 rounded-full bg-green-400/80"></div>
-            </div>
-            <span id="input-label" class="text-xs font-medium text-gray-500 dark:text-gray-400 ml-1">JSON Input</span>
-          </div>
-          <span id="json-tokens" class="text-xs font-mono text-gray-400">0 tokens</span>
+      <div class="bg-white dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden">
+        <div class="bg-gray-900 dark:bg-gray-950 text-white px-4 py-3 flex justify-between items-center">
+          <span id="input-label" class="font-semibold">JSON Input</span>
+          <span id="json-tokens" class="text-sm text-gray-400">0 tokens</span>
         </div>
         <textarea
           id="json-input"
-          class="w-full h-80 p-4 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-mono text-sm resize-none focus:outline-none border-0"
+          class="w-full h-80 p-4 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-mono text-sm resize-none focus:outline-none"
           placeholder='{"users": [{"name": "Alice", "age": 30}, {"name": "Bob", "age": 30}]}'
         ></textarea>
       </div>
 
       <!-- AXON Output -->
-      <div class="rounded-2xl overflow-hidden border border-gray-200/60 dark:border-gray-700/60">
-        <div class="bg-gray-100 dark:bg-gray-800 px-4 py-3 flex items-center justify-between">
-          <div class="flex items-center gap-3">
-            <div class="flex gap-1.5">
-              <div class="w-3 h-3 rounded-full bg-red-400/80"></div>
-              <div class="w-3 h-3 rounded-full bg-yellow-400/80"></div>
-              <div class="w-3 h-3 rounded-full bg-green-400/80"></div>
-            </div>
-            <span class="text-xs font-medium text-gray-500 dark:text-gray-400 ml-1">AXON Output</span>
-          </div>
-          <span id="axon-tokens" class="text-xs font-mono text-green-600 dark:text-green-400">0 tokens</span>
+      <div class="bg-white dark:bg-gray-900 rounded-lg shadow-lg overflow-hidden">
+        <div class="bg-gray-900 dark:bg-gray-950 text-white px-4 py-3 flex justify-between items-center">
+          <span class="font-semibold">AXON Output</span>
+          <span id="axon-tokens" class="text-sm text-green-400">0 tokens</span>
         </div>
         <pre
           id="axon-output"
@@ -61,41 +41,40 @@
     </div>
 
     <!-- Savings Display -->
-    <div class="mt-6 p-6 bg-white dark:bg-gray-900 rounded-2xl border border-gray-200/60 dark:border-gray-700/60 text-center relative overflow-hidden">
-      <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-green-400 via-primary-400 to-green-400 opacity-60"></div>
-      <div class="text-3xl font-bold mb-1">
-        <span id="savings-percentage" class="bg-gradient-to-r from-green-600 to-primary-600 dark:from-green-400 dark:to-primary-400 bg-clip-text text-transparent">0%</span>
-        <span class="text-gray-400 dark:text-gray-500 text-lg ml-2 font-normal">Token Savings</span>
+    <div class="mt-8 p-6 bg-white dark:bg-gray-900 rounded-lg shadow-lg text-center">
+      <div class="text-3xl font-bold mb-2">
+        <span id="savings-percentage" class="text-green-600 dark:text-green-400">0%</span>
+        <span class="text-gray-600 dark:text-gray-400 text-xl ml-2">Token Savings</span>
       </div>
-      <div class="text-sm text-gray-400 dark:text-gray-500">
+      <div class="text-gray-500 dark:text-gray-500">
         <span id="tokens-saved">0</span> tokens saved with AXON
       </div>
     </div>
 
     <!-- Compression Technique Demos -->
-    <div class="mt-8">
-      <p class="text-center text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-3">Compression Techniques</p>
-      <div class="flex flex-wrap gap-2 justify-center">
+    <div class="mt-6">
+      <p class="text-center text-sm text-gray-500 dark:text-gray-400 mb-3">Compression Techniques</p>
+      <div class="flex flex-wrap gap-3 justify-center">
         <button
-          class="example-btn px-3 py-1.5 text-xs font-medium bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 border border-primary-200 dark:border-primary-700/50 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900/50 transition-all"
+          class="example-btn px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors"
           data-example='{"employees": [{"id": "EMP-001", "name": "Alice Chen", "department": "Engineering", "level": "Senior", "location": "San Francisco", "fullTime": true}, {"id": "EMP-002", "name": "Bob Smith", "department": "Engineering", "level": "Senior", "location": "San Francisco", "fullTime": true}, {"id": "EMP-003", "name": "Carol Wu", "department": "Engineering", "level": "Senior", "location": "San Francisco", "fullTime": true}, {"id": "EMP-004", "name": "David Park", "department": "Engineering", "level": "Senior", "location": "San Francisco", "fullTime": true}, {"id": "EMP-005", "name": "Eva Martinez", "department": "Engineering", "level": "Senior", "location": "San Francisco", "fullTime": true}, {"id": "EMP-006", "name": "Frank Lee", "department": "Engineering", "level": "Senior", "location": "San Francisco", "fullTime": true}, {"id": "EMP-007", "name": "Grace Kim", "department": "Engineering", "level": "Senior", "location": "San Francisco", "fullTime": true}, {"id": "EMP-008", "name": "Henry Zhang", "department": "Engineering", "level": "Senior", "location": "San Francisco", "fullTime": true}]}'
         >
           Repeated Values (RLE)
         </button>
         <button
-          class="example-btn px-3 py-1.5 text-xs font-medium bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 border border-primary-200 dark:border-primary-700/50 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900/50 transition-all"
+          class="example-btn px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors"
           data-example='{"metrics": [{"sensorId": "temp-warehouse-01", "timestamp": 1706745600, "tempC": 22.0, "humidity": 45.0}, {"sensorId": "temp-warehouse-01", "timestamp": 1706745601, "tempC": 22.1, "humidity": 45.1}, {"sensorId": "temp-warehouse-01", "timestamp": 1706745602, "tempC": 22.2, "humidity": 45.2}, {"sensorId": "temp-warehouse-01", "timestamp": 1706745603, "tempC": 22.3, "humidity": 45.3}, {"sensorId": "temp-warehouse-01", "timestamp": 1706745604, "tempC": 22.4, "humidity": 45.4}, {"sensorId": "temp-warehouse-01", "timestamp": 1706745605, "tempC": 22.5, "humidity": 45.5}, {"sensorId": "temp-warehouse-01", "timestamp": 1706745606, "tempC": 22.6, "humidity": 45.6}, {"sensorId": "temp-warehouse-01", "timestamp": 1706745607, "tempC": 22.7, "humidity": 45.7}, {"sensorId": "temp-warehouse-01", "timestamp": 1706745608, "tempC": 22.8, "humidity": 45.8}, {"sensorId": "temp-warehouse-01", "timestamp": 1706745609, "tempC": 22.9, "humidity": 45.9}]}'
         >
           Sequential Data (Delta)
         </button>
         <button
-          class="example-btn px-3 py-1.5 text-xs font-medium bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 border border-primary-200 dark:border-primary-700/50 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900/50 transition-all"
+          class="example-btn px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors"
           data-example='{"featureFlags": [{"userId": "user_001", "darkMode": true, "betaFeatures": true, "notifications": true, "analytics": false, "autoSave": true, "twoFactor": true, "apiAccess": false, "exportData": true}, {"userId": "user_002", "darkMode": false, "betaFeatures": true, "notifications": true, "analytics": true, "autoSave": true, "twoFactor": false, "apiAccess": false, "exportData": true}, {"userId": "user_003", "darkMode": true, "betaFeatures": false, "notifications": true, "analytics": false, "autoSave": true, "twoFactor": true, "apiAccess": true, "exportData": false}, {"userId": "user_004", "darkMode": true, "betaFeatures": true, "notifications": false, "analytics": false, "autoSave": true, "twoFactor": true, "apiAccess": false, "exportData": true}, {"userId": "user_005", "darkMode": false, "betaFeatures": true, "notifications": true, "analytics": true, "autoSave": false, "twoFactor": false, "apiAccess": true, "exportData": true}, {"userId": "user_006", "darkMode": true, "betaFeatures": false, "notifications": true, "analytics": false, "autoSave": true, "twoFactor": true, "apiAccess": false, "exportData": false}]}'
         >
           Booleans (Bit Pack)
         </button>
         <button
-          class="example-btn px-3 py-1.5 text-xs font-medium bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 border border-primary-200 dark:border-primary-700/50 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900/50 transition-all"
+          class="example-btn px-4 py-2 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-lg hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors"
           data-example='{"shipments": [{"trackingId": "TRK-90001", "status": "in_transit", "carrier": "FedEx", "priority": "express"}, {"trackingId": "TRK-90002", "status": "delivered", "carrier": "UPS", "priority": "standard"}, {"trackingId": "TRK-90003", "status": "in_transit", "carrier": "FedEx", "priority": "express"}, {"trackingId": "TRK-90004", "status": "pending", "carrier": "USPS", "priority": "standard"}, {"trackingId": "TRK-90005", "status": "delivered", "carrier": "FedEx", "priority": "express"}, {"trackingId": "TRK-90006", "status": "in_transit", "carrier": "UPS", "priority": "standard"}, {"trackingId": "TRK-90007", "status": "pending", "carrier": "FedEx", "priority": "express"}, {"trackingId": "TRK-90008", "status": "delivered", "carrier": "USPS", "priority": "standard"}, {"trackingId": "TRK-90009", "status": "in_transit", "carrier": "UPS", "priority": "express"}, {"trackingId": "TRK-90010", "status": "delivered", "carrier": "FedEx", "priority": "standard"}]}'
         >
           Limited Values (Dictionary)
@@ -150,22 +129,22 @@
 
     <!-- Real-World Example Buttons -->
     <div class="mt-4">
-      <p class="text-center text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-3">Real-World Examples</p>
-      <div class="flex flex-wrap gap-2 justify-center">
+      <p class="text-center text-sm text-gray-500 dark:text-gray-400 mb-3">Real-World Examples</p>
+      <div class="flex flex-wrap gap-3 justify-center">
       <button
-        class="example-btn px-3 py-1.5 text-xs font-medium bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-all"
+        class="example-btn px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
         data-example='{"users": [{"id": 1001, "name": "Alice Chen", "email": "alice@company.com", "role": "admin", "department": "Engineering", "active": true, "verified": true}, {"id": 1002, "name": "Bob Smith", "email": "bob@company.com", "role": "user", "department": "Engineering", "active": true, "verified": true}, {"id": 1003, "name": "Carol Johnson", "email": "carol@company.com", "role": "user", "department": "Engineering", "active": true, "verified": true}, {"id": 1004, "name": "David Lee", "email": "david@company.com", "role": "user", "department": "Engineering", "active": true, "verified": false}, {"id": 1005, "name": "Eva Martinez", "email": "eva@company.com", "role": "user", "department": "Sales", "active": true, "verified": true}, {"id": 1006, "name": "Frank Wilson", "email": "frank@company.com", "role": "user", "department": "Sales", "active": true, "verified": true}, {"id": 1007, "name": "Grace Kim", "email": "grace@company.com", "role": "manager", "department": "Sales", "active": true, "verified": true}, {"id": 1008, "name": "Henry Brown", "email": "henry@company.com", "role": "user", "department": "Marketing", "active": false, "verified": true}]}'
       >
         API Response
       </button>
       <button
-        class="example-btn px-3 py-1.5 text-xs font-medium bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-all"
+        class="example-btn px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
         data-example='{"products": [{"sku": "LAPTOP-001", "name": "MacBook Pro 14in M3", "price": 1999.00, "category": "Laptops", "brand": "Apple", "inStock": true, "featured": true, "rating": 4.8}, {"sku": "LAPTOP-002", "name": "MacBook Air 13in M3", "price": 1099.00, "category": "Laptops", "brand": "Apple", "inStock": true, "featured": true, "rating": 4.7}, {"sku": "LAPTOP-003", "name": "MacBook Pro 16in M3", "price": 2499.00, "category": "Laptops", "brand": "Apple", "inStock": true, "featured": false, "rating": 4.9}, {"sku": "LAPTOP-004", "name": "Dell XPS 15", "price": 1799.00, "category": "Laptops", "brand": "Dell", "inStock": true, "featured": false, "rating": 4.5}, {"sku": "LAPTOP-005", "name": "Dell XPS 13 Plus", "price": 1299.00, "category": "Laptops", "brand": "Dell", "inStock": true, "featured": false, "rating": 4.4}, {"sku": "LAPTOP-006", "name": "ThinkPad X1 Carbon", "price": 1649.00, "category": "Laptops", "brand": "Lenovo", "inStock": true, "featured": false, "rating": 4.6}, {"sku": "PHONE-001", "name": "iPhone 15 Pro Max", "price": 1199.00, "category": "Phones", "brand": "Apple", "inStock": true, "featured": true, "rating": 4.8}, {"sku": "PHONE-002", "name": "iPhone 15 Pro", "price": 999.00, "category": "Phones", "brand": "Apple", "inStock": true, "featured": true, "rating": 4.7}, {"sku": "PHONE-003", "name": "iPhone 15", "price": 799.00, "category": "Phones", "brand": "Apple", "inStock": true, "featured": false, "rating": 4.5}, {"sku": "PHONE-004", "name": "Samsung Galaxy S24 Ultra", "price": 1299.00, "category": "Phones", "brand": "Samsung", "inStock": true, "featured": true, "rating": 4.6}, {"sku": "PHONE-005", "name": "Samsung Galaxy S24", "price": 799.00, "category": "Phones", "brand": "Samsung", "inStock": false, "featured": false, "rating": 4.4}, {"sku": "PHONE-006", "name": "Google Pixel 8 Pro", "price": 999.00, "category": "Phones", "brand": "Google", "inStock": true, "featured": false, "rating": 4.5}, {"sku": "TABLET-001", "name": "iPad Pro 12.9in M2", "price": 1099.00, "category": "Tablets", "brand": "Apple", "inStock": true, "featured": true, "rating": 4.9}, {"sku": "TABLET-002", "name": "iPad Air 11in M2", "price": 599.00, "category": "Tablets", "brand": "Apple", "inStock": true, "featured": false, "rating": 4.7}, {"sku": "TABLET-003", "name": "Samsung Galaxy Tab S9", "price": 849.00, "category": "Tablets", "brand": "Samsung", "inStock": true, "featured": false, "rating": 4.5}, {"sku": "WATCH-001", "name": "Apple Watch Ultra 2", "price": 799.00, "category": "Wearables", "brand": "Apple", "inStock": true, "featured": true, "rating": 4.8}, {"sku": "WATCH-002", "name": "Apple Watch Series 9", "price": 399.00, "category": "Wearables", "brand": "Apple", "inStock": true, "featured": false, "rating": 4.6}, {"sku": "WATCH-003", "name": "Samsung Galaxy Watch 6", "price": 329.00, "category": "Wearables", "brand": "Samsung", "inStock": true, "featured": false, "rating": 4.3}, {"sku": "AUDIO-001", "name": "AirPods Pro 2nd Gen", "price": 249.00, "category": "Audio", "brand": "Apple", "inStock": true, "featured": true, "rating": 4.8}, {"sku": "AUDIO-002", "name": "AirPods Max", "price": 549.00, "category": "Audio", "brand": "Apple", "inStock": true, "featured": false, "rating": 4.5}, {"sku": "AUDIO-003", "name": "Sony WH-1000XM5", "price": 399.00, "category": "Audio", "brand": "Sony", "inStock": true, "featured": true, "rating": 4.7}, {"sku": "AUDIO-004", "name": "Bose QuietComfort Ultra", "price": 429.00, "category": "Audio", "brand": "Bose", "inStock": true, "featured": false, "rating": 4.6}]}'
       >
         Product Catalog
       </button>
       <button
-        class="example-btn px-3 py-1.5 text-xs font-medium bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-all"
+        class="example-btn px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
         data-example='{"messages": [{"role": "system", "content": "You are a helpful coding assistant.", "timestamp": 1706745600}, {"role": "user", "content": "How do I read a file in Python?", "timestamp": 1706745610}, {"role": "assistant", "content": "You can use the open() function with a context manager.", "timestamp": 1706745615}, {"role": "user", "content": "Can you show me an example?", "timestamp": 1706745625}, {"role": "assistant", "content": "Here is an example using with open()...", "timestamp": 1706745630}, {"role": "user", "content": "What about writing to a file?", "timestamp": 1706745650}, {"role": "assistant", "content": "For writing, use open() with mode w or a.", "timestamp": 1706745655}, {"role": "user", "content": "How do I handle encoding?", "timestamp": 1706745670}, {"role": "assistant", "content": "Pass encoding parameter like encoding=utf-8.", "timestamp": 1706745675}, {"role": "user", "content": "Thanks, that helps!", "timestamp": 1706745690}, {"role": "assistant", "content": "You are welcome! Let me know if you need more help.", "timestamp": 1706745695}]}'
       >
         Chat History
@@ -173,7 +152,7 @@
       <button
         class="example-btn xml-example px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
         data-example='<?xml version="1.0" encoding="UTF-8"?>
-<invoices xmlns="http://corp.com/billing">
+<invoices xmlns="http://acme-corp.com/billing">
   <invoice id="INV-2024-0001" customer="CUST-500">
     <date>2024-01-15</date>
     <dueDate>2024-02-15</dueDate>
@@ -212,7 +191,7 @@
 </invoices>'
         data-type="xml"
       >
-        Corp Invoices
+        Acme Corp Invoices
       </button>
       </div>
     </div>

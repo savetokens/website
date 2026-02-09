@@ -1,24 +1,24 @@
 ---
 import DocsLayout from '../../../layouts/DocsLayout.astro';
+import DocPageHeader from '../../../components/DocPageHeader.astro';
+import LearningSummary from '../../../components/LearningSummary.astro';
+import PageNavigation from '../../../components/PageNavigation.astro';
 ---
 
 <DocsLayout title="Compression - AXON Documentation | SaveTokens">
-  <div class="not-prose mb-12">
-    <a
-      href="/axon"
-      class="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors text-sm mb-8"
-    >
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-      </svg>
-      Back to AXON
-    </a>
+  <DocPageHeader
+    title="Compression Algorithms"
+    description="AXON automatically applies the most effective compression based on your data patterns"
+    pageName="Compression"
+    badge="Core Concept"
+    badgeColor="accent"
+  />
 
-    <h1 class="text-5xl font-bold mb-4 text-gray-900 dark:text-gray-100">Compression Algorithms</h1>
-    <p class="text-xl text-gray-600 dark:text-gray-400 leading-relaxed">
-      AXON automatically applies the most effective compression based on your data patterns
-    </p>
-  </div>
+  <LearningSummary items={[
+    "All 5 compression algorithms: RLE, Dictionary, Delta, Bit Packing, Varint",
+    "When each algorithm is automatically applied and its efficiency",
+    "How AXON combines multiple algorithms for optimal compression"
+  ]} />
 
   <div class="bg-primary-50 dark:bg-primary-900/20 p-6 rounded-lg my-8 border-l-4 border-primary-500 not-prose">
     <p class="text-sm text-gray-700 dark:text-gray-300 m-0">
@@ -223,4 +223,9 @@ role:[0,1,0,2,1]</code></pre>
       and how AXON adapts to different data structures.
     </p>
   </div>
+
+  <PageNavigation
+    prevPage={{ href: "/axon/docs/type-system", label: "Type System" }}
+    nextPage={{ href: "/axon/docs/encoding-modes", label: "Encoding Modes" }}
+  />
 </DocsLayout>

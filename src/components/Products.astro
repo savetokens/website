@@ -1,115 +1,164 @@
 ---
 ---
 
-<section class="py-20 px-4">
+<section id="products" class="py-28 px-4 relative">
+  <!-- Section divider -->
+  <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-200 dark:via-gray-700 to-transparent"></div>
+
   <div class="max-w-6xl mx-auto">
     <div class="text-center mb-16">
-      <h2 class="text-4xl md:text-5xl font-bold mb-6">Our Solutions</h2>
-      <p class="text-xl text-gray-600 dark:text-gray-400">
-        Open-source tools built for the AI era
+      <h2 class="text-4xl md:text-[3.25rem] font-bold mb-5 leading-tight">
+        <span class="text-gray-900 dark:text-gray-100">Open-Source Tools for the </span>
+        <span class="bg-gradient-to-r from-accent-600 to-highlight-600 dark:from-accent-400 dark:to-highlight-400 bg-clip-text text-transparent">AI Era</span>
+      </h2>
+      <p class="text-lg text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
+        Production-grade libraries that make every AI interaction leaner, faster, and more precise.
       </p>
     </div>
 
     <!-- AXON Product Card -->
-    <div class="bg-gradient-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 rounded-2xl shadow-2xl overflow-hidden">
+    <div class="relative bg-white dark:bg-gray-900 rounded-2xl border border-gray-200/60 dark:border-gray-700/60 overflow-hidden shadow-sm">
+      <!-- Top accent -->
+      <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-400 via-accent-400 to-highlight-400"></div>
+
       <div class="grid md:grid-cols-2 gap-0">
         <!-- Left: Product Info -->
         <div class="p-8 md:p-12 flex flex-col justify-center">
-          <h3 class="text-4xl font-bold mb-4">AXON</h3>
-          <p class="text-lg text-gray-600 dark:text-gray-400 mb-6">
+          <h3 class="text-4xl font-bold mb-1 tracking-tight text-gray-900 dark:text-gray-100">AXON</h3>
+          <p class="text-[13px] text-gray-400 dark:text-gray-500 mb-5 tracking-widest uppercase font-medium">
             Adaptive eXchange Oriented Notation
           </p>
-          <p class="text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
-            A next-generation data serialization format engineered specifically for LLM interactions.
-            AXON achieves 60-95% token reduction compared to JSON while maintaining full type safety
-            and validation.
+          <p class="text-[15px] text-gray-600 dark:text-gray-300 mb-7 leading-relaxed">
+            The data serialization format built for LLMs. Feed it JSON, XML, or any verbose format.
+            AXON produces output that's 60&ndash;95% smaller, fully typed, and schema-validated, so your models
+            see more signal and less noise.
           </p>
 
           <!-- Key Benefits -->
           <div class="space-y-3 mb-8">
-            <div class="flex items-start gap-3">
-              <svg class="w-6 h-6 text-primary-600 dark:text-primary-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-              </svg>
-              <span class="text-gray-700 dark:text-gray-300">60-95% smaller than JSON for typical LLM payloads</span>
+            <div class="flex items-center gap-3">
+              <div class="w-5 h-5 rounded-md bg-green-100 dark:bg-green-900/40 flex items-center justify-center flex-shrink-0">
+                <svg class="w-3 h-3 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+              </div>
+              <span class="text-sm text-gray-600 dark:text-gray-300">60&ndash;95% smaller than verbose formats like JSON and XML</span>
             </div>
-            <div class="flex items-start gap-3">
-              <svg class="w-6 h-6 text-primary-600 dark:text-primary-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-              </svg>
-              <span class="text-gray-700 dark:text-gray-300">5 compression algorithms automatically applied</span>
+            <div class="flex items-center gap-3">
+              <div class="w-5 h-5 rounded-md bg-green-100 dark:bg-green-900/40 flex items-center justify-center flex-shrink-0">
+                <svg class="w-3 h-3 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+              </div>
+              <span class="text-sm text-gray-600 dark:text-gray-300">5 compression algorithms, automatically selected</span>
             </div>
-            <div class="flex items-start gap-3">
-              <svg class="w-6 h-6 text-primary-600 dark:text-primary-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-              </svg>
-              <span class="text-gray-700 dark:text-gray-300">13 validated types with schema support</span>
+            <div class="flex items-center gap-3">
+              <div class="w-5 h-5 rounded-md bg-green-100 dark:bg-green-900/40 flex items-center justify-center flex-shrink-0">
+                <svg class="w-3 h-3 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+              </div>
+              <span class="text-sm text-gray-600 dark:text-gray-300">13 validated types with full schema support</span>
             </div>
-            <div class="flex items-start gap-3">
-              <svg class="w-6 h-6 text-primary-600 dark:text-primary-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-              </svg>
-              <span class="text-gray-700 dark:text-gray-300">Production-ready with 93% test coverage</span>
+            <div class="flex items-center gap-3">
+              <div class="w-5 h-5 rounded-md bg-green-100 dark:bg-green-900/40 flex items-center justify-center flex-shrink-0">
+                <svg class="w-3 h-3 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+              </div>
+              <span class="text-sm text-gray-600 dark:text-gray-300">342 tests passing, zero dependencies, MIT licensed</span>
             </div>
           </div>
 
-          <div class="flex gap-4">
+          <div class="flex gap-3">
             <a
               href="/axon"
-              class="px-6 py-3 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 rounded-lg font-semibold hover:bg-gray-800 dark:hover:bg-gray-200 transition-all duration-200 shadow-lg"
+              class="group px-6 py-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-xl font-semibold hover:bg-gray-800 dark:hover:bg-gray-100 transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5 flex items-center gap-2 text-sm"
             >
-              Learn More
+              Explore AXON
+              <svg class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+              </svg>
             </a>
             <a
               href="https://github.com/savetokens/axon"
               target="_blank"
               rel="noopener noreferrer"
-              class="px-6 py-3 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-2 border-gray-300 dark:border-gray-600 rounded-lg font-semibold hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200 flex items-center gap-2"
+              class="px-6 py-3 bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 rounded-xl font-medium hover:bg-gray-50 dark:hover:bg-gray-700 hover:border-gray-300 dark:hover:border-gray-600 transition-all duration-200 flex items-center gap-2 text-sm"
             >
-              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                 <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path>
               </svg>
-              GitHub
+              View Source
             </a>
           </div>
         </div>
 
         <!-- Right: Visual/Stats -->
-        <div class="bg-gray-50 dark:bg-gray-800 p-8 md:p-12 flex flex-col justify-center">
-          <div class="space-y-6">
+        <div class="bg-gray-50 dark:bg-gray-800/50 p-8 md:p-12 flex flex-col justify-center border-l border-gray-100 dark:border-gray-800">
+          <div class="space-y-4">
             <!-- Stat 1 -->
-            <div class="bg-white dark:bg-gray-900 rounded-lg p-6 shadow-sm">
-              <div class="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-2">204x</div>
-              <div class="text-sm text-gray-600 dark:text-gray-400">More efficient for repeated data patterns</div>
+            <div class="relative bg-white dark:bg-gray-900 rounded-xl p-6 border border-gray-200/60 dark:border-gray-700/60 group hover:border-accent-300 dark:hover:border-accent-700 transition-all duration-300">
+              <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-accent-400/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div class="flex items-baseline gap-2 mb-1.5">
+                <div class="text-3xl font-bold bg-gradient-to-r from-accent-600 to-primary-600 dark:from-accent-400 dark:to-primary-400 bg-clip-text text-transparent">204x</div>
+                <span class="text-xs font-medium text-accent-500 dark:text-accent-400">compression</span>
+              </div>
+              <div class="text-xs text-gray-500 dark:text-gray-400">More efficient for repeated data patterns</div>
             </div>
 
             <!-- Stat 2 -->
-            <div class="bg-white dark:bg-gray-900 rounded-lg p-6 shadow-sm">
-              <div class="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-2">60-95%</div>
-              <div class="text-sm text-gray-600 dark:text-gray-400">Token reduction vs JSON</div>
+            <div class="relative bg-white dark:bg-gray-900 rounded-xl p-6 border border-gray-200/60 dark:border-gray-700/60 group hover:border-green-300 dark:hover:border-green-700 transition-all duration-300">
+              <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-green-400/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div class="flex items-baseline gap-2 mb-1.5">
+                <div class="text-3xl font-bold bg-gradient-to-r from-green-600 to-primary-600 dark:from-green-400 dark:to-primary-400 bg-clip-text text-transparent">60&ndash;95%</div>
+                <span class="text-xs font-medium text-green-500 dark:text-green-400">savings</span>
+              </div>
+              <div class="text-xs text-gray-500 dark:text-gray-400">Token reduction vs verbose formats</div>
             </div>
 
             <!-- Stat 3 -->
-            <div class="bg-white dark:bg-gray-900 rounded-lg p-6 shadow-sm">
-              <div class="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-2">6</div>
-              <div class="text-sm text-gray-600 dark:text-gray-400">Adaptive encoding modes</div>
+            <div class="relative bg-white dark:bg-gray-900 rounded-xl p-6 border border-gray-200/60 dark:border-gray-700/60 group hover:border-primary-300 dark:hover:border-primary-700 transition-all duration-300">
+              <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary-400/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div class="flex items-baseline gap-2 mb-1.5">
+                <div class="text-3xl font-bold bg-gradient-to-r from-primary-600 to-highlight-600 dark:from-primary-400 dark:to-highlight-400 bg-clip-text text-transparent">6</div>
+                <span class="text-xs font-medium text-primary-500 dark:text-primary-400">modes</span>
+              </div>
+              <div class="text-xs text-gray-500 dark:text-gray-400">Adaptive encoding modes for every data shape</div>
+            </div>
+
+            <!-- Stat 4 -->
+            <div class="relative bg-white dark:bg-gray-900 rounded-xl p-6 border border-gray-200/60 dark:border-gray-700/60 group hover:border-highlight-300 dark:hover:border-highlight-700 transition-all duration-300">
+              <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-highlight-400/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div class="flex items-baseline gap-2 mb-1.5">
+                <div class="text-3xl font-bold bg-gradient-to-r from-highlight-600 to-accent-600 dark:from-highlight-400 dark:to-accent-400 bg-clip-text text-transparent">0</div>
+                <span class="text-xs font-medium text-highlight-500 dark:text-highlight-400">dependencies</span>
+              </div>
+              <div class="text-xs text-gray-500 dark:text-gray-400">Lightweight, self-contained, ready to ship</div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Coming Soon -->
-    <div class="mt-12 text-center">
-      <p class="text-gray-500 dark:text-gray-500 mb-4">More tools coming soon...</p>
-      <a
-        href="https://github.com/savetokens"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="text-blue-600 dark:text-blue-400 hover:underline"
-      >
-        Follow our progress on GitHub →
-      </a>
+    <!-- Roadmap hint -->
+    <div class="mt-14 text-center">
+      <div class="inline-flex items-center gap-3 px-5 py-3 bg-white/60 dark:bg-gray-800/60 backdrop-blur-sm border border-gray-200/60 dark:border-gray-700/60 rounded-2xl">
+        <div class="flex -space-x-1">
+          <div class="w-2 h-2 rounded-full bg-primary-400"></div>
+          <div class="w-2 h-2 rounded-full bg-accent-400"></div>
+          <div class="w-2 h-2 rounded-full bg-highlight-400"></div>
+        </div>
+        <span class="text-sm text-gray-500 dark:text-gray-400">More tools on the roadmap</span>
+        <a
+          href="https://github.com/savetokens"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-sm font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
+        >
+          Follow along &rarr;
+        </a>
+      </div>
     </div>
   </div>
 </section>

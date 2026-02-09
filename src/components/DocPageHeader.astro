@@ -1,0 +1,47 @@
+---
+import Breadcrumbs from './Breadcrumbs.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  pageName: string;
+  badge?: string;
+  badgeColor?: 'primary' | 'accent' | 'highlight' | 'green';
+}
+
+const { title, description, pageName, badge, badgeColor = 'primary' } = Astro.props;
+
+const badgeClasses: Record<string, string> = {
+  primary: 'bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300 border-primary-200 dark:border-primary-800',
+  accent: 'bg-accent-100 dark:bg-accent-900/40 text-accent-700 dark:text-accent-300 border-accent-200 dark:border-accent-800',
+  highlight: 'bg-highlight-100 dark:bg-highlight-900/40 text-highlight-700 dark:text-highlight-300 border-highlight-200 dark:border-highlight-800',
+  green: 'bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 border-green-200 dark:border-green-800',
+};
+---
+
+<div class="not-prose mb-10">
+  <Breadcrumbs pageName={pageName} />
+
+  <div class="relative -mx-4 sm:-mx-6 px-4 sm:px-6 py-8 mb-6 rounded-2xl bg-gradient-to-br from-white via-gray-50 to-primary-50/30 dark:from-gray-900 dark:via-gray-900 dark:to-primary-950/30 border border-gray-200/60 dark:border-gray-700/60">
+    <div class="relative">
+      {badge && (
+        <span class:list={[
+          "inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider border mb-4",
+          badgeClasses[badgeColor]
+        ]}>
+          {badge}
+        </span>
+      )}
+      <h1 class="text-4xl sm:text-5xl font-extrabold mb-3 text-gray-900 dark:text-gray-100 tracking-tight leading-tight">{title}</h1>
+      <p class="text-lg text-gray-500 dark:text-gray-400 leading-relaxed max-w-2xl">
+        {description}
+      </p>
+    </div>
+    <!-- Decorative accent -->
+    <div class="absolute top-0 right-0 w-32 h-32 opacity-[0.03] dark:opacity-[0.02]">
+      <svg viewBox="0 0 100 100" fill="currentColor" class="text-primary-900 dark:text-primary-100">
+        <polygon points="50,5 95,27.5 95,72.5 50,95 5,72.5 5,27.5" />
+      </svg>
+    </div>
+  </div>
+</div>

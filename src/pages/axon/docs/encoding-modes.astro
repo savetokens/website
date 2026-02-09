@@ -1,24 +1,24 @@
 ---
 import DocsLayout from '../../../layouts/DocsLayout.astro';
+import DocPageHeader from '../../../components/DocPageHeader.astro';
+import LearningSummary from '../../../components/LearningSummary.astro';
+import PageNavigation from '../../../components/PageNavigation.astro';
 ---
 
 <DocsLayout title="Encoding Modes - AXON Documentation | SaveTokens">
-  <div class="not-prose mb-12">
-    <a
-      href="/axon"
-      class="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors text-sm mb-8"
-    >
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-      </svg>
-      Back to AXON
-    </a>
+  <DocPageHeader
+    title="Encoding Modes"
+    description="AXON automatically selects the optimal encoding mode based on your data structure"
+    pageName="Encoding Modes"
+    badge="Core Concept"
+    badgeColor="accent"
+  />
 
-    <h1 class="text-5xl font-bold mb-4 text-gray-900 dark:text-gray-100">Encoding Modes</h1>
-    <p class="text-xl text-gray-600 dark:text-gray-400 leading-relaxed">
-      AXON automatically selects the optimal encoding mode based on your data structure
-    </p>
-  </div>
+  <LearningSummary items={[
+    "All 6 encoding modes: Compact, Nested, Columnar, Stream, Sparse, JSON Fallback",
+    "How XML input is converted with tag elimination and attribute extraction",
+    "How to check which mode AXON recommends for your data"
+  ]} />
 
   <div class="grid md:grid-cols-2 gap-6 my-8 not-prose">
     <div class="bg-white dark:bg-gray-900 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
@@ -76,6 +76,46 @@ import DocsLayout from '../../../layouts/DocsLayout.astro';
     </div>
   </div>
 
+  <h2>XML Input Support</h2>
+  <p>
+    AXON can convert XML data directly, which is especially effective due to XML's inherently verbose structure.
+    The conversion process:
+  </p>
+  <ul>
+    <li><strong>Tag elimination:</strong> Repetitive opening/closing tags become schema definitions</li>
+    <li><strong>Attribute extraction:</strong> XML attributes are converted to columnar fields</li>
+    <li><strong>Uniform children:</strong> Repeated child elements (like <code>&lt;item&gt;</code>) use columnar format</li>
+    <li><strong>Namespace handling:</strong> Common namespaces are compressed via dictionary encoding</li>
+  </ul>
+
+  <pre><code set:html={`<span class="text-gray-500">// XML input</span>
+&lt;products&gt;
+  &lt;product id="P001" category="electronics"&gt;
+    &lt;name&gt;Headphones&lt;/name&gt;
+    &lt;price&gt;149.99&lt;/price&gt;
+  &lt;/product&gt;
+  &lt;product id="P002" category="electronics"&gt;
+    &lt;name&gt;Speaker&lt;/name&gt;
+    &lt;price&gt;79.99&lt;/price&gt;
+  &lt;/product&gt;
+&lt;/products&gt;
+
+<span class="text-gray-500">// AXON output (conceptual)</span>
+@xml
+products:
+  @schema(product): [@id, @category, name, price]
+    @id: ["P001", "P002"]
+    @category: "electronics"*2
+    name: ["Headphones", "Speaker"]
+    price: [149.99, 79.99]`} /></pre>
+
+  <div class="bg-accent-50 dark:bg-accent-900/20 p-6 rounded-lg my-6 border-l-4 border-accent-500 not-prose">
+    <p class="text-sm text-gray-700 dark:text-gray-300 m-0">
+      <strong>Best for XML:</strong> Enterprise data feeds (invoices, orders), configuration files,
+      SOAP responses, and any XML with repeated element structures.
+    </p>
+  </div>
+
   <h2>Mode Selection Example</h2>
   <p>You can check which mode AXON would recommend for your data:</p>
 
@@ -93,4 +133,9 @@ console.log(recommendation.reason); <span class="text-gray-500">// Explanatory t
       needed and may reduce compression effectiveness.
     </p>
   </div>
+
+  <PageNavigation
+    prevPage={{ href: "/axon/docs/compression", label: "Compression" }}
+    nextPage={{ href: "/axon/docs/schemas", label: "Schema System" }}
+  />
 </DocsLayout>

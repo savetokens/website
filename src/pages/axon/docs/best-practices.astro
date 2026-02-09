@@ -1,21 +1,60 @@
 ---
 import DocsLayout from '../../../layouts/DocsLayout.astro';
+import DocPageHeader from '../../../components/DocPageHeader.astro';
+import LearningSummary from '../../../components/LearningSummary.astro';
+import PageNavigation from '../../../components/PageNavigation.astro';
 ---
 
 <DocsLayout title="Best Practices - AXON Documentation | SaveTokens">
-  <div class="not-prose mb-12">
-    <a href="/axon" class="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors text-sm mb-8">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-      </svg>
-      Back to AXON
-    </a>
+  <DocPageHeader
+    title="Best Practices"
+    description="Guidelines for optimal AXON usage and common pitfalls to avoid"
+    pageName="Best Practices"
+    badge="Resources"
+    badgeColor="green"
+  />
 
-    <h1 class="text-5xl font-bold mb-4 text-gray-900 dark:text-gray-100">Best Practices</h1>
-    <p class="text-xl text-gray-600 dark:text-gray-400 leading-relaxed">Guidelines for optimal AXON usage</p>
+  <LearningSummary items={[
+    "When and how to use schema validation for error prevention",
+    "Why automatic mode selection outperforms manual overrides",
+    "Strategies for measuring and maximizing token savings",
+    "Common anti-patterns to avoid"
+  ]} />
+
+  <!-- Quick reference summary with anchor links -->
+  <div class="not-prose my-10 grid md:grid-cols-2 gap-4">
+    <div class="p-5 rounded-xl bg-green-50 dark:bg-green-900/10 border border-green-200 dark:border-green-800/50">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-green-500 text-white text-xs font-bold">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+        </span>
+        <span class="text-sm font-bold text-green-800 dark:text-green-300 uppercase tracking-wider">Do</span>
+      </div>
+      <ul class="space-y-1.5 text-sm text-gray-700 dark:text-gray-300">
+        <li><a href="#use-schemas-for-validation" class="hover:text-green-700 dark:hover:text-green-300 transition-colors">Use schemas for validation</a></li>
+        <li><a href="#let-axon-choose-the-mode" class="hover:text-green-700 dark:hover:text-green-300 transition-colors">Let AXON choose the mode</a></li>
+        <li><a href="#add-query-hints-for-complex-data" class="hover:text-green-700 dark:hover:text-green-300 transition-colors">Add query hints for complex data</a></li>
+        <li><a href="#compress-structured-data-not-prose" class="hover:text-green-700 dark:hover:text-green-300 transition-colors">Compress structured data, not prose</a></li>
+        <li><a href="#reuse-schemas-for-related-data" class="hover:text-green-700 dark:hover:text-green-300 transition-colors">Reuse schemas across your app</a></li>
+        <li><a href="#measure-your-savings" class="hover:text-green-700 dark:hover:text-green-300 transition-colors">Measure your token savings</a></li>
+      </ul>
+    </div>
+    <div class="p-5 rounded-xl bg-red-50 dark:bg-red-900/10 border border-red-200 dark:border-red-800/50">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-red-500 text-white text-xs font-bold">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </span>
+        <span class="text-sm font-bold text-red-800 dark:text-red-300 uppercase tracking-wider">Avoid</span>
+      </div>
+      <ul class="space-y-1.5 text-sm text-gray-700 dark:text-gray-300">
+        <li><a href="#dont-over-optimize" class="hover:text-red-700 dark:hover:text-red-300 transition-colors">Over-optimizing tiny payloads</a></li>
+        <li><a href="#dont-skip-validation" class="hover:text-red-700 dark:hover:text-red-300 transition-colors">Skipping validation</a></li>
+        <li><a href="#dont-mix-encoding-strategies" class="hover:text-red-700 dark:hover:text-red-300 transition-colors">Mixing encoding strategies</a></li>
+      </ul>
+    </div>
   </div>
 
-  <h2>✓ Use Schemas for Validation</h2>
+  <h2 id="use-schemas-for-validation"><span class="bp-badge bp-do">DO</span> Use Schemas for Validation</h2>
   <p>Define schemas to catch type errors before sending data to expensive LLM APIs. Validation happens before encoding, saving you from costly API errors.</p>
 
   <pre><code set:html={`<span class="text-purple-400">import</span> { encode, <span class="text-purple-400">type</span> Schema } <span class="text-purple-400">from</span> <span class="text-green-400">'@axon-format/core'</span>;
@@ -53,21 +92,21 @@ import DocsLayout from '../../../layouts/DocsLayout.astro';
     </p>
   </div>
 
-  <h2>✓ Let AXON Choose the Mode</h2>
+  <h2 id="let-axon-choose-the-mode"><span class="bp-badge bp-do">DO</span> Let AXON Choose the Mode</h2>
   <p>
-    AXON automatically selects between Table, Stream, and Nested modes based on your data structure.
+    AXON automatically selects between Compact, Stream, and Nested modes based on your data structure.
     The automatic mode selection is optimized through extensive testing across thousands of real-world datasets.
   </p>
 
-  <pre><code set:html={`<span class="text-gray-500">// ✅ Good: Let AXON choose automatically</span>
+  <pre><code set:html={`<span class="text-gray-500">// Good: Let AXON choose automatically</span>
 <span class="text-purple-400">const</span> encoded = encode(data);
 
-<span class="text-gray-500">// ❌ Rarely needed: Manual override</span>
+<span class="text-gray-500">// Rarely needed: Manual override</span>
 <span class="text-purple-400">const</span> encoded = encode(data, { mode: <span class="text-green-400">'table'</span> });
 
 <span class="text-gray-500">// Examples of automatic mode selection:</span>
 
-<span class="text-gray-500">// Arrays of objects → Table mode</span>
+<span class="text-gray-500">// Arrays of objects -> Table mode</span>
 <span class="text-purple-400">const</span> tableData = {
   users: [
     { id: <span class="text-blue-400">1</span>, name: <span class="text-green-400">"Alice"</span> },
@@ -75,7 +114,7 @@ import DocsLayout from '../../../layouts/DocsLayout.astro';
   ]
 };
 
-<span class="text-gray-500">// Time-series data → Stream mode (better compression)</span>
+<span class="text-gray-500">// Time-series data -> Stream mode (better compression)</span>
 <span class="text-purple-400">const</span> streamData = {
   events: [
     { timestamp: <span class="text-blue-400">1640000000</span>, temp: <span class="text-blue-400">72.5</span> },
@@ -83,7 +122,7 @@ import DocsLayout from '../../../layouts/DocsLayout.astro';
   ]
 };
 
-<span class="text-gray-500">// Deeply nested objects → Nested mode</span>
+<span class="text-gray-500">// Deeply nested objects -> Nested mode</span>
 <span class="text-purple-400">const</span> nestedData = {
   company: {
     name: <span class="text-green-400">"Acme"</span>,
@@ -93,7 +132,7 @@ import DocsLayout from '../../../layouts/DocsLayout.astro';
   }
 };`} /></pre>
 
-  <h2>✓ Add Query Hints for Complex Data</h2>
+  <h2 id="add-query-hints-for-complex-data"><span class="bp-badge bp-do">DO</span> Add Query Hints for Complex Data</h2>
   <p>Query hints help LLMs understand relationships and primary keys, dramatically improving accuracy in responses about your data.</p>
 
   <pre><code set:html={`<span class="text-purple-400">import</span> { encode } <span class="text-purple-400">from</span> <span class="text-green-400">'@axon-format/core'</span>;
@@ -120,16 +159,16 @@ import DocsLayout from '../../../layouts/DocsLayout.astro';
 <span class="text-gray-500">// "What orders are pending for user 43?"</span>
 <span class="text-gray-500">// "What's the total value of shipped orders?"</span>`} /></pre>
 
-  <div class="bg-blue-50 dark:bg-blue-900/20 p-6 rounded-lg my-6 border-l-4 border-blue-500 not-prose">
+  <div class="bg-primary-50 dark:bg-primary-900/20 p-6 rounded-lg my-6 border-l-4 border-primary-500 not-prose">
     <p class="text-sm text-gray-700 dark:text-gray-300 m-0">
       <strong>Real Impact:</strong> In testing, query hints improved LLM response accuracy by 40-60% for complex relational queries.
     </p>
   </div>
 
-  <h2>✓ Compress Structured Data, Not Prose</h2>
+  <h2 id="compress-structured-data-not-prose"><span class="bp-badge bp-do">DO</span> Compress Structured Data, Not Prose</h2>
   <p>AXON is optimized for structured/tabular data where it achieves 60-95% token reduction. Natural language text should remain as-is for LLM readability.</p>
 
-  <pre><code set:html={`<span class="text-gray-500">// ✅ Perfect for AXON: Structured data</span>
+  <pre><code set:html={`<span class="text-gray-500">// Perfect for AXON: Structured data</span>
 <span class="text-purple-400">const</span> structuredData = {
   products: [
     { id: <span class="text-blue-400">1</span>, name: <span class="text-green-400">"Widget A"</span>, price: <span class="text-blue-400">19.99</span>, stock: <span class="text-blue-400">100</span> },
@@ -139,7 +178,7 @@ import DocsLayout from '../../../layouts/DocsLayout.astro';
 };
 <span class="text-purple-400">const</span> encoded = encode(structuredData); <span class="text-gray-500">// ~80% smaller!</span>
 
-<span class="text-gray-500">// ❌ Not ideal for AXON: Prose/narrative text</span>
+<span class="text-gray-500">// Not ideal for AXON: Prose/narrative text</span>
 <span class="text-purple-400">const</span> proseData = {
   article: <span class="text-green-400">\`The evolution of software development has been
     marked by continuous innovation and adaptation. Over the decades,
@@ -147,13 +186,13 @@ import DocsLayout from '../../../layouts/DocsLayout.astro';
 };
 <span class="text-gray-500">// Minimal benefit - LLMs need natural language as-is</span>
 
-<span class="text-gray-500">// ✅ Best of both: Combine them</span>
+<span class="text-gray-500">// Best of both: Combine them</span>
 <span class="text-purple-400">const</span> hybrid = {
   context: <span class="text-green-400">"Analyze the following product performance data:"</span>,
   data: encode(structuredData) <span class="text-gray-500">// Only encode the structured part</span>
 };`} /></pre>
 
-  <h2>✓ Reuse Schemas for Related Data</h2>
+  <h2 id="reuse-schemas-for-related-data"><span class="bp-badge bp-do">DO</span> Reuse Schemas for Related Data</h2>
   <p>Register schemas globally to ensure consistency across your application and reduce redundancy.</p>
 
   <pre><code set:html={`<span class="text-purple-400">import</span> { registerSchema, encode, <span class="text-purple-400">type</span> Schema } <span class="text-purple-400">from</span> <span class="text-green-400">'@axon-format/core'</span>;
@@ -177,9 +216,9 @@ registerSchema(productSchema);
 <span class="text-purple-400">const</span> catalog = encode(storeData, { schemas: [productSchema] });
 <span class="text-purple-400">const</span> orders = encode(orderData, { schemas: [productSchema] });
 
-<span class="text-gray-500">// All use the same validated structure! ✅</span>`} /></pre>
+<span class="text-gray-500">// All use the same validated structure</span>`} /></pre>
 
-  <h2>✓ Measure Your Savings</h2>
+  <h2 id="measure-your-savings"><span class="bp-badge bp-do">DO</span> Measure Your Savings</h2>
   <p>Always measure actual token savings to validate AXON's impact on your specific use case.</p>
 
   <pre><code set:html={`<span class="text-purple-400">import</span> { encode, getTokenCount } <span class="text-purple-400">from</span> <span class="text-green-400">'@axon-format/core'</span>;
@@ -197,24 +236,24 @@ registerSchema(productSchema);
 <span class="text-gray-500">// Calculate savings</span>
 <span class="text-purple-400">const</span> savings = ((<span class="text-blue-400">1</span> - axonTokens / jsonTokens) * <span class="text-blue-400">100</span>).toFixed(<span class="text-blue-400">1</span>);
 console.log(<span class="text-green-400">\`Token reduction: \${savings}%\`</span>);
-console.log(<span class="text-green-400">\`\${jsonTokens} → \${axonTokens} tokens\`</span>);
+console.log(<span class="text-green-400">\`\${jsonTokens} -> \${axonTokens} tokens\`</span>);
 
 <span class="text-gray-500">// Typical results:</span>
 <span class="text-gray-500">// Tabular data: 70-95% reduction</span>
 <span class="text-gray-500">// Time-series: 80-95% reduction</span>
 <span class="text-gray-500">// Mixed data: 40-70% reduction</span>`} /></pre>
 
-  <h2>✗ Don't Over-Optimize</h2>
+  <h2 id="dont-over-optimize"><span class="bp-badge bp-dont">DON'T</span> Over-Optimize</h2>
   <p>For small payloads (under 100 tokens), the overhead isn't worth it. Use AXON for larger datasets where the savings are meaningful.</p>
 
-  <pre><code set:html={`<span class="text-gray-500">// ❌ Not worth it: Tiny payload</span>
+  <pre><code set:html={`<span class="text-gray-500">// Not worth it: Tiny payload</span>
 <span class="text-purple-400">const</span> smallData = {
   status: <span class="text-green-400">"ok"</span>,
   count: <span class="text-blue-400">3</span>
 };
 <span class="text-gray-500">// JSON: ~20 tokens, AXON: ~18 tokens (minimal gain)</span>
 
-<span class="text-gray-500">// ✅ Worth it: Large dataset</span>
+<span class="text-gray-500">// Worth it: Large dataset</span>
 <span class="text-purple-400">const</span> largeData = {
   transactions: [<span class="text-gray-500">/* 1000+ rows */</span>]
 };
@@ -222,15 +261,15 @@ console.log(<span class="text-green-400">\`\${jsonTokens} → \${axonTokens} tok
 
 <span class="text-gray-500">// Rule of thumb: Use AXON when original payload > 200 tokens</span>`} /></pre>
 
-  <h2>✗ Don't Skip Validation</h2>
+  <h2 id="dont-skip-validation"><span class="bp-badge bp-dont">DON'T</span> Skip Validation</h2>
   <p>Type validation catches errors early and prevents wasted LLM API calls. The tiny performance cost is always worth it.</p>
 
-  <pre><code set:html={`<span class="text-gray-500">// ❌ Bad: No validation</span>
+  <pre><code set:html={`<span class="text-gray-500">// Bad: No validation</span>
 <span class="text-purple-400">const</span> encoded = encode(userData);
 <span class="text-gray-500">// If userData has wrong types, you'll only find out</span>
 <span class="text-gray-500">// AFTER spending tokens on the LLM API call!</span>
 
-<span class="text-gray-500">// ✅ Good: Validate first</span>
+<span class="text-gray-500">// Good: Validate first</span>
 <span class="text-purple-400">const</span> encoded = encode(userData, { schemas: [userSchema] });
 <span class="text-gray-500">// Catches errors instantly, before the API call</span>
 
@@ -239,7 +278,7 @@ console.log(<span class="text-green-400">\`\${jsonTokens} → \${axonTokens} tok
   <span class="text-purple-400">const</span> encoded = encode({
     id: <span class="text-green-400">"abc"</span>, <span class="text-gray-500">// Should be u8!</span>
     age: <span class="text-blue-400">999</span>  <span class="text-gray-500">// Out of u8 range!</span>
-  }, { schemas: [personSchema] });
+  }, { schemas: [userSchema] });
 } <span class="text-purple-400">catch</span> (err) {
   <span class="text-gray-500">// ValidationError: Field 'id' expected u8, got string</span>
   <span class="text-gray-500">// Fix it BEFORE the expensive API call!</span>
@@ -252,20 +291,99 @@ console.log(<span class="text-green-400">\`\${jsonTokens} → \${axonTokens} tok
     </p>
   </div>
 
-  <h2>✗ Don't Mix Encoding Strategies</h2>
+  <h2 id="dont-mix-encoding-strategies"><span class="bp-badge bp-dont">DON'T</span> Mix Encoding Strategies</h2>
   <p>Keep your encoding strategy consistent within a single LLM conversation to avoid confusing the model.</p>
 
-  <pre><code set:html={`<span class="text-gray-500">// ❌ Bad: Inconsistent encoding in same conversation</span>
+  <pre><code set:html={`<span class="text-gray-500">// Bad: Inconsistent encoding in same conversation</span>
 <span class="text-purple-400">const</span> message1 = <span class="text-green-400">"Here's the data: "</span> + JSON.stringify(data1);
 <span class="text-purple-400">const</span> message2 = <span class="text-green-400">"And here's more: "</span> + encode(data2);
 <span class="text-gray-500">// LLM has to handle two different formats!</span>
 
-<span class="text-gray-500">// ✅ Good: Consistent encoding</span>
+<span class="text-gray-500">// Good: Consistent encoding</span>
 <span class="text-purple-400">const</span> message1 = <span class="text-green-400">"Here's the data: "</span> + encode(data1);
 <span class="text-purple-400">const</span> message2 = <span class="text-green-400">"And here's more: "</span> + encode(data2);
 <span class="text-gray-500">// LLM knows to expect AXON format throughout</span>
 
-<span class="text-gray-500">// ✅ Also good: Tell the LLM upfront</span>
+<span class="text-gray-500">// Also good: Tell the LLM upfront</span>
 <span class="text-purple-400">const</span> systemPrompt = <span class="text-green-400">\`You will receive data in AXON format.
   AXON is a compact encoding. Decode it before analysis.\`</span>;`} /></pre>
+
+  <!-- Quick Reference Card -->
+  <div class="not-prose mt-16 mb-8">
+    <div class="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+      <div class="px-8 py-5 bg-gradient-to-r from-primary-50 to-highlight-50 dark:from-primary-950/40 dark:to-highlight-950/40 border-b border-gray-200 dark:border-gray-700">
+        <h3 class="text-lg font-bold text-gray-900 dark:text-gray-100 m-0">Quick Reference</h3>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 m-0">Copy-paste checklist for your AXON integration</p>
+      </div>
+      <div class="p-8">
+        <div class="grid md:grid-cols-2 gap-8">
+          <div>
+            <h4 class="text-sm font-bold uppercase tracking-wider text-green-600 dark:text-green-400 mb-3">Before Encoding</h4>
+            <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+              <li>Define a <code class="text-primary-700 dark:text-primary-300 bg-primary-100 dark:bg-primary-900/40 px-1.5 py-0.5 rounded text-xs font-mono">Schema</code> for each data type</li>
+              <li>Add <code class="text-primary-700 dark:text-primary-300 bg-primary-100 dark:bg-primary-900/40 px-1.5 py-0.5 rounded text-xs font-mono">queryHints</code> for relational data</li>
+              <li>Separate structured data from prose</li>
+              <li>Confirm payload is &gt; 200 tokens</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-sm font-bold uppercase tracking-wider text-primary-600 dark:text-primary-400 mb-3">During Integration</h4>
+            <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+              <li>Use <code class="text-primary-700 dark:text-primary-300 bg-primary-100 dark:bg-primary-900/40 px-1.5 py-0.5 rounded text-xs font-mono">encode(data)</code> without manual mode</li>
+              <li>Pass <code class="text-primary-700 dark:text-primary-300 bg-primary-100 dark:bg-primary-900/40 px-1.5 py-0.5 rounded text-xs font-mono">{'{ schemas: [...] }'}</code> for validation</li>
+              <li>Use AXON consistently in conversation</li>
+              <li>Measure savings with <code class="text-primary-700 dark:text-primary-300 bg-primary-100 dark:bg-primary-900/40 px-1.5 py-0.5 rounded text-xs font-mono">tokenStats()</code></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <PageNavigation
+    prevPage={{ href: "/axon/docs/performance", label: "Performance" }}
+    nextPage={{ href: "/axon/docs/examples", label: "Examples" }}
+  />
 </DocsLayout>
+
+<style>
+  /* DO / DON'T badge styles for best-practices h2 headings */
+  .bp-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.15rem 0.6rem;
+    border-radius: 0.375rem;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+    position: relative;
+    top: -0.1em;
+  }
+
+  .bp-do {
+    background-color: rgb(220 252 231);
+    color: rgb(21 128 61);
+    border: 1px solid rgb(187 247 208);
+  }
+
+  .bp-dont {
+    background-color: rgb(254 226 226);
+    color: rgb(185 28 28);
+    border: 1px solid rgb(254 202 202);
+  }
+
+  :global(.dark) .bp-do {
+    background-color: rgb(20 83 45 / 0.4);
+    color: rgb(134 239 172);
+    border-color: rgb(22 101 52 / 0.5);
+  }
+
+  :global(.dark) .bp-dont {
+    background-color: rgb(127 29 29 / 0.4);
+    color: rgb(252 165 165);
+    border-color: rgb(153 27 27 / 0.5);
+  }
+</style>

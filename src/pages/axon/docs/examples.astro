@@ -1,51 +1,250 @@
 ---
 import DocsLayout from '../../../layouts/DocsLayout.astro';
+import DocPageHeader from '../../../components/DocPageHeader.astro';
+import LearningSummary from '../../../components/LearningSummary.astro';
+import PageNavigation from '../../../components/PageNavigation.astro';
 ---
 
 <DocsLayout title="Examples - AXON Documentation | SaveTokens">
-  <div class="not-prose mb-12">
-    <a href="/axon" class="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors text-sm mb-8">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-      </svg>
-      Back to AXON
-    </a>
+  <DocPageHeader
+    title="Real-World Examples"
+    description="Production-ready patterns and code examples for common use cases"
+    pageName="Examples"
+    badge="Resources"
+    badgeColor="green"
+  />
 
-    <h1 class="text-5xl font-bold mb-4 text-gray-900 dark:text-gray-100">Examples</h1>
-    <p class="text-xl text-gray-600 dark:text-gray-400 leading-relaxed">Real-world usage patterns and code examples</p>
-  </div>
+  <LearningSummary items={[
+    "E-commerce product catalog encoding with schemas",
+    "User analytics dashboard with stream mode",
+    "Enterprise XML invoice feed conversion"
+  ]} />
 
   <h2>E-commerce Product Catalog</h2>
-  <pre><code set:html={`<span class="text-purple-400">import</span> { encode, defineSchema } <span class="text-purple-400">from</span> <span class="text-green-400">'@axon-format/core'</span>;
+  <p>Encode a product catalog with schema validation, then see the compact AXON output:</p>
 
-<span class="text-purple-400">const</span> productSchema = defineSchema({
-  id: <span class="text-green-400">'u8'</span>,
-  sku: <span class="text-green-400">'str'</span>,
-  name: <span class="text-green-400">'str'</span>,
-  price: <span class="text-green-400">'f64'</span>,
-  inStock: <span class="text-green-400">'bool'</span>,
-  categories: <span class="text-green-400">'str[]'</span>
-});
+  <pre><code set:html={`<span class="text-purple-400">import</span> { encode, <span class="text-purple-400">type</span> Schema } <span class="text-purple-400">from</span> <span class="text-green-400">'@axon-format/core'</span>;
 
-<span class="text-purple-400">const</span> products = { products: [<span class="text-gray-500">/* ... */</span>] };
-<span class="text-purple-400">const</span> encoded = encode(products, { schema: productSchema });`} /></pre>
-
-  <h2>User Analytics Dashboard</h2>
-  <pre><code set:html={`<span class="text-purple-400">const</span> analyticsData = {
-  events: [
-    { timestamp: <span class="text-green-400">"2025-01-15T10:00:00Z"</span>, userId: <span class="text-blue-400">123</span>, action: <span class="text-green-400">"login"</span> },
-    { timestamp: <span class="text-green-400">"2025-01-15T10:05:00Z"</span>, userId: <span class="text-blue-400">123</span>, action: <span class="text-green-400">"view_product"</span> },
-    <span class="text-gray-500">// Time-series data works great with AXON</span>
+<span class="text-purple-400">const</span> productSchema<span class="text-purple-400">:</span> Schema = {
+  name: <span class="text-green-400">'Product'</span>,
+  fields: [
+    { name: <span class="text-green-400">'id'</span>, type: <span class="text-green-400">'u8'</span> },
+    { name: <span class="text-green-400">'sku'</span>, type: <span class="text-green-400">'str'</span> },
+    { name: <span class="text-green-400">'name'</span>, type: <span class="text-green-400">'str'</span> },
+    { name: <span class="text-green-400">'price'</span>, type: <span class="text-green-400">'f64'</span> },
+    { name: <span class="text-green-400">'inStock'</span>, type: <span class="text-green-400">'bool'</span> }
   ]
 };
 
-<span class="text-purple-400">const</span> axon = encode(analyticsData);
-<span class="text-gray-500">// Automatically uses Stream mode + delta encoding</span>`} /></pre>
+<span class="text-purple-400">const</span> data = {
+  products: [
+    { id: <span class="text-blue-400">1</span>, sku: <span class="text-green-400">"WDG-001"</span>, name: <span class="text-green-400">"Widget Pro"</span>, price: <span class="text-blue-400">19.99</span>, inStock: <span class="text-blue-400">true</span> },
+    { id: <span class="text-blue-400">2</span>, sku: <span class="text-green-400">"GDG-002"</span>, name: <span class="text-green-400">"Gadget X"</span>, price: <span class="text-blue-400">29.99</span>, inStock: <span class="text-blue-400">true</span> },
+    { id: <span class="text-blue-400">3</span>, sku: <span class="text-green-400">"SPR-003"</span>, name: <span class="text-green-400">"Sprocket"</span>, price: <span class="text-blue-400">9.50</span>, inStock: <span class="text-blue-400">false</span> }
+  ]
+};
 
-  <h2>More Examples</h2>
-  <p>Find complete working examples in the GitHub repository:</p>
+<span class="text-purple-400">const</span> encoded = encode(data, { schemas: [productSchema] });`} /></pre>
+
+  <p>AXON output:</p>
+
+  <pre><code set:html={`products::[<span class="text-blue-400">3</span>] id:u8|inStock:bool|name:str|price:f64|sku:str
+<span class="text-blue-400">1</span>|<span class="text-blue-400">true</span>|<span class="text-green-400">Widget Pro</span>|<span class="text-blue-400">19.99</span>|<span class="text-green-400">WDG-001</span>
+<span class="text-blue-400">2</span>|<span class="text-blue-400">true</span>|<span class="text-green-400">Gadget X</span>|<span class="text-blue-400">29.99</span>|<span class="text-green-400">GDG-002</span>
+<span class="text-blue-400">3</span>|<span class="text-blue-400">false</span>|<span class="text-green-400">Sprocket</span>|<span class="text-blue-400">9.5</span>|<span class="text-green-400">SPR-003</span>`} /></pre>
+
+  <div class="bg-primary-50 dark:bg-primary-900/20 p-6 rounded-lg my-6 border-l-4 border-primary-500 not-prose">
+    <p class="text-sm text-gray-700 dark:text-gray-300 m-0">
+      <strong>Token savings:</strong> The JSON version of this data uses ~120 tokens. The AXON version uses ~45 tokens -- a 62% reduction. Savings grow as the number of rows increases.
+    </p>
+  </div>
+
+  <h2>User Analytics Dashboard</h2>
+  <p>Time-series event data is a natural fit for AXON. The encoder automatically applies Stream mode with delta encoding for timestamps:</p>
+
+  <pre><code set:html={`<span class="text-purple-400">import</span> { encode, <span class="text-purple-400">type</span> Schema } <span class="text-purple-400">from</span> <span class="text-green-400">'@axon-format/core'</span>;
+
+<span class="text-purple-400">const</span> analyticsSchema<span class="text-purple-400">:</span> Schema = {
+  name: <span class="text-green-400">'Event'</span>,
+  fields: [
+    { name: <span class="text-green-400">'timestamp'</span>, type: <span class="text-green-400">'iso8601'</span> },
+    { name: <span class="text-green-400">'userId'</span>, type: <span class="text-green-400">'u16'</span> },
+    { name: <span class="text-green-400">'action'</span>, type: <span class="text-green-400">'str'</span> }
+  ]
+};
+
+<span class="text-purple-400">const</span> analyticsData = {
+  events: [
+    { timestamp: <span class="text-green-400">"2025-01-15T10:00:00Z"</span>, userId: <span class="text-blue-400">123</span>, action: <span class="text-green-400">"login"</span> },
+    { timestamp: <span class="text-green-400">"2025-01-15T10:05:00Z"</span>, userId: <span class="text-blue-400">123</span>, action: <span class="text-green-400">"view_product"</span> },
+    { timestamp: <span class="text-green-400">"2025-01-15T10:07:30Z"</span>, userId: <span class="text-blue-400">123</span>, action: <span class="text-green-400">"add_to_cart"</span> },
+    { timestamp: <span class="text-green-400">"2025-01-15T10:12:00Z"</span>, userId: <span class="text-blue-400">201</span>, action: <span class="text-green-400">"login"</span> },
+    { timestamp: <span class="text-green-400">"2025-01-15T10:15:00Z"</span>, userId: <span class="text-blue-400">201</span>, action: <span class="text-green-400">"search"</span> }
+  ]
+};
+
+<span class="text-purple-400">const</span> encoded = encode(analyticsData, { schemas: [analyticsSchema] });`} /></pre>
+
+  <p>AXON output with automatic delta encoding on timestamps:</p>
+
+  <pre><code set:html={`events::[<span class="text-blue-400">5</span>] action:str|timestamp:iso8601|userId:u8
+<span class="text-green-400">login</span>|<span class="text-green-400">2025-01-15T10:00:00Z</span>|<span class="text-blue-400">123</span>
+<span class="text-green-400">view_product</span>|<span class="text-green-400">+5m</span>|<span class="text-blue-400">123</span>
+<span class="text-green-400">add_to_cart</span>|<span class="text-green-400">+2m30s</span>|<span class="text-blue-400">123</span>
+<span class="text-green-400">login</span>|<span class="text-green-400">+4m30s</span>|<span class="text-blue-400">201</span>
+<span class="text-green-400">search</span>|<span class="text-green-400">+3m</span>|<span class="text-blue-400">201</span>`} /></pre>
+
+  <h2>Chat / RAG Integration</h2>
+  <p>The most common AXON use case: encoding retrieval results before sending them as context to an LLM. This reduces the tokens consumed by context data, leaving more of the context window for the actual conversation:</p>
+
+  <pre><code set:html={`<span class="text-purple-400">import</span> { encode, <span class="text-purple-400">type</span> Schema } <span class="text-purple-400">from</span> <span class="text-green-400">'@axon-format/core'</span>;
+
+<span class="text-purple-400">const</span> docSchema<span class="text-purple-400">:</span> Schema = {
+  name: <span class="text-green-400">'Document'</span>,
+  fields: [
+    { name: <span class="text-green-400">'title'</span>, type: <span class="text-green-400">'str'</span> },
+    { name: <span class="text-green-400">'content'</span>, type: <span class="text-green-400">'str'</span> },
+    { name: <span class="text-green-400">'score'</span>, type: <span class="text-green-400">'f64'</span> },
+    { name: <span class="text-green-400">'source'</span>, type: <span class="text-green-400">'str'</span> }
+  ]
+};
+
+<span class="text-gray-500">// Retrieval results from your vector DB</span>
+<span class="text-purple-400">const</span> retrievalResults = {
+  documents: [
+    { title: <span class="text-green-400">"Refund Policy"</span>, content: <span class="text-green-400">"Returns accepted within 30 days..."</span>, score: <span class="text-blue-400">0.94</span>, source: <span class="text-green-400">"policies/refunds.md"</span> },
+    { title: <span class="text-green-400">"Shipping FAQ"</span>, content: <span class="text-green-400">"Standard shipping takes 3-5 days..."</span>, score: <span class="text-blue-400">0.87</span>, source: <span class="text-green-400">"faq/shipping.md"</span> },
+    { title: <span class="text-green-400">"Contact Us"</span>, content: <span class="text-green-400">"Reach our support team at..."</span>, score: <span class="text-blue-400">0.72</span>, source: <span class="text-green-400">"support/contact.md"</span> }
+  ]
+};
+
+<span class="text-purple-400">const</span> axonContext = encode(retrievalResults, { schemas: [docSchema] });
+
+<span class="text-gray-500">// Build your LLM prompt</span>
+<span class="text-purple-400">const</span> messages = [
+  {
+    role: <span class="text-green-400">"system"</span>,
+    content: <span class="text-green-400">"You are a support agent. Use the following context (in AXON format) to answer questions:\\n"</span> + axonContext
+  },
+  {
+    role: <span class="text-green-400">"user"</span>,
+    content: <span class="text-green-400">"How long do I have to return an item?"</span>
+  }
+];`} /></pre>
+
+  <h2>XML Invoice Feed</h2>
+  <p>Convert enterprise XML data feeds to token-efficient AXON:</p>
+
+  <pre><code set:html={`<span class="text-purple-400">import</span> { encodeXml } <span class="text-purple-400">from</span> <span class="text-green-400">'@axon-format/core'</span>;
+
+<span class="text-gray-500">// Enterprise invoice XML from ERP system</span>
+<span class="text-purple-400">const</span> invoiceXml = \`
+&lt;invoices xmlns="http://corp.com/billing"&gt;
+  &lt;invoice id="INV-2024-0001" customer="CUST-500"&gt;
+    &lt;date&gt;2024-01-15&lt;/date&gt;
+    &lt;status&gt;paid&lt;/status&gt;
+    &lt;lineItems&gt;
+      &lt;item sku="SVC-CONSULT" qty="8"&gt;Consulting&lt;/item&gt;
+      &lt;item sku="SVC-SUPPORT" qty="1"&gt;Support&lt;/item&gt;
+    &lt;/lineItems&gt;
+    &lt;total currency="USD"&gt;1836.00&lt;/total&gt;
+  &lt;/invoice&gt;
+  &lt;invoice id="INV-2024-0002" customer="CUST-501"&gt;
+    &lt;date&gt;2024-01-16&lt;/date&gt;
+    &lt;status&gt;pending&lt;/status&gt;
+    &lt;lineItems&gt;
+      &lt;item sku="PROD-LICENSE" qty="5"&gt;License&lt;/item&gt;
+    &lt;/lineItems&gt;
+    &lt;total currency="USD"&gt;2478.60&lt;/total&gt;
+  &lt;/invoice&gt;
+&lt;/invoices&gt;
+\`;
+
+<span class="text-purple-400">const</span> axon = encodeXml(invoiceXml);
+<span class="text-gray-500">// Converts verbose XML tags to columnar schema</span>
+<span class="text-gray-500">// Repeated attributes (currency, xmlns) compressed via RLE</span>
+<span class="text-gray-500">// ~60% token reduction vs original XML</span>`} /></pre>
+
+  <h2>Batch Processing</h2>
+  <p>When processing large datasets in batches (e.g., for embedding generation or bulk classification), AXON reduces the token overhead per batch significantly:</p>
+
+  <pre><code set:html={`<span class="text-purple-400">import</span> { encode, <span class="text-purple-400">type</span> Schema } <span class="text-purple-400">from</span> <span class="text-green-400">'@axon-format/core'</span>;
+
+<span class="text-purple-400">const</span> reviewSchema<span class="text-purple-400">:</span> Schema = {
+  name: <span class="text-green-400">'Review'</span>,
+  fields: [
+    { name: <span class="text-green-400">'id'</span>, type: <span class="text-green-400">'u8'</span> },
+    { name: <span class="text-green-400">'text'</span>, type: <span class="text-green-400">'str'</span> },
+    { name: <span class="text-green-400">'rating'</span>, type: <span class="text-green-400">'u8'</span> }
+  ]
+};
+
+<span class="text-gray-500">// Process reviews in batches of 100</span>
+<span class="text-purple-400">const</span> BATCH_SIZE = <span class="text-blue-400">100</span>;
+
+<span class="text-purple-400">for</span> (<span class="text-purple-400">let</span> i = <span class="text-blue-400">0</span>; i &lt; allReviews.length; i += BATCH_SIZE) {
+  <span class="text-purple-400">const</span> batch = allReviews.slice(i, i + BATCH_SIZE);
+  <span class="text-purple-400">const</span> encoded = encode({ reviews: batch }, { schemas: [reviewSchema] });
+
+  <span class="text-gray-500">// Send to LLM for sentiment classification</span>
+  <span class="text-purple-400">const</span> response = <span class="text-purple-400">await</span> llm.chat({
+    messages: [{
+      role: <span class="text-green-400">"user"</span>,
+      content: <span class="text-green-400">"Classify each review as positive, negative, or neutral:\\n"</span> + encoded
+    }]
+  });
+}`} /></pre>
+
+  <p>AXON output for a batch (100 rows, showing first 3):</p>
+
+  <pre><code set:html={`reviews::[<span class="text-blue-400">100</span>] id:u8|rating:u8|text:str
+<span class="text-blue-400">1</span>|<span class="text-blue-400">5</span>|<span class="text-green-400">Great product, works perfectly</span>
+<span class="text-blue-400">2</span>|<span class="text-blue-400">2</span>|<span class="text-green-400">Arrived damaged, disappointing</span>
+<span class="text-blue-400">3</span>|<span class="text-blue-400">4</span>|<span class="text-green-400">Good value for the price</span>
+<span class="text-gray-500">... 97 more rows</span>`} /></pre>
+
+  <div class="bg-primary-50 dark:bg-primary-900/20 p-6 rounded-lg my-6 border-l-4 border-primary-500 not-prose">
+    <p class="text-sm text-gray-700 dark:text-gray-300 m-0">
+      <strong>Batch tip:</strong> For batch processing, AXON's compression ratio improves with batch size.
+      A batch of 100 records typically saves 65-75% vs JSON, while a batch of 10 saves around 45-55%.
+      Larger batches mean more repetition for the compression algorithms to exploit.
+    </p>
+  </div>
+
+  <h2>What's Next?</h2>
+  <p>Find complete working examples and contribute to the project:</p>
   <ul>
-    <li><a href="https://github.com/savetokens/axon/tree/main/examples" target="_blank" rel="noopener noreferrer">Official Examples Directory</a></li>
-    <li><a href="https://github.com/savetokens/axon#readme" target="_blank" rel="noopener noreferrer">README with Examples</a></li>
+    <li><a href="https://github.com/savetokens/axon/tree/main/examples" target="_blank" rel="noopener noreferrer">Official Examples Directory</a> -- runnable code for each use case</li>
+    <li><a href="https://github.com/savetokens/axon#readme" target="_blank" rel="noopener noreferrer">README with Quick Start</a></li>
+    <li><a href="https://github.com/savetokens/axon/issues" target="_blank" rel="noopener noreferrer">GitHub Issues</a> -- request features or report bugs</li>
   </ul>
+
+  <div class="not-prose mt-16 p-8 bg-gradient-to-br from-primary-50 to-accent-50 dark:from-primary-900/20 dark:to-accent-900/20 rounded-2xl border border-primary-200 dark:border-primary-800">
+    <h2 class="text-2xl font-bold mb-6 text-gray-900 dark:text-gray-100">Explore the Docs</h2>
+    <div class="grid md:grid-cols-2 gap-4">
+      <a href="/axon/docs/schemas" class="group block p-6 bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-primary-300 dark:hover:border-primary-700 transition-all hover:shadow-lg">
+        <h3 class="text-lg font-bold text-gray-900 dark:text-gray-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">Schema System</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Add type validation to your data</p>
+      </a>
+
+      <a href="/axon/docs/query-hints" class="group block p-6 bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-primary-300 dark:hover:border-primary-700 transition-all hover:shadow-lg">
+        <h3 class="text-lg font-bold text-gray-900 dark:text-gray-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">Query Hints</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Help LLMs understand your data</p>
+      </a>
+
+      <a href="/axon/docs/performance" class="group block p-6 bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-primary-300 dark:hover:border-primary-700 transition-all hover:shadow-lg">
+        <h3 class="text-lg font-bold text-gray-900 dark:text-gray-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">Performance</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Benchmarks and cost savings</p>
+      </a>
+
+      <a href="/axon/docs/best-practices" class="group block p-6 bg-white dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-primary-300 dark:hover:border-primary-700 transition-all hover:shadow-lg">
+        <h3 class="text-lg font-bold text-gray-900 dark:text-gray-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">Best Practices</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Tips for production usage</p>
+      </a>
+    </div>
+  </div>
+
+  <PageNavigation
+    prevPage={{ href: "/axon/docs/best-practices", label: "Best Practices" }}
+  />
 </DocsLayout>

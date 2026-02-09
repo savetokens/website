@@ -1,24 +1,24 @@
 ---
 import DocsLayout from '../../../layouts/DocsLayout.astro';
+import DocPageHeader from '../../../components/DocPageHeader.astro';
+import LearningSummary from '../../../components/LearningSummary.astro';
+import PageNavigation from '../../../components/PageNavigation.astro';
 ---
 
 <DocsLayout title="AXON Documentation | SaveTokens">
-  <div class="not-prose mb-12">
-    <a
-      href="/axon"
-      class="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors text-sm mb-8"
-    >
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-      </svg>
-      Back to AXON
-    </a>
+  <DocPageHeader
+    title="AXON Documentation"
+    description="Complete guide to using AXON for token-efficient LLM interactions"
+    pageName="Overview"
+    badge="Getting Started"
+    badgeColor="primary"
+  />
 
-    <h1 class="text-5xl font-bold mb-4 text-gray-900 dark:text-gray-100">AXON Documentation</h1>
-    <p class="text-xl text-gray-600 dark:text-gray-400 leading-relaxed">
-      Complete guide to using AXON for token-efficient LLM interactions
-    </p>
-  </div>
+  <LearningSummary items={[
+    "What AXON is and how it reduces LLM token costs by 60-95%",
+    "Key features including 13 validated types and 5 compression algorithms",
+    "When to use AXON versus JSON or CSV"
+  ]} />
 
   <h2>What is AXON?</h2>
   <p>
@@ -42,6 +42,7 @@ import DocsLayout from '../../../layouts/DocsLayout.astro';
   <h2>Key Features</h2>
   <ul>
     <li><strong>60-95% token reduction</strong> versus JSON</li>
+    <li><strong>JSON & XML input support</strong> - convert from both formats seamlessly</li>
     <li><strong>13 validated types</strong> including u8, i32, f64, bool, iso8601, uuid, enum</li>
     <li><strong>5 compression algorithms</strong> automatically applied based on data patterns</li>
     <li><strong>6 adaptive modes</strong> for different data structures</li>
@@ -102,4 +103,8 @@ import DocsLayout from '../../../layouts/DocsLayout.astro';
       </a>
     </div>
   </div>
+
+  <PageNavigation
+    nextPage={{ href: "/axon/docs/installation", label: "Installation" }}
+  />
 </DocsLayout>

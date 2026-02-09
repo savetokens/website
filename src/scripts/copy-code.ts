@@ -20,7 +20,10 @@ function addCopyButtons() {
 
     // Create copy button
     const button = document.createElement('button');
-    button.className = 'copy-code-button absolute top-2 right-2 p-2 rounded-md bg-gray-700 hover:bg-gray-600 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center gap-2';
+    // Position below the terminal-style header bar (2.5rem ::before pseudo-element in docs)
+    const isDocsArticle = pre.closest('.docs-article') !== null;
+    const topOffset = isDocsArticle ? 'top-12' : 'top-2';
+    button.className = `copy-code-button absolute ${topOffset} right-2 p-2 rounded-md bg-gray-700 hover:bg-gray-600 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center gap-2`;
     button.setAttribute('aria-label', 'Copy code');
     button.innerHTML = `
       <svg class="copy-icon w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

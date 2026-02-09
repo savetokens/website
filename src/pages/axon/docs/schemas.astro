@@ -1,59 +1,159 @@
 ---
 import DocsLayout from '../../../layouts/DocsLayout.astro';
+import DocPageHeader from '../../../components/DocPageHeader.astro';
+import LearningSummary from '../../../components/LearningSummary.astro';
+import PageNavigation from '../../../components/PageNavigation.astro';
 ---
 
 <DocsLayout title="Schema System - AXON Documentation | SaveTokens">
-  <div class="not-prose mb-12">
-    <a href="/axon" class="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors text-sm mb-8">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-      </svg>
-      Back to AXON
-    </a>
+  <DocPageHeader
+    title="Schema System"
+    description="Define reusable, validated data structures for type-safe encoding"
+    pageName="Schema System"
+    badge="Advanced"
+    badgeColor="highlight"
+  />
 
-    <h1 class="text-5xl font-bold mb-4 text-gray-900 dark:text-gray-100">Schema System</h1>
-    <p class="text-xl text-gray-600 dark:text-gray-400 leading-relaxed">Define reusable, validated data structures</p>
+  <LearningSummary items={[
+    "How to define schemas with typed fields",
+    "Schema inheritance for extending base schemas",
+    "Using schemas for encode-time validation"
+  ]} />
+
+  <h2>Why Schemas?</h2>
+  <p>
+    Every call to an LLM API costs money. Sending malformed data wastes tokens on errors and retries.
+    AXON schemas let you validate data <strong>before</strong> it reaches the API, catching type mismatches,
+    missing fields, and invalid values at the encoding step rather than in a costly round-trip.
+  </p>
+
+  <div class="bg-primary-50 dark:bg-primary-900/20 p-6 rounded-lg my-6 border-l-4 border-primary-500 not-prose">
+    <p class="text-sm text-gray-700 dark:text-gray-300 m-0">
+      <strong>Key benefit:</strong> Schemas are also embedded in the AXON output as type annotations.
+      This means the receiving LLM understands the data types without needing additional instructions,
+      improving accuracy and reducing prompt engineering overhead.
+    </p>
   </div>
 
-  <h2>Defining Schemas</h2>
-  <pre><code set:html={`<span class="text-purple-400">import</span> { defineSchema, encode } <span class="text-purple-400">from</span> <span class="text-green-400">'@axon-format/core'</span>;
+  <h2>Defining a Schema</h2>
+  <p>A schema is a plain object with a <code>name</code> and a <code>fields</code> array. Each field specifies a name and one of AXON's 13 validated types:</p>
 
-<span class="text-purple-400">const</span> userSchema = defineSchema({
-  id: <span class="text-green-400">'u8'</span>,
-  name: <span class="text-green-400">'str'</span>,
-  email: <span class="text-green-400">'str'</span>,
-  verified: <span class="text-green-400">'bool'</span>,
-  createdAt: <span class="text-green-400">'iso8601'</span>
-});`} /></pre>
+  <pre><code set:html={`<span class="text-purple-400">import</span> { encode, decode, registerSchema, <span class="text-purple-400">type</span> Schema } <span class="text-purple-400">from</span> <span class="text-green-400">'@axon-format/core'</span>;
 
-  <h2>Schema Inheritance</h2>
-  <pre><code set:html={`<span class="text-gray-500">// Base schema</span>
-<span class="text-purple-400">const</span> userSchema = defineSchema({
-  id: <span class="text-green-400">'u8'</span>,
-  name: <span class="text-green-400">'str'</span>,
-  email: <span class="text-green-400">'str'</span>
-});
+<span class="text-purple-400">const</span> userSchema<span class="text-purple-400">:</span> Schema = {
+  name: <span class="text-green-400">'User'</span>,
+  fields: [
+    { name: <span class="text-green-400">'id'</span>, type: <span class="text-green-400">'u8'</span> },
+    { name: <span class="text-green-400">'name'</span>, type: <span class="text-green-400">'str'</span> },
+    { name: <span class="text-green-400">'email'</span>, type: <span class="text-green-400">'str'</span> },
+    { name: <span class="text-green-400">'verified'</span>, type: <span class="text-green-400">'bool'</span> },
+    { name: <span class="text-green-400">'createdAt'</span>, type: <span class="text-green-400">'iso8601'</span> }
+  ]
+};`} /></pre>
 
-<span class="text-gray-500">// Extended schema</span>
-<span class="text-purple-400">const</span> adminSchema = defineSchema({
-  ...userSchema,
-  permissions: <span class="text-green-400">'str[]'</span>,
-  level: <span class="text-green-400">'u8'</span>
-});`} /></pre>
+  <h2>Encoding with a Schema</h2>
+  <p>Pass your schema to <code>encode()</code> via the <code>schemas</code> option. AXON validates every row against the schema and produces compact, typed output:</p>
 
-  <h2>Using Schemas</h2>
-  <pre><code set:html={`<span class="text-purple-400">const</span> data = [
-  { id: <span class="text-blue-400">1</span>, name: <span class="text-green-400">"Alice"</span>, email: <span class="text-green-400">"alice@example.com"</span>, verified: <span class="text-blue-400">true</span> }
-];
+  <pre><code set:html={`<span class="text-purple-400">const</span> data = {
+  users: [
+    { id: <span class="text-blue-400">1</span>, name: <span class="text-green-400">"Alice"</span>, email: <span class="text-green-400">"alice@co.com"</span>, verified: <span class="text-blue-400">true</span>, createdAt: <span class="text-green-400">"2025-01-15T09:00:00Z"</span> },
+    { id: <span class="text-blue-400">2</span>, name: <span class="text-green-400">"Bob"</span>, email: <span class="text-green-400">"bob@co.com"</span>, verified: <span class="text-blue-400">false</span>, createdAt: <span class="text-green-400">"2025-02-20T14:30:00Z"</span> }
+  ]
+};
 
 <span class="text-gray-500">// Encode with schema validation</span>
-<span class="text-purple-400">const</span> encoded = encode(data, { schema: userSchema });`} /></pre>
+<span class="text-purple-400">const</span> encoded = encode(data, { schemas: [userSchema] });
+console.log(encoded);`} /></pre>
+
+  <p>The AXON output includes type annotations in the header, so the LLM knows each column's type:</p>
+
+  <pre><code set:html={`<span class="text-gray-500">// AXON output</span>
+users::[<span class="text-blue-400">2</span>] createdAt:iso8601|email:str|id:u8|name:str|verified:bool
+<span class="text-green-400">2025-01-15T09:00:00Z</span>|<span class="text-green-400">alice@co.com</span>|<span class="text-blue-400">1</span>|<span class="text-green-400">Alice</span>|<span class="text-blue-400">true</span>
+<span class="text-green-400">2025-02-20T14:30:00Z</span>|<span class="text-green-400">bob@co.com</span>|<span class="text-blue-400">2</span>|<span class="text-green-400">Bob</span>|<span class="text-blue-400">false</span>`} /></pre>
+
+  <h2>Schema Registration</h2>
+  <p>For schemas you use frequently, register them globally with <code>registerSchema()</code>. Registered schemas can be referenced by name and are available throughout your application:</p>
+
+  <pre><code set:html={`<span class="text-gray-500">// Register at application startup</span>
+registerSchema(userSchema);
+
+<span class="text-gray-500">// Later, use by name anywhere in your codebase</span>
+<span class="text-purple-400">const</span> encoded = encode(data, { schemas: [<span class="text-green-400">'User'</span>] });
+
+<span class="text-gray-500">// Decode with the same schema for type-safe output</span>
+<span class="text-purple-400">const</span> decoded = decode(encoded, { schemas: [<span class="text-green-400">'User'</span>] });`} /></pre>
+
+  <h2>Schema Inheritance</h2>
+  <p>Build specialized schemas by extending base schemas with the spread operator. This keeps your type definitions DRY while supporting different entity variations:</p>
+
+  <pre><code set:html={`<span class="text-gray-500">// Base schema</span>
+<span class="text-purple-400">const</span> userSchema<span class="text-purple-400">:</span> Schema = {
+  name: <span class="text-green-400">'User'</span>,
+  fields: [
+    { name: <span class="text-green-400">'id'</span>, type: <span class="text-green-400">'u8'</span> },
+    { name: <span class="text-green-400">'name'</span>, type: <span class="text-green-400">'str'</span> },
+    { name: <span class="text-green-400">'email'</span>, type: <span class="text-green-400">'str'</span> }
+  ]
+};
+
+<span class="text-gray-500">// Extended schema adds admin-specific fields</span>
+<span class="text-purple-400">const</span> adminSchema<span class="text-purple-400">:</span> Schema = {
+  name: <span class="text-green-400">'Admin'</span>,
+  fields: [
+    ...userSchema.fields,
+    { name: <span class="text-green-400">'permissions'</span>, type: <span class="text-green-400">'str[]'</span> },
+    { name: <span class="text-green-400">'level'</span>, type: <span class="text-green-400">'u8'</span> }
+  ]
+};`} /></pre>
+
+  <h2>Validation Errors</h2>
+  <p>When data does not match the schema, AXON throws descriptive errors at encode time. This catches problems before you spend tokens on a failed API call:</p>
+
+  <pre><code set:html={`<span class="text-purple-400">const</span> badData = {
+  users: [
+    { id: <span class="text-green-400">"not-a-number"</span>, name: <span class="text-green-400">"Alice"</span>, email: <span class="text-green-400">"alice@co.com"</span>, verified: <span class="text-blue-400">true</span> }
+  ]
+};
+
+<span class="text-purple-400">try</span> {
+  encode(badData, { schemas: [userSchema] });
+} <span class="text-purple-400">catch</span> (err) {
+  console.error(err.message);
+  <span class="text-gray-500">// Schema validation failed: field "id" expected type u8, got string "not-a-number"</span>
+}`} /></pre>
+
+  <div class="bg-accent-50 dark:bg-accent-900/20 p-6 rounded-lg my-6 border-l-4 border-accent-500 not-prose">
+    <p class="text-sm text-gray-700 dark:text-gray-300 m-0">
+      <strong>Common validation errors:</strong> Type mismatches (<code>u8</code> receiving a string),
+      missing required fields, values out of numeric range (e.g., negative values for unsigned types),
+      and malformed ISO 8601 timestamps. All errors include the field name and expected type for easy debugging.
+    </p>
+  </div>
 
   <h2>Benefits</h2>
   <ul>
     <li><strong>Type safety:</strong> Catch errors before expensive API calls</li>
     <li><strong>Reusability:</strong> Define once, use across your application</li>
-    <li><strong>Documentation:</strong> Schemas serve as inline documentation</li>
-    <li><strong>Validation:</strong> Automatic data validation on encode/decode</li>
+    <li><strong>Documentation:</strong> Schemas serve as inline documentation for your data shapes</li>
+    <li><strong>Validation:</strong> Automatic data validation on both encode and decode</li>
+    <li><strong>LLM context:</strong> Type annotations in the output help LLMs understand your data without extra prompting</li>
   </ul>
+
+  <div class="not-prose mt-16 p-8 bg-gradient-to-r from-highlight-50 to-primary-50 dark:from-highlight-900/20 dark:to-primary-900/20 rounded-2xl border border-highlight-200 dark:border-highlight-800">
+    <div class="flex items-center justify-between">
+      <div>
+        <h3 class="text-lg font-bold mb-2 text-gray-900 dark:text-gray-100">Next: Query Hints</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400">Add metadata to help LLMs understand and query your data</p>
+      </div>
+      <a href="/axon/docs/query-hints" class="px-6 py-3 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 rounded-lg font-semibold hover:bg-gray-800 dark:hover:bg-gray-200 transition-all">
+        Query Hints &rarr;
+      </a>
+    </div>
+  </div>
+
+  <PageNavigation
+    prevPage={{ href: "/axon/docs/encoding-modes", label: "Encoding Modes" }}
+    nextPage={{ href: "/axon/docs/query-hints", label: "Query Hints" }}
+  />
 </DocsLayout>

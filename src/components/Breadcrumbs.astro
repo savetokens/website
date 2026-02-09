@@ -1,0 +1,23 @@
+---
+interface Props {
+  pageName: string;
+}
+
+const { pageName } = Astro.props;
+---
+
+<nav aria-label="Breadcrumb" class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-8">
+  <a href="/" class="hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Home</a>
+  <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+  </svg>
+  <a href="/axon" class="hover:text-gray-900 dark:hover:text-gray-100 transition-colors">AXON</a>
+  <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+  </svg>
+  <a href="/axon/docs" class="hover:text-gray-900 dark:hover:text-gray-100 transition-colors">Docs</a>
+  <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+  </svg>
+  <span class="text-gray-900 dark:text-gray-100 font-medium">{pageName}</span>
+</nav>

@@ -1,24 +1,25 @@
 ---
 import DocsLayout from '../../../layouts/DocsLayout.astro';
+import DocPageHeader from '../../../components/DocPageHeader.astro';
+import LearningSummary from '../../../components/LearningSummary.astro';
+import PageNavigation from '../../../components/PageNavigation.astro';
 ---
 
 <DocsLayout title="Quick Start - AXON Documentation | SaveTokens">
-  <div class="not-prose mb-12">
-    <a
-      href="/axon"
-      class="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors text-sm mb-8"
-    >
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-      </svg>
-      Back to AXON
-    </a>
+  <DocPageHeader
+    title="Quick Start"
+    description="Encode your first data structure with AXON in minutes"
+    pageName="Quick Start"
+    badge="Getting Started"
+    badgeColor="primary"
+  />
 
-    <h1 class="text-5xl font-bold mb-4 text-gray-900 dark:text-gray-100">Quick Start</h1>
-    <p class="text-xl text-gray-600 dark:text-gray-400 leading-relaxed">
-      Encode your first data structure with AXON in minutes
-    </p>
-  </div>
+  <LearningSummary items={[
+    "Basic encode/decode workflow with round-trip fidelity",
+    "Adding schema validation to catch errors early",
+    "Using AXON in a real LLM API call to save tokens",
+    "Converting XML data and using the CLI tool"
+  ]} />
 
   <h2>Basic Encoding</h2>
   <p>The simplest way to use AXON is with the <code>encode()</code> and <code>decode()</code> functions:</p>
@@ -44,7 +45,7 @@ console.log(axonString);
 
 <span class="text-gray-500">// Decode back to original</span>
 <span class="text-purple-400">const</span> decoded = decode(axonString);
-<span class="text-gray-500">// Perfect round-trip! ✅</span>`} /></pre>
+<span class="text-gray-500">// Perfect round-trip!</span>`} /></pre>
 
   <h2>With Schema Validation</h2>
   <p>Add type validation to catch errors before sending data to expensive LLM APIs:</p>
@@ -120,11 +121,46 @@ registerSchema(userSchema);
     </p>
   </div>
 
+  <h2>Converting from XML</h2>
+  <p>AXON can also convert XML data, eliminating verbose tags while preserving structure:</p>
+
+  <pre><code set:html={`<span class="text-purple-400">import</span> { encodeXml } <span class="text-purple-400">from</span> <span class="text-green-400">'@axon-format/core'</span>;
+
+<span class="text-purple-400">const</span> xmlData = \`
+&lt;employees&gt;
+  &lt;employee id="E001" department="Engineering"&gt;
+    &lt;name&gt;Alice Chen&lt;/name&gt;
+    &lt;salary currency="USD"&gt;125000&lt;/salary&gt;
+    &lt;active&gt;true&lt;/active&gt;
+  &lt;/employee&gt;
+  &lt;employee id="E002" department="Engineering"&gt;
+    &lt;name&gt;Bob Smith&lt;/name&gt;
+    &lt;salary currency="USD"&gt;120000&lt;/salary&gt;
+    &lt;active&gt;true&lt;/active&gt;
+  &lt;/employee&gt;
+&lt;/employees&gt;
+\`;
+
+<span class="text-purple-400">const</span> axonString = encodeXml(xmlData);
+<span class="text-gray-500">// Removes repetitive tags, applies columnar format</span>
+<span class="text-gray-500">// Typically 50-70% smaller than original XML!</span>`} /></pre>
+
+  <div class="bg-accent-50 dark:bg-accent-900/20 p-6 rounded-lg my-6 border-l-4 border-accent-500 not-prose">
+    <p class="text-sm text-gray-700 dark:text-gray-300 m-0">
+      <strong>XML Compression:</strong> XML's verbose structure (opening/closing tags, attributes) makes it
+      especially well-suited for AXON compression. Repeated element names become schema definitions, and
+      uniform child elements are converted to columnar format.
+    </p>
+  </div>
+
   <h2>CLI Usage</h2>
   <p>You can also use AXON from the command line:</p>
 
   <pre><code># Convert JSON to AXON
 axon encode data.json -o data.axon
+
+# Convert XML to AXON
+axon encode invoice.xml -o invoice.axon
 
 # See token savings
 axon stats data.json data.axon
@@ -138,4 +174,9 @@ axon decode data.axon -o output.json</code></pre>
     <li><a href="/axon/docs/compression">Explore Compression</a> - See how the 5 algorithms work</li>
     <li><a href="/axon/docs/schemas">Use Schemas</a> - Add validation to your data</li>
   </ul>
+
+  <PageNavigation
+    prevPage={{ href: "/axon/docs/installation", label: "Installation" }}
+    nextPage={{ href: "/axon/docs/type-system", label: "Type System" }}
+  />
 </DocsLayout>

@@ -1,24 +1,24 @@
 ---
 import DocsLayout from '../../../layouts/DocsLayout.astro';
+import DocPageHeader from '../../../components/DocPageHeader.astro';
+import LearningSummary from '../../../components/LearningSummary.astro';
+import PageNavigation from '../../../components/PageNavigation.astro';
 ---
 
 <DocsLayout title="Type System - AXON Documentation | SaveTokens">
-  <div class="not-prose mb-12">
-    <a
-      href="/axon"
-      class="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors text-sm mb-8"
-    >
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-      </svg>
-      Back to AXON
-    </a>
+  <DocPageHeader
+    title="Type System"
+    description="AXON's 13 validated types ensure data integrity and catch errors before expensive LLM API calls"
+    pageName="Type System"
+    badge="Core Concept"
+    badgeColor="accent"
+  />
 
-    <h1 class="text-5xl font-bold mb-4 text-gray-900 dark:text-gray-100">Type System</h1>
-    <p class="text-xl text-gray-600 dark:text-gray-400 leading-relaxed">
-      AXON's 13 validated types ensure data integrity and catch errors before expensive LLM API calls
-    </p>
-  </div>
+  <LearningSummary items={[
+    "All 13 built-in types with ranges and examples",
+    "Type modifiers: nullable, array, and combined modifiers",
+    "How type validation catches errors early and enables better compression"
+  ]} />
 
   <h2>Built-in Types</h2>
 
@@ -40,10 +40,40 @@ import DocsLayout from '../../../layouts/DocsLayout.astro';
           <td class="px-6 py-4 font-mono text-sm">42</td>
         </tr>
         <tr>
+          <td class="px-6 py-4 font-mono text-sm font-semibold">u16</td>
+          <td class="px-6 py-4 text-sm">Unsigned 16-bit integer</td>
+          <td class="px-6 py-4 text-sm">0 to 65,535</td>
+          <td class="px-6 py-4 font-mono text-sm">1024</td>
+        </tr>
+        <tr>
+          <td class="px-6 py-4 font-mono text-sm font-semibold">u32</td>
+          <td class="px-6 py-4 text-sm">Unsigned 32-bit integer</td>
+          <td class="px-6 py-4 text-sm">0 to 4.2B</td>
+          <td class="px-6 py-4 font-mono text-sm">100000</td>
+        </tr>
+        <tr>
+          <td class="px-6 py-4 font-mono text-sm font-semibold">i8</td>
+          <td class="px-6 py-4 text-sm">Signed 8-bit integer</td>
+          <td class="px-6 py-4 text-sm">-128 to 127</td>
+          <td class="px-6 py-4 font-mono text-sm">-50</td>
+        </tr>
+        <tr>
+          <td class="px-6 py-4 font-mono text-sm font-semibold">i16</td>
+          <td class="px-6 py-4 text-sm">Signed 16-bit integer</td>
+          <td class="px-6 py-4 text-sm">-32,768 to 32,767</td>
+          <td class="px-6 py-4 font-mono text-sm">-500</td>
+        </tr>
+        <tr>
           <td class="px-6 py-4 font-mono text-sm font-semibold">i32</td>
           <td class="px-6 py-4 text-sm">Signed 32-bit integer</td>
           <td class="px-6 py-4 text-sm">-2.1B to 2.1B</td>
           <td class="px-6 py-4 font-mono text-sm">-1000</td>
+        </tr>
+        <tr>
+          <td class="px-6 py-4 font-mono text-sm font-semibold">i64</td>
+          <td class="px-6 py-4 text-sm">Signed 64-bit integer</td>
+          <td class="px-6 py-4 text-sm">-9.2 quintillion to 9.2 quintillion</td>
+          <td class="px-6 py-4 font-mono text-sm">9007199254740992</td>
         </tr>
         <tr>
           <td class="px-6 py-4 font-mono text-sm font-semibold">f64</td>
@@ -148,4 +178,9 @@ registerSchema(productSchema);
       work to achieve massive token savings.
     </p>
   </div>
+
+  <PageNavigation
+    prevPage={{ href: "/axon/docs/quick-start", label: "Quick Start" }}
+    nextPage={{ href: "/axon/docs/compression", label: "Compression" }}
+  />
 </DocsLayout>
